@@ -48,6 +48,10 @@ const ensureSetupStyles = () => {
     --setup-use-gradient: true;
     --setup-gradient-start: #5CB85C;
     --setup-gradient-end: #D4A574;
+    
+    /* Button colors - theme matched */
+    --setup-button-bg: #4a7c59;
+    --setup-button-text: #ffffff;
   }
 
   .setup-container {
@@ -457,17 +461,18 @@ const ensureSetupStyles = () => {
   }
 
   .setup-button.primary {
-    background: var(--setup-primary);
-    color: var(--setup-text-white);
-    border-color: var(--setup-primary);
+    background: var(--setup-button-bg);
+    color: var(--setup-button-text);
+    border-color: var(--setup-button-bg);
     box-shadow: 0 2px 4px rgba(0, 128, 96, 0.2);
   }
 
   .setup-button.primary:hover:not([disabled]) {
-    background: var(--setup-primary-dark);
-    border-color: var(--setup-primary-dark);
+    background: var(--setup-button-bg);
+    border-color: var(--setup-button-bg);
     transform: translateY(-1px);
     box-shadow: 0 4px 6px rgba(0, 128, 96, 0.3);
+    filter: brightness(0.9);
   }
 
   .setup-button[disabled] {
@@ -534,6 +539,8 @@ const applyColorSettings = (settings) => {
     ["badgeText", "--setup-badge-text"],
     ["gradientStart", "--setup-gradient-start"],
     ["gradientEnd", "--setup-gradient-end"],
+    ["buttonBg", "--setup-button-bg"],
+    ["buttonText", "--setup-button-text"],
   ];
 
   for (const [key, cssVar] of colorMap) {
@@ -735,31 +742,32 @@ export default function mountSetup(container, props = {}) {
       
       // Update claim reasons in select dropdown - ADDITIVE approach
       if (settings.claimReasons && Array.isArray(settings.claimReasons)) {
-        // Get current options to preserve existing ones
-        const currentOptions = [...CLAIM_OPTIONS];
+        // Start with current CLAIM_OPTIONS (preserve defaults)
+        const existingReasons = [...CLAIM_OPTIONS];
         
-        // Find new reasons that aren't already in the list
+        // Find truly new reasons that aren't already in the existing list
         const newReasons = settings.claimReasons.filter(reason => 
-          !currentOptions.includes(reason)
+          !existingReasons.includes(reason)
         );
         
-        // Add new reasons to the existing list (additive)
+        // Only add if there are actually new reasons
         if (newReasons.length > 0) {
+          // Add new reasons to the existing list (additive)
           CLAIM_OPTIONS.push(...newReasons);
           
-          // Set the newest added reason as selected
+          // Set the newest added reason as selected (last one added)
           state.selectedClaimOption = newReasons[newReasons.length - 1];
-        }
-        
-        // Update the select dropdown with all options
-        const select = document.querySelector('.setup-select');
-        if (select) {
-          select.innerHTML = CLAIM_OPTIONS.map(reason => 
-            `<option value="${reason}">${reason}</option>`
-          ).join('');
           
-          // Set the selected value
-          select.value = state.selectedClaimOption;
+          // Update the select dropdown with all options (existing + new)
+          const select = document.querySelector('.setup-select');
+          if (select) {
+            select.innerHTML = CLAIM_OPTIONS.map(reason => 
+              `<option value="${reason}">${reason}</option>`
+            ).join('');
+            
+            // Set the selected value to the newest added reason
+            select.value = state.selectedClaimOption;
+          }
         }
       }
     },
@@ -793,6 +801,8 @@ export default function mountSetup(container, props = {}) {
         ["badgeText", "--setup-badge-text"],
         ["gradientStart", "--setup-gradient-start"],
         ["gradientEnd", "--setup-gradient-end"],
+        ["buttonBg", "--setup-button-bg"],
+        ["buttonText", "--setup-button-text"],
       ];
 
       for (const [key, cssVar] of colorMap) {
@@ -1394,14 +1404,6 @@ if (typeof window !== "undefined") {
 
 
 
-
-
-
-
-
-
-
-
 // // Setup Component - Clean Code with Original Design
 // const SETUP_STYLE_ID = "vanilla-setup-styles";
 
@@ -1443,12 +1445,15 @@ if (typeof window !== "undefined") {
 //     --setup-focus-ring: 0 0 0 3px rgba(0, 128, 96, 0.15);
 //     --setup-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     
-//     /* Selected item specific colors */
-//     --setup-selected-item-bg: #edfff6;
-//     --setup-selected-item-text: #202223;
-//     --setup-badge-bg: #008060;
+//     /* Selected item specific colors - darker defaults */
+//     --setup-selected-item-bg: #d4f5d4;
+//     --setup-selected-item-text: #1a4d1a;
+//     --setup-badge-bg: #4a7c59;
 //     --setup-badge-text: #ffffff;
 //     --setup-selected-item-border: #bed1c7;
+//     --setup-use-gradient: true;
+//     --setup-gradient-start: #5CB85C;
+//     --setup-gradient-end: #D4A574;
 //   }
 
 //   .setup-container {
@@ -1550,7 +1555,10 @@ if (typeof window !== "undefined") {
 //   }
 
 //   .setup-item-card.selected {
-//     background-color: var(--setup-selected-item-bg);
+//     background: var(--setup-selected-item-bg);
+//     background: var(--setup-use-gradient) == 'true' 
+//       ? linear-gradient(135deg, var(--setup-gradient-start, var(--setup-selected-item-bg)), var(--setup-gradient-end, var(--setup-selected-item-bg)))
+//       : var(--setup-selected-item-bg);
 //     border-color: var(--setup-selected-item-border, var(--setup-selected-item-bg));
 //     color: var(--setup-selected-item-text);
 //   }
@@ -1930,12 +1938,19 @@ if (typeof window !== "undefined") {
 //     ["selectedItemText", "--setup-selected-item-text"],
 //     ["badgeBg", "--setup-badge-bg"],
 //     ["badgeText", "--setup-badge-text"],
+//     ["gradientStart", "--setup-gradient-start"],
+//     ["gradientEnd", "--setup-gradient-end"],
 //   ];
 
 //   for (const [key, cssVar] of colorMap) {
 //     if (settings[key]) {
 //       root.style.setProperty(cssVar, settings[key]);
 //     }
+//   }
+
+//   // Handle gradient toggle
+//   if (typeof settings.useGradient !== 'undefined') {
+//     root.style.setProperty('--setup-use-gradient', settings.useGradient ? 'true' : 'false');
 //   }
 
 //   // Auto-generate border color based on selected item background
@@ -1945,6 +1960,16 @@ if (typeof window !== "undefined") {
 //       root.style.setProperty('--setup-selected-item-border', borderColor);
 //     }
 //   }
+  
+//   // Apply gradient or solid background to selected items
+//   const selectedCards = document.querySelectorAll('.setup-item-card.selected');
+//   selectedCards.forEach(card => {
+//     if (settings.useGradient && settings.gradientStart && settings.gradientEnd) {
+//       card.style.background = `linear-gradient(135deg, ${settings.gradientStart}, ${settings.gradientEnd})`;
+//     } else if (settings.selectedItemBg) {
+//       card.style.background = settings.selectedItemBg;
+//     }
+//   });
 // };
 
 // // Main Setup Component
@@ -1956,7 +1981,7 @@ if (typeof window !== "undefined") {
 //     selectedEligibleId: null,
 //     quantities: {},
 //     selectedAction: "reorder",
-//     selectedClaimOption: "product_damaged",
+//     selectedClaimOption: "Product damaged", // Default to first option
 //     claimDetails: "",
 //     supportingFiles: [],
 //     submitting: false,
@@ -2055,7 +2080,7 @@ if (typeof window !== "undefined") {
 //     total: "€11.90 EUR"
 //   };
 
-//   // Default claim options - hardcoded
+//   // Default claim options - hardcoded with "Product damaged" first
 //   const CLAIM_OPTIONS = props.CLAIM_OPTIONS || [
 //     "Product damaged",
 //     "Defective item", 
@@ -2114,18 +2139,34 @@ if (typeof window !== "undefined") {
 //     applyContentSettings(settings) {
 //       if (!settings) return;
       
-//       // Update claim reasons in select dropdown
+//       // Update claim reasons in select dropdown - ADDITIVE approach
 //       if (settings.claimReasons && Array.isArray(settings.claimReasons)) {
-//         const select = document.querySelector('.setup-select');
-//         if (select) {
-//           select.innerHTML = settings.claimReasons.map(reason => 
-//             `<option value="${reason}">${reason}</option>`
-//           ).join('');
+//         // Get current options to preserve existing ones
+//         const currentOptions = [...CLAIM_OPTIONS];
+        
+//         // Find new reasons that aren't already in the list
+//         const newReasons = settings.claimReasons.filter(reason => 
+//           !currentOptions.includes(reason)
+//         );
+        
+//         // Add new reasons to the existing list (additive)
+//         if (newReasons.length > 0) {
+//           CLAIM_OPTIONS.push(...newReasons);
+          
+//           // Set the newest added reason as selected
+//           state.selectedClaimOption = newReasons[newReasons.length - 1];
 //         }
         
-//         // Also update CLAIM_OPTIONS array
-//         CLAIM_OPTIONS.length = 0;
-//         CLAIM_OPTIONS.push(...settings.claimReasons);
+//         // Update the select dropdown with all options
+//         const select = document.querySelector('.setup-select');
+//         if (select) {
+//           select.innerHTML = CLAIM_OPTIONS.map(reason => 
+//             `<option value="${reason}">${reason}</option>`
+//           ).join('');
+          
+//           // Set the selected value
+//           select.value = state.selectedClaimOption;
+//         }
 //       }
 //     },
 
@@ -2156,12 +2197,19 @@ if (typeof window !== "undefined") {
 //         ["selectedItemText", "--setup-selected-item-text"],
 //         ["badgeBg", "--setup-badge-bg"],
 //         ["badgeText", "--setup-badge-text"],
+//         ["gradientStart", "--setup-gradient-start"],
+//         ["gradientEnd", "--setup-gradient-end"],
 //       ];
 
 //       for (const [key, cssVar] of colorMap) {
 //         if (settings[key]) {
 //           root.style.setProperty(cssVar, settings[key]);
 //         }
+//       }
+
+//       // Handle gradient toggle
+//       if (typeof settings.useGradient !== 'undefined') {
+//         root.style.setProperty('--setup-use-gradient', settings.useGradient ? 'true' : 'false');
 //       }
 
 //       // Auto-generate border color based on selected item background
@@ -2171,6 +2219,16 @@ if (typeof window !== "undefined") {
 //           root.style.setProperty('--setup-selected-item-border', borderColor);
 //         }
 //       }
+      
+//       // Apply gradient or solid background to selected items
+//       const selectedCards = document.querySelectorAll('.setup-item-card.selected');
+//       selectedCards.forEach(card => {
+//         if (settings.useGradient && settings.gradientStart && settings.gradientEnd) {
+//           card.style.background = `linear-gradient(135deg, ${settings.gradientStart}, ${settings.gradientEnd})`;
+//         } else if (settings.selectedItemBg) {
+//           card.style.background = settings.selectedItemBg;
+//         }
+//       });
 //     },
 //   };
 
@@ -2677,10 +2735,25 @@ if (typeof window !== "undefined") {
 
 //   function rerender() {
 //     render();
+//     // Reapply color settings after re-rendering
+//     if (typeof window !== 'undefined' && window.SetupProxy) {
+//       const colorSettings = window.SetupProxy.getColorSettings?.();
+//       if (colorSettings) {
+//         proxy.applyColorSettings(colorSettings);
+//       }
+//     }
 //   }
 
 //   // Initial render
 //   render();
+  
+//   // Apply initial color settings if available
+//   if (typeof window !== 'undefined' && window.SetupProxy) {
+//     const colorSettings = window.SetupProxy.getColorSettings?.();
+//     if (colorSettings) {
+//       proxy.applyColorSettings(colorSettings);
+//     }
+//   }
 
 //   // Set the proxy globally
 //   if (typeof window !== "undefined" && window.ClaimSetup) {
