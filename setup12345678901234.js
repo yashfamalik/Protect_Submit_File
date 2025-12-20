@@ -159,12 +159,14 @@ const ensureSetupStyles = () => {
 
   .setup-item-card.selected {
     background: var(--setup-primary-light);
-    background: var(--setup-use-gradient) == 'true' 
-      ? linear-gradient(135deg, var(--setup-gradient-start, var(--setup-primary-light)), var(--setup-gradient-end, var(--setup-primary-light)))
-      : var(--setup-primary-light);
     border-color: var(--setup-primary-border);
     color: var(--setup-primary-border);
     box-shadow: 0 0 0 1px var(--setup-primary-border) inset;
+  }
+
+  /* Apply gradient to selected items when gradient is enabled */
+  .setup-item-card.selected[data-use-gradient="true"] {
+    background: linear-gradient(135deg, var(--setup-gradient-start), var(--setup-gradient-end));
   }
 
   .setup-item-card.selected .setup-item-name {
@@ -579,10 +581,10 @@ const applyColorSettings = (settings) => {
   // Apply gradient or solid background to selected items
   const selectedCards = document.querySelectorAll('.setup-item-card.selected');
   selectedCards.forEach(card => {
-    if (settings.useGradient && settings.gradientStart && settings.gradientEnd) {
-      card.style.background = `linear-gradient(135deg, ${settings.gradientStart}, ${settings.gradientEnd})`;
-    } else if (settings.primaryLight) {
-      card.style.background = settings.primaryLight;
+    if (settings.useGradient) {
+      card.setAttribute('data-use-gradient', 'true');
+    } else {
+      card.setAttribute('data-use-gradient', 'false');
     }
   });
 };
@@ -843,10 +845,10 @@ export default function mountSetup(container, props = {}) {
       // Apply gradient or solid background to selected items
       const selectedCards = document.querySelectorAll('.setup-item-card.selected');
       selectedCards.forEach(card => {
-        if (settings.useGradient && settings.gradientStart && settings.gradientEnd) {
-          card.style.background = `linear-gradient(135deg, ${settings.gradientStart}, ${settings.gradientEnd})`;
-        } else if (settings.primaryLight) {
-          card.style.background = settings.primaryLight;
+        if (settings.useGradient) {
+          card.setAttribute('data-use-gradient', 'true');
+        } else {
+          card.setAttribute('data-use-gradient', 'false');
         }
       });
     },
@@ -1185,7 +1187,7 @@ export default function mountSetup(container, props = {}) {
     const totalVal = parsePrice(item.price) * quantity;
 
     const card = createElement(`
-      <div class="setup-item-card${selected ? ' selected' : ''}">
+      <div class="setup-item-card${selected ? ' selected' : ''}"${selected ? ' data-use-gradient="true"' : ''}>
         <div class="setup-item-header">
           <div class="setup-item">
             <img src="${item.image}" alt="${item.name}">
@@ -1393,6 +1395,17 @@ export default function mountSetup(container, props = {}) {
       const colorSettings = window.SetupProxy.getColorSettings?.();
       if (colorSettings) {
         proxy.applyColorSettings(colorSettings);
+      } else {
+        // Apply Green-Yellow theme as default
+        const greenYellowTheme = {
+          useGradient: true,
+          gradientStart: "#72D9A3",
+          gradientEnd: "#F3EEA5",
+          primaryColor: "#72D9A3",
+          primaryLight: "#a8e6a8",
+          primaryBorder: "#4a7c59"
+        };
+        proxy.applyColorSettings(greenYellowTheme);
       }
     }
   }
@@ -1483,7 +1496,6 @@ if (typeof window !== "undefined") {
 
 
 
-
 // // Setup Component - Clean Code with Original Design
 // const SETUP_STYLE_ID = "vanilla-setup-styles";
 
@@ -1532,15 +1544,15 @@ if (typeof window !== "undefined") {
 //     --setup-badge-text: #ffffff;
 //     --setup-selected-item-border: #bed1c7;
 //     --setup-use-gradient: true;
-//     --setup-gradient-start: #5CB85C;
-//     --setup-gradient-end: #D4A574;
+//     --setup-gradient-start: #72D9A3;
+//     --setup-gradient-end: #F3EEA5;
     
 //     /* Button colors - theme matched */
 //     --setup-button-bg: #4a7c59;
 //     --setup-button-text: #ffffff;
     
-//     /* Primary color for selected states */
-//     --setup-primary-color: #5CB85C;
+//     /* Primary color for selected states - Green-Yellow theme */
+//     --setup-primary-color: #72D9A3;
 //     --setup-primary-light: #a8e6a8;
 //     --setup-primary-border: #4a7c59;
 //   }
@@ -2347,6 +2359,23 @@ if (typeof window !== "undefined") {
 //     const initialColors = localProxy.getColorSettings?.();
 //     if (initialColors) {
 //       proxy.applyColorSettings(initialColors);
+//     } else {
+//       // If no colors available, apply Green-Yellow theme as default
+//       const greenYellowTheme = {
+//         useGradient: true,
+//         gradientStart: "#72D9A3",
+//         gradientEnd: "#F3EEA5",
+//         primaryColor: "#72D9A3",
+//         primaryLight: "#a8e6a8",
+//         primaryBorder: "#4a7c59",
+//         selectedItemBg: "#d4f5d4",
+//         selectedItemText: "#1a4d1a",
+//         badgeBg: "#4a7c59",
+//         badgeText: "#ffffff",
+//         buttonBg: "#4a7c59",
+//         buttonText: "#ffffff"
+//       };
+//       proxy.applyColorSettings(greenYellowTheme);
 //     }
 
 //     // Get claim reasons from content settings and apply them
@@ -2369,6 +2398,23 @@ if (typeof window !== "undefined") {
 //         proxy.applyContentSettings(snapshot.contentSettings);
 //       }
 //     });
+//   } else {
+//     // If no SetupProxy available, apply Green-Yellow theme directly
+//     const greenYellowTheme = {
+//       useGradient: true,
+//       gradientStart: "#72D9A3",
+//       gradientEnd: "#F3EEA5",
+//       primaryColor: "#72D9A3",
+//       primaryLight: "#a8e6a8",
+//       primaryBorder: "#4a7c59",
+//       selectedItemBg: "#d4f5d4",
+//       selectedItemText: "#1a4d1a",
+//       badgeBg: "#4a7c59",
+//       badgeText: "#ffffff",
+//       buttonBg: "#4a7c59",
+//       buttonText: "#ffffff"
+//     };
+//     proxy.applyColorSettings(greenYellowTheme);
 //   }
 
 //   // Filter items
@@ -2852,12 +2898,46 @@ if (typeof window !== "undefined") {
 //   // Initial render
 //   render();
   
-//   // Apply initial color settings if available
+//   // Apply Green-Yellow theme as default if no proxy colors available
 //   if (typeof window !== 'undefined' && window.SetupProxy) {
 //     const colorSettings = window.SetupProxy.getColorSettings?.();
 //     if (colorSettings) {
 //       proxy.applyColorSettings(colorSettings);
+//     } else {
+//       // Apply Green-Yellow theme as default
+//       const greenYellowTheme = {
+//         useGradient: true,
+//         gradientStart: "#72D9A3",
+//         gradientEnd: "#F3EEA5",
+//         primaryColor: "#72D9A3",
+//         primaryLight: "#a8e6a8",
+//         primaryBorder: "#4a7c59",
+//         selectedItemBg: "#d4f5d4",
+//         selectedItemText: "#1a4d1a",
+//         badgeBg: "#4a7c59",
+//         badgeText: "#ffffff",
+//         buttonBg: "#4a7c59",
+//         buttonText: "#ffffff"
+//       };
+//       proxy.applyColorSettings(greenYellowTheme);
 //     }
+//   } else {
+//     // If no SetupProxy, apply Green-Yellow theme directly
+//     const greenYellowTheme = {
+//       useGradient: true,
+//       gradientStart: "#72D9A3",
+//       gradientEnd: "#F3EEA5",
+//       primaryColor: "#72D9A3",
+//       primaryLight: "#a8e6a8",
+//       primaryBorder: "#4a7c59",
+//       selectedItemBg: "#d4f5d4",
+//       selectedItemText: "#1a4d1a",
+//       badgeBg: "#4a7c59",
+//       badgeText: "#ffffff",
+//       buttonBg: "#4a7c59",
+//       buttonText: "#ffffff"
+//     };
+//     proxy.applyColorSettings(greenYellowTheme);
 //   }
 
 //   // Set the proxy globally
