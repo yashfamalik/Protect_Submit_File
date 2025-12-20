@@ -52,6 +52,11 @@ const ensureSetupStyles = () => {
     /* Button colors - theme matched */
     --setup-button-bg: #4a7c59;
     --setup-button-text: #ffffff;
+    
+    /* Primary color for selected states */
+    --setup-primary-color: #5CB85C;
+    --setup-primary-light: #d4f5d4;
+    --setup-primary-border: #4a7c59;
   }
 
   .setup-container {
@@ -153,11 +158,11 @@ const ensureSetupStyles = () => {
   }
 
   .setup-item-card.selected {
-    background: var(--setup-selected-item-bg);
+    background: var(--setup-primary-light);
     background: var(--setup-use-gradient) == 'true' 
-      ? linear-gradient(135deg, var(--setup-gradient-start, var(--setup-selected-item-bg)), var(--setup-gradient-end, var(--setup-selected-item-bg)))
-      : var(--setup-selected-item-bg);
-    border-color: var(--setup-selected-item-border, var(--setup-selected-item-bg));
+      ? linear-gradient(135deg, var(--setup-gradient-start, var(--setup-primary-light)), var(--setup-gradient-end, var(--setup-primary-light)))
+      : var(--setup-primary-light);
+    border-color: var(--setup-primary-border);
     color: var(--setup-selected-item-text);
   }
 
@@ -318,9 +323,9 @@ const ensureSetupStyles = () => {
     transition: all 0.2s;
   }
   .setup-upload:hover {
-    border-color: var(--setup-primary);
+    border-color: var(--setup-primary-border);
     background: var(--setup-primary-light);
-    color: var(--setup-primary);
+    color: var(--setup-primary-color);
   }
 
   .setup-file-previews {
@@ -370,9 +375,9 @@ const ensureSetupStyles = () => {
   }
 
   .setup-action-card.selected {
-    border-color: var(--setup-primary);
+    border-color: var(--setup-primary-border);
     background: var(--setup-primary-light);
-    box-shadow: 0 0 0 1px var(--setup-primary) inset;
+    box-shadow: 0 0 0 1px var(--setup-primary-border) inset;
   }
 
   .setup-action-head {
@@ -398,8 +403,8 @@ const ensureSetupStyles = () => {
   }
 
   .setup-action-card.selected input[type="radio"] {
-    border-color: var(--setup-primary);
-    background: var(--setup-primary);
+    border-color: var(--setup-primary-color);
+    background: var(--setup-primary-color);
   }
   .setup-action-card.selected input[type="radio"]::after {
     content: '';
@@ -541,6 +546,9 @@ const applyColorSettings = (settings) => {
     ["gradientEnd", "--setup-gradient-end"],
     ["buttonBg", "--setup-button-bg"],
     ["buttonText", "--setup-button-text"],
+    ["primaryColor", "--setup-primary-color"],
+    ["primaryLight", "--setup-primary-light"],
+    ["primaryBorder", "--setup-primary-border"],
   ];
 
   for (const [key, cssVar] of colorMap) {
@@ -802,6 +810,9 @@ export default function mountSetup(container, props = {}) {
         ["gradientEnd", "--setup-gradient-end"],
         ["buttonBg", "--setup-button-bg"],
         ["buttonText", "--setup-button-text"],
+        ["primaryColor", "--setup-primary-color"],
+        ["primaryLight", "--setup-primary-light"],
+        ["primaryBorder", "--setup-primary-border"],
       ];
 
       for (const [key, cssVar] of colorMap) {
@@ -1381,6 +1392,12 @@ if (typeof window !== "undefined") {
     proxy: null // Will be set when component is initialized
   };
 }
+
+
+
+
+
+
 
 
 
@@ -2142,6 +2159,12 @@ if (typeof window !== "undefined") {
 //         CLAIM_OPTIONS.length = 0; // Clear existing
 //         CLAIM_OPTIONS.push(...settings.claimReasons); // Add all from SetupController
         
+//         // Update the proxy's contentSettings to reflect current state
+//         this.contentSettings = {
+//           ...this.contentSettings,
+//           claimReasons: [...CLAIM_OPTIONS]
+//         };
+        
 //         // If there are reasons, set the last one as selected (newest added)
 //         if (CLAIM_OPTIONS.length > 0) {
 //           // Set the last reason as selected (this will be the newest one added)
@@ -2240,6 +2263,11 @@ if (typeof window !== "undefined") {
 //     const contentSettings = localProxy.getContentSettings?.();
 //     if (contentSettings) {
 //       proxy.applyContentSettings(contentSettings);
+//     } else {
+//       // If no content settings available, initialize proxy with default CLAIM_OPTIONS
+//       proxy.contentSettings = {
+//         claimReasons: [...CLAIM_OPTIONS]
+//       };
 //     }
 
 //     // Subscribe to changes
@@ -2247,12 +2275,8 @@ if (typeof window !== "undefined") {
 //       if (snapshot.colorSettings) {
 //         proxy.applyColorSettings(snapshot.colorSettings);
 //       }
-//       if (snapshot.contentSettings?.claimReasons) {
-//         // Update claim options when reasons change
-//         CLAIM_OPTIONS.length = 0;
-//         CLAIM_OPTIONS.push(...snapshot.contentSettings.claimReasons);
-//         // Re-render if needed
-//         rerender();
+//       if (snapshot.contentSettings) {
+//         proxy.applyContentSettings(snapshot.contentSettings);
 //       }
 //     });
 //   }
