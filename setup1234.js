@@ -559,16 +559,106 @@ export default function mountSetup(container, props = {}) {
     claimSubmitted: false,
   };
 
-  // Props with defaults
-  const t = (key, opts) => {
-    if (props.t) {
-      return props.t(key, opts);
-    }
-    // Fallback for missing translations
-    return key;
+  // Hardcoded translations - no dependency on external translation files
+  const translations = {
+    "ManualClaim.selectedItems.heading": "Selected Item",
+    "ManualClaim.selectedItems.verifiedBadge": "Verified",
+    "ManualClaim.ineligibleItems.heading": "Ineligible items",
+    "ManualClaim.claimDetails.heading": "Claim Details",
+    "ManualClaim.claimDetails.helpText": "Help us process your claim quickly",
+    "ManualClaim.claimDetails.reasonLabel": "Reason for claim",
+    "ManualClaim.claimDetails.reasonRequired": "*",
+    "ManualClaim.claimDetails.additionalDetailsLabel": "Additional details",
+    "ManualClaim.claimDetails.additionalDetailsOptional": "(optional)",
+    "ManualClaim.claimDetails.additionalDetailsPlaceholder": "Please describe the issue in detail. The more information you provide, the faster we can process your claim.",
+    "ManualClaim.claimDetails.supportingEvidenceLabel": "Supporting evidence",
+    "ManualClaim.claimDetails.supportingEvidenceOptional": "(optional)",
+    "ManualClaim.claimDetails.uploadHint": "PNG, JPG, PDF up to 10MB each",
+    "ManualClaim.actionOptions.heading": "Choose a claim option",
+    "ManualClaim.actionOptions.reorder.title": "Reorder",
+    "ManualClaim.actionOptions.reorder.description": "Reorder same items. This will create a new order.",
+    "ManualClaim.actionOptions.refund.title": "Refund",
+    "ManualClaim.actionOptions.refund.description": "Payment will be refunded to original payment method.",
+    "ManualClaim.claimedItems.heading": "Claimed items",
+    "ManualClaim.badgeReasons.reason": "Reason:",
+    "ManualClaim.orderTotal.label": "Order Total:",
+    "ManualClaim.buttons.back": "Back",
+    "ManualClaim.buttons.submit": "Submit",
+    "ManualClaim.buttons.submitting": "Submitting...",
+    "ManualClaim.productInfo.quantity": "Quantity to claim",
+    "ManualClaim.actionSummary.whatHappensNext": "What happens next:",
+    "ManualClaim.actionSummary.reorder.title": "Reorder",
+    "ManualClaim.actionSummary.reorder.description": "Reordering same item(s). This will create a new order.",
+    "ManualClaim.actionSummary.refund.title": "Refund",
+    "ManualClaim.actionSummary.refund.description": "Payment will be refunded to original payment method."
   };
-  const ORDER_DATA = props.ORDER_DATA || { items: [] };
-  const CLAIM_OPTIONS = props.CLAIM_OPTIONS || [];
+
+  const t = (key, opts) => {
+    return translations[key] || key;
+  };
+
+  // Default order data with hardcoded sample data
+  const ORDER_DATA = props.ORDER_DATA || {
+    orderNumber: "ORD-123456",
+    date: "2024-06-10",
+    customer: "Ali Raza",
+    email: "ali@example.com",
+    items: [
+      {
+        id: 1,
+        name: "AHMED Aqua perfume by Laiba",
+        sku: "PERF-001",
+        qty: 2,
+        price: "€5.95 EUR",
+        image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+        status: "In Stock",
+        eligible: true,
+        rating: 4.8,
+        reviews: 43,
+        collection: "Premium fragrance collection",
+        verified: true
+      },
+      {
+        id: 2,
+        name: "AHMED Aqua perfume by Laiba",
+        sku: "PERF-001",
+        qty: 1,
+        price: "€5.95",
+        image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+        status: "Out Of Stock",
+        eligible: false,
+        rating: 4.8,
+        reviews: 43,
+        collection: "Premium fragrance collection",
+        verified: false
+      },
+      {
+        id: 3,
+        name: "Another Eligible Perfume",
+        sku: "PERF-022",
+        qty: 3,
+        price: "€7.50 EUR",
+        image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+        status: "In Stock",
+        eligible: true,
+        rating: 4.5,
+        reviews: 12,
+        collection: "Classic fragrance collection",
+        verified: false
+      }
+    ],
+    status: "Delivered",
+    total: "€11.90 EUR"
+  };
+
+  // Default claim options - hardcoded
+  const CLAIM_OPTIONS = props.CLAIM_OPTIONS || [
+    "Product damaged",
+    "Defective item", 
+    "Wrong item received",
+    "Item not received",
+    "Other reason"
+  ];
   const onBack = props.onBack || (() => {});
   const onSubmitted = props.onSubmitted || (() => {});
 
@@ -1098,8 +1188,8 @@ export default function mountSetup(container, props = {}) {
     const isReorder = state.selectedAction === "reorder";
     const actionType = isReorder ? "reorder" : "refund";
 
-    // Fallback steps if translation doesn't work
-    const defaultSteps = {
+    // Hardcoded steps for each action type
+    const steps = {
       reorder: [
         "We'll review your claim within 24 hours",
         "If approved, we'll send replacement items",
@@ -1112,27 +1202,27 @@ export default function mountSetup(container, props = {}) {
       ]
     };
 
-    // Try to get steps from translations, fallback to default
-    let steps;
-    try {
-      steps = t(`ManualClaim.actionSummary.${actionType}.steps`, { returnObjects: true });
-      if (!Array.isArray(steps)) {
-        steps = defaultSteps[actionType];
-      }
-    } catch (error) {
-      steps = defaultSteps[actionType];
-    }
+    const actionSteps = steps[actionType];
+    const stepsHTML = actionSteps.map(step => `<div class="setup-text-subdued setup-mt-8">• ${step}</div>`).join('');
 
-    const stepsHTML = steps.map(step => `<div class="setup-text-subdued setup-mt-8">• ${step}</div>`).join('');
+    const titles = {
+      reorder: "Reorder Summary",
+      refund: "Refund Summary"
+    };
+
+    const descriptions = {
+      reorder: "Reordering same item(s). This will create a new order.",
+      refund: "Payment will be refunded to original payment method."
+    };
 
     return createElement(`
       <div class="setup-card">
         <div class="setup-card-header">
-          <div class="setup-heading">${t(`ManualClaim.actionSummary.${actionType}.title`) || (actionType.charAt(0).toUpperCase() + actionType.slice(1) + ' Summary')}</div>
+          <div class="setup-heading">${titles[actionType]}</div>
         </div>
         <div class="setup-card-body">
-          <div class="setup-text-subdued setup-spacer">${t(`ManualClaim.actionSummary.${actionType}.description`) || `Your ${actionType} request will be processed according to our policy.`}</div>
-          <div class="setup-heading setup-margin-top">${t("ManualClaim.actionSummary.whatHappensNext") || "What happens next:"}</div>
+          <div class="setup-text-subdued setup-spacer">${descriptions[actionType]}</div>
+          <div class="setup-heading setup-margin-top">What happens next:</div>
           <div class="setup-action-summary-list">${stepsHTML}</div>
         </div>
       </div>
