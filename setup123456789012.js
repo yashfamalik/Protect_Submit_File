@@ -543,70 +543,6 @@ const applyColorSettings = (settings) => {
     return `#${darkenedR.toString(16).padStart(2, '0')}${darkenedG.toString(16).padStart(2, '0')}${darkenedB.toString(16).padStart(2, '0')}`;
   };
 
-  // Helper function to ensure background is always light enough
-  const ensureLightBackground = (color) => {
-    if (!color) return color;
-    
-    // Convert hex to RGB
-    const hex = color.replace('#', '');
-    const r = parseInt(hex.substr(0, 2), 16);
-    const g = parseInt(hex.substr(2, 2), 16);
-    const b = parseInt(hex.substr(4, 2), 16);
-    
-    // Convert to HSL
-    const rNorm = r / 255;
-    const gNorm = g / 255;
-    const bNorm = b / 255;
-    
-    const max = Math.max(rNorm, gNorm, bNorm);
-    const min = Math.min(rNorm, gNorm, bNorm);
-    let h, s, l = (max + min) / 2;
-    
-    if (max === min) {
-      h = s = 0;
-    } else {
-      const d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      switch (max) {
-        case rNorm: h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0); break;
-        case gNorm: h = (bNorm - rNorm) / d + 2; break;
-        case bNorm: h = (rNorm - gNorm) / d + 4; break;
-      }
-      h /= 6;
-    }
-    
-    // Ensure minimum 70% lightness for backgrounds
-    l = Math.max(l, 0.7);
-    
-    // Convert back to RGB
-    const hue2rgb = (p, q, t) => {
-      if (t < 0) t += 1;
-      if (t > 1) t -= 1;
-      if (t < 1/6) return p + (q - p) * 6 * t;
-      if (t < 1/2) return q;
-      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-      return p;
-    };
-
-    let rFinal, gFinal, bFinal;
-    if (s === 0) {
-      rFinal = gFinal = bFinal = l;
-    } else {
-      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-      const p = 2 * l - q;
-      rFinal = hue2rgb(p, q, h + 1/3);
-      gFinal = hue2rgb(p, q, h);
-      bFinal = hue2rgb(p, q, h - 1/3);
-    }
-
-    const toHex = (c) => {
-      const hex = Math.round(c * 255).toString(16);
-      return hex.length === 1 ? '0' + hex : hex;
-    };
-
-    return `#${toHex(rFinal)}${toHex(gFinal)}${toHex(bFinal)}`;
-  };
-
   const colorMap = [
     ["selectedItemBg", "--setup-selected-item-bg"],
     ["selectedItemText", "--setup-selected-item-text"],
@@ -623,12 +559,7 @@ const applyColorSettings = (settings) => {
 
   for (const [key, cssVar] of colorMap) {
     if (settings[key]) {
-      // Ensure background colors are always light enough
-      if (key === "primaryLight") {
-        root.style.setProperty(cssVar, ensureLightBackground(settings[key]));
-      } else {
-        root.style.setProperty(cssVar, settings[key]);
-      }
+      root.style.setProperty(cssVar, settings[key]);
     }
   }
 
@@ -651,7 +582,7 @@ const applyColorSettings = (settings) => {
     if (settings.useGradient && settings.gradientStart && settings.gradientEnd) {
       card.style.background = `linear-gradient(135deg, ${settings.gradientStart}, ${settings.gradientEnd})`;
     } else if (settings.primaryLight) {
-      card.style.background = ensureLightBackground(settings.primaryLight);
+      card.style.background = settings.primaryLight;
     }
   });
 };
@@ -876,70 +807,6 @@ export default function mountSetup(container, props = {}) {
         return `#${darkenedR.toString(16).padStart(2, '0')}${darkenedG.toString(16).padStart(2, '0')}${darkenedB.toString(16).padStart(2, '0')}`;
       };
 
-      // Helper function to ensure background is always light enough
-      const ensureLightBackground = (color) => {
-        if (!color) return color;
-        
-        // Convert hex to RGB
-        const hex = color.replace('#', '');
-        const r = parseInt(hex.substr(0, 2), 16);
-        const g = parseInt(hex.substr(2, 2), 16);
-        const b = parseInt(hex.substr(4, 2), 16);
-        
-        // Convert to HSL
-        const rNorm = r / 255;
-        const gNorm = g / 255;
-        const bNorm = b / 255;
-        
-        const max = Math.max(rNorm, gNorm, bNorm);
-        const min = Math.min(rNorm, gNorm, bNorm);
-        let h, s, l = (max + min) / 2;
-        
-        if (max === min) {
-          h = s = 0;
-        } else {
-          const d = max - min;
-          s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-          switch (max) {
-            case rNorm: h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0); break;
-            case gNorm: h = (bNorm - rNorm) / d + 2; break;
-            case bNorm: h = (rNorm - gNorm) / d + 4; break;
-          }
-          h /= 6;
-        }
-        
-        // Ensure minimum 70% lightness for backgrounds
-        l = Math.max(l, 0.7);
-        
-        // Convert back to RGB
-        const hue2rgb = (p, q, t) => {
-          if (t < 0) t += 1;
-          if (t > 1) t -= 1;
-          if (t < 1/6) return p + (q - p) * 6 * t;
-          if (t < 1/2) return q;
-          if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-          return p;
-        };
-
-        let rFinal, gFinal, bFinal;
-        if (s === 0) {
-          rFinal = gFinal = bFinal = l;
-        } else {
-          const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-          const p = 2 * l - q;
-          rFinal = hue2rgb(p, q, h + 1/3);
-          gFinal = hue2rgb(p, q, h);
-          bFinal = hue2rgb(p, q, h - 1/3);
-        }
-
-        const toHex = (c) => {
-          const hex = Math.round(c * 255).toString(16);
-          return hex.length === 1 ? '0' + hex : hex;
-        };
-
-        return `#${toHex(rFinal)}${toHex(gFinal)}${toHex(bFinal)}`;
-      };
-
       const colorMap = [
         ["selectedItemBg", "--setup-selected-item-bg"],
         ["selectedItemText", "--setup-selected-item-text"],
@@ -956,12 +823,7 @@ export default function mountSetup(container, props = {}) {
 
       for (const [key, cssVar] of colorMap) {
         if (settings[key]) {
-          // Ensure background colors are always light enough
-          if (key === "primaryLight") {
-            root.style.setProperty(cssVar, ensureLightBackground(settings[key]));
-          } else {
-            root.style.setProperty(cssVar, settings[key]);
-          }
+          root.style.setProperty(cssVar, settings[key]);
         }
       }
 
@@ -984,7 +846,7 @@ export default function mountSetup(container, props = {}) {
         if (settings.useGradient && settings.gradientStart && settings.gradientEnd) {
           card.style.background = `linear-gradient(135deg, ${settings.gradientStart}, ${settings.gradientEnd})`;
         } else if (settings.primaryLight) {
-          card.style.background = ensureLightBackground(settings.primaryLight);
+          card.style.background = settings.primaryLight;
         }
       });
     },
@@ -1536,7 +1398,6 @@ if (typeof window !== "undefined") {
     proxy: null // Will be set when component is initialized
   };
 }
-
 
 
 
