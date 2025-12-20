@@ -149,12 +149,12 @@ const ensureSetupStyles = () => {
   .setup-card-body .setup-item-card:last-child { margin-bottom: 0; }
 
   .setup-item-card:hover {
-    border-color: var(--setup-primary);
-    background-color: var(--setup-surface-hover);
+    border-color: var(--setup-primary-color);
+    background-color: var(--setup-primary-light);
   }
 
   .setup-item-card:hover .setup-item-name {
-    color: var(--setup-primary);
+    color: var(--setup-primary-color);
   }
 
   .setup-item-card.selected {
@@ -272,7 +272,7 @@ const ensureSetupStyles = () => {
     justify-content: center;
     transition: color 0.2s;
   }
-  .setup-qty button:hover { color: var(--setup-primary); }
+  .setup-qty button:hover { color: var(--setup-primary-color); }
 
   .setup-qty-value {
     font-size: 14px;
@@ -372,9 +372,9 @@ const ensureSetupStyles = () => {
   }
 
   .setup-action-card:hover {
-    border-color: #cbd5e0;
+    border-color: var(--setup-primary-border);
     box-shadow: var(--setup-shadow-hover);
-    border-color: var(--setup-primary);
+    background: var(--setup-primary-light);
   }
 
   .setup-action-card.selected {
@@ -469,8 +469,8 @@ const ensureSetupStyles = () => {
   }
 
   .setup-button:hover:not([disabled]) {
-    background: var(--setup-surface-hover);
-    border-color: #cbd5e0;
+    background: var(--setup-primary-light);
+    border-color: var(--setup-primary-border);
   }
 
   .setup-button.primary {
@@ -1497,6 +1497,16 @@ if (typeof window !== "undefined") {
 
 
 
+
+
+
+
+
+
+
+
+
+
 // // Setup Component - Clean Code with Original Design
 // const SETUP_STYLE_ID = "vanilla-setup-styles";
 
@@ -1508,14 +1518,14 @@ if (typeof window !== "undefined") {
 //   style.id = SETUP_STYLE_ID;
 //   style.textContent = `
 //   :root {
-//     --setup-primary: #008060;
-//     --setup-primary-dark: #006e52;
-//     --setup-primary-light: #edfff6;
+//     --setup-primary: #72D9A3;
+//     --setup-primary-dark: #5a9a5a;
+//     --setup-primary-light: #b8e6b8;
 //     --setup-bg: #f7f9fc;
 //     --setup-surface: #ffffff;
 //     --setup-surface-hover: #f9fafb;
 //     --setup-border: #e2e8f0;
-//     --setup-border-focus: #008060;
+//     --setup-border-focus: #72D9A3;
 //     --setup-text-heading: #1a202c;
 //     --setup-text-body: #4a5568;
 //     --setup-text-muted: #718096;
@@ -1535,27 +1545,27 @@ if (typeof window !== "undefined") {
 //     --setup-space-xl: 32px;
 //     --setup-shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 //     --setup-shadow-hover: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
-//     --setup-focus-ring: 0 0 0 3px rgba(0, 128, 96, 0.15);
+//     --setup-focus-ring: 0 0 0 3px rgba(114, 217, 163, 0.15);
 //     --setup-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     
-//     /* Selected item specific colors - darker defaults */
-//     --setup-selected-item-bg: #d4f5d4;
-//     --setup-selected-item-text: #1a4d1a;
-//     --setup-badge-bg: #4a7c59;
+//     /* Selected item specific colors - Green-Yellow theme defaults */
+//     --setup-selected-item-bg: #b8e6b8;
+//     --setup-selected-item-text: #2d5a2d;
+//     --setup-badge-bg: #5a9a5a;
 //     --setup-badge-text: #ffffff;
-//     --setup-selected-item-border: #bed1c7;
+//     --setup-selected-item-border: #7db87d;
 //     --setup-use-gradient: true;
 //     --setup-gradient-start: #72D9A3;
 //     --setup-gradient-end: #F3EEA5;
     
-//     /* Button colors - theme matched */
-//     --setup-button-bg: #4a7c59;
+//     /* Button colors - Green-Yellow theme matched */
+//     --setup-button-bg: #5a9a5a;
 //     --setup-button-text: #ffffff;
     
 //     /* Primary color for selected states - Green-Yellow theme */
 //     --setup-primary-color: #72D9A3;
-//     --setup-primary-light: #a8e6a8;
-//     --setup-primary-border: #4a7c59;
+//     --setup-primary-light: #b8e6b8;
+//     --setup-primary-border: #5a9a5a;
 //   }
 
 //   .setup-container {
@@ -2369,13 +2379,13 @@ if (typeof window !== "undefined") {
 //         gradientStart: "#72D9A3",
 //         gradientEnd: "#F3EEA5",
 //         primaryColor: "#72D9A3",
-//         primaryLight: "#a8e6a8",
-//         primaryBorder: "#4a7c59",
-//         selectedItemBg: "#d4f5d4",
-//         selectedItemText: "#1a4d1a",
-//         badgeBg: "#4a7c59",
+//         primaryLight: "#b8e6b8",
+//         primaryBorder: "#5a9a5a",
+//         selectedItemBg: "#b8e6b8",
+//         selectedItemText: "#2d5a2d",
+//         badgeBg: "#5a9a5a",
 //         badgeText: "#ffffff",
-//         buttonBg: "#4a7c59",
+//         buttonBg: "#5a9a5a",
 //         buttonText: "#ffffff"
 //       };
 //       proxy.applyColorSettings(greenYellowTheme);
@@ -2408,13 +2418,13 @@ if (typeof window !== "undefined") {
 //       gradientStart: "#72D9A3",
 //       gradientEnd: "#F3EEA5",
 //       primaryColor: "#72D9A3",
-//       primaryLight: "#a8e6a8",
-//       primaryBorder: "#4a7c59",
-//       selectedItemBg: "#d4f5d4",
-//       selectedItemText: "#1a4d1a",
-//       badgeBg: "#4a7c59",
+//       primaryLight: "#b8e6b8",
+//       primaryBorder: "#5a9a5a",
+//       selectedItemBg: "#b8e6b8",
+//       selectedItemText: "#2d5a2d",
+//       badgeBg: "#5a9a5a",
 //       badgeText: "#ffffff",
-//       buttonBg: "#4a7c59",
+//       buttonBg: "#5a9a5a",
 //       buttonText: "#ffffff"
 //     };
 //     proxy.applyColorSettings(greenYellowTheme);
@@ -2901,8 +2911,14 @@ if (typeof window !== "undefined") {
 //           gradientStart: "#72D9A3",
 //           gradientEnd: "#F3EEA5",
 //           primaryColor: "#72D9A3",
-//           primaryLight: "#a8e6a8",
-//           primaryBorder: "#4a7c59"
+//           primaryLight: "#b8e6b8",
+//           primaryBorder: "#5a9a5a",
+//           selectedItemBg: "#b8e6b8",
+//           selectedItemText: "#2d5a2d",
+//           badgeBg: "#5a9a5a",
+//           badgeText: "#ffffff",
+//           buttonBg: "#5a9a5a",
+//           buttonText: "#ffffff"
 //         };
 //         proxy.applyColorSettings(greenYellowTheme);
 //       }
@@ -2924,13 +2940,13 @@ if (typeof window !== "undefined") {
 //         gradientStart: "#72D9A3",
 //         gradientEnd: "#F3EEA5",
 //         primaryColor: "#72D9A3",
-//         primaryLight: "#a8e6a8",
-//         primaryBorder: "#4a7c59",
-//         selectedItemBg: "#d4f5d4",
-//         selectedItemText: "#1a4d1a",
-//         badgeBg: "#4a7c59",
+//         primaryLight: "#b8e6b8",
+//         primaryBorder: "#5a9a5a",
+//         selectedItemBg: "#b8e6b8",
+//         selectedItemText: "#2d5a2d",
+//         badgeBg: "#5a9a5a",
 //         badgeText: "#ffffff",
-//         buttonBg: "#4a7c59",
+//         buttonBg: "#5a9a5a",
 //         buttonText: "#ffffff"
 //       };
 //       proxy.applyColorSettings(greenYellowTheme);
@@ -2942,13 +2958,13 @@ if (typeof window !== "undefined") {
 //       gradientStart: "#72D9A3",
 //       gradientEnd: "#F3EEA5",
 //       primaryColor: "#72D9A3",
-//       primaryLight: "#a8e6a8",
-//       primaryBorder: "#4a7c59",
-//       selectedItemBg: "#d4f5d4",
-//       selectedItemText: "#1a4d1a",
-//       badgeBg: "#4a7c59",
+//       primaryLight: "#b8e6b8",
+//       primaryBorder: "#5a9a5a",
+//       selectedItemBg: "#b8e6b8",
+//       selectedItemText: "#2d5a2d",
+//       badgeBg: "#5a9a5a",
 //       badgeText: "#ffffff",
-//       buttonBg: "#4a7c59",
+//       buttonBg: "#5a9a5a",
 //       buttonText: "#ffffff"
 //     };
 //     proxy.applyColorSettings(greenYellowTheme);
