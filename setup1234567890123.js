@@ -46,15 +46,15 @@ const ensureSetupStyles = () => {
     --setup-badge-text: #ffffff;
     --setup-selected-item-border: #bed1c7;
     --setup-use-gradient: true;
-    --setup-gradient-start: #5CB85C;
-    --setup-gradient-end: #D4A574;
+    --setup-gradient-start: #72D9A3;
+    --setup-gradient-end: #F3EEA5;
     
     /* Button colors - theme matched */
     --setup-button-bg: #4a7c59;
     --setup-button-text: #ffffff;
     
-    /* Primary color for selected states */
-    --setup-primary-color: #5CB85C;
+    /* Primary color for selected states - Green-Yellow theme */
+    --setup-primary-color: #72D9A3;
     --setup-primary-light: #a8e6a8;
     --setup-primary-border: #4a7c59;
   }
@@ -861,6 +861,23 @@ export default function mountSetup(container, props = {}) {
     const initialColors = localProxy.getColorSettings?.();
     if (initialColors) {
       proxy.applyColorSettings(initialColors);
+    } else {
+      // If no colors available, apply Green-Yellow theme as default
+      const greenYellowTheme = {
+        useGradient: true,
+        gradientStart: "#72D9A3",
+        gradientEnd: "#F3EEA5",
+        primaryColor: "#72D9A3",
+        primaryLight: "#a8e6a8",
+        primaryBorder: "#4a7c59",
+        selectedItemBg: "#d4f5d4",
+        selectedItemText: "#1a4d1a",
+        badgeBg: "#4a7c59",
+        badgeText: "#ffffff",
+        buttonBg: "#4a7c59",
+        buttonText: "#ffffff"
+      };
+      proxy.applyColorSettings(greenYellowTheme);
     }
 
     // Get claim reasons from content settings and apply them
@@ -883,6 +900,23 @@ export default function mountSetup(container, props = {}) {
         proxy.applyContentSettings(snapshot.contentSettings);
       }
     });
+  } else {
+    // If no SetupProxy available, apply Green-Yellow theme directly
+    const greenYellowTheme = {
+      useGradient: true,
+      gradientStart: "#72D9A3",
+      gradientEnd: "#F3EEA5",
+      primaryColor: "#72D9A3",
+      primaryLight: "#a8e6a8",
+      primaryBorder: "#4a7c59",
+      selectedItemBg: "#d4f5d4",
+      selectedItemText: "#1a4d1a",
+      badgeBg: "#4a7c59",
+      badgeText: "#ffffff",
+      buttonBg: "#4a7c59",
+      buttonText: "#ffffff"
+    };
+    proxy.applyColorSettings(greenYellowTheme);
   }
 
   // Filter items
@@ -1366,12 +1400,46 @@ export default function mountSetup(container, props = {}) {
   // Initial render
   render();
   
-  // Apply initial color settings if available
+  // Apply Green-Yellow theme as default if no proxy colors available
   if (typeof window !== 'undefined' && window.SetupProxy) {
     const colorSettings = window.SetupProxy.getColorSettings?.();
     if (colorSettings) {
       proxy.applyColorSettings(colorSettings);
+    } else {
+      // Apply Green-Yellow theme as default
+      const greenYellowTheme = {
+        useGradient: true,
+        gradientStart: "#72D9A3",
+        gradientEnd: "#F3EEA5",
+        primaryColor: "#72D9A3",
+        primaryLight: "#a8e6a8",
+        primaryBorder: "#4a7c59",
+        selectedItemBg: "#d4f5d4",
+        selectedItemText: "#1a4d1a",
+        badgeBg: "#4a7c59",
+        badgeText: "#ffffff",
+        buttonBg: "#4a7c59",
+        buttonText: "#ffffff"
+      };
+      proxy.applyColorSettings(greenYellowTheme);
     }
+  } else {
+    // If no SetupProxy, apply Green-Yellow theme directly
+    const greenYellowTheme = {
+      useGradient: true,
+      gradientStart: "#72D9A3",
+      gradientEnd: "#F3EEA5",
+      primaryColor: "#72D9A3",
+      primaryLight: "#a8e6a8",
+      primaryBorder: "#4a7c59",
+      selectedItemBg: "#d4f5d4",
+      selectedItemText: "#1a4d1a",
+      badgeBg: "#4a7c59",
+      badgeText: "#ffffff",
+      buttonBg: "#4a7c59",
+      buttonText: "#ffffff"
+    };
+    proxy.applyColorSettings(greenYellowTheme);
   }
 
   // Set the proxy globally
@@ -1398,6 +1466,8 @@ if (typeof window !== "undefined") {
     proxy: null // Will be set when component is initialized
   };
 }
+
+
 
 
 
@@ -1997,8 +2067,8 @@ if (typeof window !== "undefined") {
 //   selectedCards.forEach(card => {
 //     if (settings.useGradient && settings.gradientStart && settings.gradientEnd) {
 //       card.style.background = `linear-gradient(135deg, ${settings.gradientStart}, ${settings.gradientEnd})`;
-//     } else if (settings.selectedItemBg) {
-//       card.style.background = settings.selectedItemBg;
+//     } else if (settings.primaryLight) {
+//       card.style.background = settings.primaryLight;
 //     }
 //   });
 // };
@@ -2261,8 +2331,8 @@ if (typeof window !== "undefined") {
 //       selectedCards.forEach(card => {
 //         if (settings.useGradient && settings.gradientStart && settings.gradientEnd) {
 //           card.style.background = `linear-gradient(135deg, ${settings.gradientStart}, ${settings.gradientEnd})`;
-//         } else if (settings.selectedItemBg) {
-//           card.style.background = settings.selectedItemBg;
+//         } else if (settings.primaryLight) {
+//           card.style.background = settings.primaryLight;
 //         }
 //       });
 //     },
