@@ -740,34 +740,27 @@ export default function mountSetup(container, props = {}) {
     applyContentSettings(settings) {
       if (!settings) return;
       
-      // Update claim reasons in select dropdown - ADDITIVE approach
+      // Update claim reasons in select dropdown - Use complete list from SetupController
       if (settings.claimReasons && Array.isArray(settings.claimReasons)) {
-        // Start with current CLAIM_OPTIONS (preserve defaults)
-        const existingReasons = [...CLAIM_OPTIONS];
+        // Use the complete list from SetupController as the source of truth
+        CLAIM_OPTIONS.length = 0; // Clear existing
+        CLAIM_OPTIONS.push(...settings.claimReasons); // Add all from SetupController
         
-        // Find truly new reasons that aren't already in the existing list
-        const newReasons = settings.claimReasons.filter(reason => 
-          !existingReasons.includes(reason)
-        );
+        // If there are reasons, set the last one as selected (newest added)
+        if (CLAIM_OPTIONS.length > 0) {
+          // Set the last reason as selected (this will be the newest one added)
+          state.selectedClaimOption = CLAIM_OPTIONS[CLAIM_OPTIONS.length - 1];
+        }
         
-        // Only add if there are actually new reasons
-        if (newReasons.length > 0) {
-          // Add new reasons to the existing list (additive)
-          CLAIM_OPTIONS.push(...newReasons);
+        // Update the select dropdown with all options
+        const select = document.querySelector('.setup-select');
+        if (select) {
+          select.innerHTML = CLAIM_OPTIONS.map(reason => 
+            `<option value="${reason}">${reason}</option>`
+          ).join('');
           
-          // Set the newest added reason as selected (last one added)
-          state.selectedClaimOption = newReasons[newReasons.length - 1];
-          
-          // Update the select dropdown with all options (existing + new)
-          const select = document.querySelector('.setup-select');
-          if (select) {
-            select.innerHTML = CLAIM_OPTIONS.map(reason => 
-              `<option value="${reason}">${reason}</option>`
-            ).join('');
-            
-            // Set the selected value to the newest added reason
-            select.value = state.selectedClaimOption;
-          }
+          // Set the selected value
+          select.value = state.selectedClaimOption;
         }
       }
     },
@@ -847,12 +840,10 @@ export default function mountSetup(container, props = {}) {
       proxy.applyColorSettings(initialColors);
     }
 
-    // Get claim reasons from content settings
+    // Get claim reasons from content settings and apply them
     const contentSettings = localProxy.getContentSettings?.();
-    if (contentSettings?.claimReasons && Array.isArray(contentSettings.claimReasons)) {
-      // Update CLAIM_OPTIONS with the custom reasons
-      CLAIM_OPTIONS.length = 0; // Clear existing options
-      CLAIM_OPTIONS.push(...contentSettings.claimReasons);
+    if (contentSettings) {
+      proxy.applyContentSettings(contentSettings);
     }
 
     // Subscribe to changes
@@ -1390,20 +1381,6 @@ if (typeof window !== "undefined") {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // // Setup Component - Clean Code with Original Design
 // const SETUP_STYLE_ID = "vanilla-setup-styles";
 
@@ -1454,6 +1431,10 @@ if (typeof window !== "undefined") {
 //     --setup-use-gradient: true;
 //     --setup-gradient-start: #5CB85C;
 //     --setup-gradient-end: #D4A574;
+    
+//     /* Button colors - theme matched */
+//     --setup-button-bg: #4a7c59;
+//     --setup-button-text: #ffffff;
 //   }
 
 //   .setup-container {
@@ -1863,17 +1844,18 @@ if (typeof window !== "undefined") {
 //   }
 
 //   .setup-button.primary {
-//     background: var(--setup-primary);
-//     color: var(--setup-text-white);
-//     border-color: var(--setup-primary);
+//     background: var(--setup-button-bg);
+//     color: var(--setup-button-text);
+//     border-color: var(--setup-button-bg);
 //     box-shadow: 0 2px 4px rgba(0, 128, 96, 0.2);
 //   }
 
 //   .setup-button.primary:hover:not([disabled]) {
-//     background: var(--setup-primary-dark);
-//     border-color: var(--setup-primary-dark);
+//     background: var(--setup-button-bg);
+//     border-color: var(--setup-button-bg);
 //     transform: translateY(-1px);
 //     box-shadow: 0 4px 6px rgba(0, 128, 96, 0.3);
+//     filter: brightness(0.9);
 //   }
 
 //   .setup-button[disabled] {
@@ -1940,6 +1922,8 @@ if (typeof window !== "undefined") {
 //     ["badgeText", "--setup-badge-text"],
 //     ["gradientStart", "--setup-gradient-start"],
 //     ["gradientEnd", "--setup-gradient-end"],
+//     ["buttonBg", "--setup-button-bg"],
+//     ["buttonText", "--setup-button-text"],
 //   ];
 
 //   for (const [key, cssVar] of colorMap) {
@@ -2141,31 +2125,32 @@ if (typeof window !== "undefined") {
       
 //       // Update claim reasons in select dropdown - ADDITIVE approach
 //       if (settings.claimReasons && Array.isArray(settings.claimReasons)) {
-//         // Get current options to preserve existing ones
-//         const currentOptions = [...CLAIM_OPTIONS];
+//         // Start with current CLAIM_OPTIONS (preserve defaults)
+//         const existingReasons = [...CLAIM_OPTIONS];
         
-//         // Find new reasons that aren't already in the list
+//         // Find truly new reasons that aren't already in the existing list
 //         const newReasons = settings.claimReasons.filter(reason => 
-//           !currentOptions.includes(reason)
+//           !existingReasons.includes(reason)
 //         );
         
-//         // Add new reasons to the existing list (additive)
+//         // Only add if there are actually new reasons
 //         if (newReasons.length > 0) {
+//           // Add new reasons to the existing list (additive)
 //           CLAIM_OPTIONS.push(...newReasons);
           
-//           // Set the newest added reason as selected
+//           // Set the newest added reason as selected (last one added)
 //           state.selectedClaimOption = newReasons[newReasons.length - 1];
-//         }
-        
-//         // Update the select dropdown with all options
-//         const select = document.querySelector('.setup-select');
-//         if (select) {
-//           select.innerHTML = CLAIM_OPTIONS.map(reason => 
-//             `<option value="${reason}">${reason}</option>`
-//           ).join('');
           
-//           // Set the selected value
-//           select.value = state.selectedClaimOption;
+//           // Update the select dropdown with all options (existing + new)
+//           const select = document.querySelector('.setup-select');
+//           if (select) {
+//             select.innerHTML = CLAIM_OPTIONS.map(reason => 
+//               `<option value="${reason}">${reason}</option>`
+//             ).join('');
+            
+//             // Set the selected value to the newest added reason
+//             select.value = state.selectedClaimOption;
+//           }
 //         }
 //       }
 //     },
@@ -2199,6 +2184,8 @@ if (typeof window !== "undefined") {
 //         ["badgeText", "--setup-badge-text"],
 //         ["gradientStart", "--setup-gradient-start"],
 //         ["gradientEnd", "--setup-gradient-end"],
+//         ["buttonBg", "--setup-button-bg"],
+//         ["buttonText", "--setup-button-text"],
 //       ];
 
 //       for (const [key, cssVar] of colorMap) {
