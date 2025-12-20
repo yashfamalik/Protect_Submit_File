@@ -606,6 +606,37 @@ export default function mountSetup(container, props = {}) {
       });
     }
 
+    // Also check for external Setup proxy integration
+    if (typeof window !== 'undefined' && window.Setup?.proxy) {
+      const extProxy = window.Setup.proxy;
+      
+      // Apply initial colors from external proxy
+      const extColors = extProxy.getColorSettings?.();
+      if (extColors) {
+        applyColorSettings(extColors);
+      }
+
+      // Subscribe to external proxy changes
+      const extUnsubscribe = extProxy.subscribe?.((snapshot) => {
+        if (snapshot.colorSettings) {
+          applyColorSettings(snapshot.colorSettings);
+        }
+        if (snapshot.contentSettings?.claimReasons) {
+          CLAIM_OPTIONS.length = 0;
+          CLAIM_OPTIONS.push(...snapshot.contentSettings.claimReasons);
+          rerender();
+        }
+      });
+
+      if (extUnsubscribe) {
+        const originalCleanup = proxyUnsubscribe;
+        proxyUnsubscribe = () => {
+          if (originalCleanup) originalCleanup();
+          extUnsubscribe();
+        };
+      }
+    }
+
   // Filter items
   const eligibleItems = ORDER_DATA.items.filter(item => item.eligible);
   const ineligibleItems = ORDER_DATA.items.filter(item => !item.eligible);
