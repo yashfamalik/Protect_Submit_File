@@ -164,36 +164,19 @@ const getTranslation = (t, key, fallback) => t?.(key, fallback) ?? fallback;
  * @param {Object} settings - Color settings object
  */
 const applySubmittedColorSettings = (settings) => {
+  console.log('applySubmittedColorSettings called with:', settings);
   if (!settings) return;
   const root = document.documentElement;
   const setVar = (key, value) => root.style.setProperty(key, value);
 
-  // Apply colors to CSS variables
+  // Apply only button colors to CSS variables
   [
-    ["cardBg", "--submitted-bg-surface"],
     ["buttonBg", "--submitted-primary"],
     ["buttonText", "--submitted-primary-text"],
-    ["textColor", "--submitted-text"],
-    ["gradientStart", "--submitted-gradient-start"],
-    ["gradientEnd", "--submitted-gradient-end"],
   ].forEach(([key, cssVar]) => {
     if (settings[key]) {
+      console.log('Setting CSS variable:', cssVar, 'to', settings[key]);
       setVar(cssVar, settings[key]);
-    }
-  });
-
-  // Handle gradient toggle
-  if (typeof settings.useGradient !== 'undefined') {
-    setVar("--submitted-use-gradient", settings.useGradient ? "true" : "false");
-  }
-
-  // Apply gradient or solid background to cards
-  const submittedCards = document.querySelectorAll('.submitted-card');
-  submittedCards.forEach(card => {
-    if (settings.useGradient) {
-      card.setAttribute('data-use-gradient', 'true');
-    } else {
-      card.setAttribute('data-use-gradient', 'false');
     }
   });
 };
@@ -207,7 +190,7 @@ const createHeader = (t) => {
     "SubmittedDesignJs.backButton",
     "←"
   )}</button>
-        <h2 class="submitted-title">${getTranslation(
+      <h2 class="submitted-title">${getTranslation(
           t,
           "SubmittedDesignJs.title",
           "Submitted"
@@ -243,7 +226,7 @@ const render = (container, props) => {
       .join("");
 
     return `
-      <div class="${CSS_CLASSES.card}" data-use-gradient="true">
+      <div class="${CSS_CLASSES.card}">
         <div class="submitted-stack submitted-gap-100 submitted-p-2">
           <div class="submitted-row submitted-row-between submitted-row-center submitted-mb-2">
             <h3 class="submitted-heading-md">${getTranslation(
@@ -313,7 +296,7 @@ const render = (container, props) => {
       .join("");
 
     return `
-      <div class="${CSS_CLASSES.card}" data-use-gradient="true">
+      <div class="${CSS_CLASSES.card}">
         <div class="submitted-stack submitted-gap-100 submitted-p-2">
           <div class="submitted-mb-2">
             <h3 class="submitted-heading-md">${getTranslation(
@@ -407,7 +390,7 @@ const render = (container, props) => {
  * @param {Object} props - Component properties
  * @returns {Object} Component instance with destroy and update methods
  */
-export default function mountSubmitted(container, props = {}) {
+function mountSubmitted(container, props = {}) {
   // Validate container
   if (!container) {
     throw new Error("mountSubmitted: container is required");
@@ -437,17 +420,12 @@ export default function mountSubmitted(container, props = {}) {
     if (initialColors) {
       applySubmittedColorSettings(initialColors);
     } else {
-      // Apply Green-Yellow theme as default if no color settings
-      const greenYellowTheme = {
-        useGradient: true,
-        gradientStart: "#72D9A3",
-        gradientEnd: "#F3EEA5",
-        cardBg: "#ffffff",
+      // Apply default button colors
+      const defaultButtonColors = {
         buttonBg: "#5a9a5a",
         buttonText: "#ffffff",
-        textColor: "#202223",
       };
-      applySubmittedColorSettings(greenYellowTheme);
+      applySubmittedColorSettings(defaultButtonColors);
     }
 
     // Subscribe to changes
@@ -467,17 +445,12 @@ export default function mountSubmitted(container, props = {}) {
     if (extColors) {
       applySubmittedColorSettings(extColors);
     } else {
-      // Apply Green-Yellow theme as default if no color settings
-      const greenYellowTheme = {
-        useGradient: true,
-        gradientStart: "#72D9A3",
-        gradientEnd: "#F3EEA5",
-        cardBg: "#ffffff",
+      // Apply default button colors
+      const defaultButtonColors = {
         buttonBg: "#5a9a5a",
         buttonText: "#ffffff",
-        textColor: "#202223",
       };
-      applySubmittedColorSettings(greenYellowTheme);
+      applySubmittedColorSettings(defaultButtonColors);
     }
 
     // Subscribe to external proxy changes
@@ -553,8 +526,6 @@ const submittedStyles = `
     --submitted-primary-dark: #006e52;
     --submitted-primary-light: #edfff6;
     --submitted-primary-text: #ffffff;
-    --submitted-gradient-start: #72D9A3;
-    --submitted-gradient-end: #F3EEA5;
     --submitted-radius: 12px;
     --submitted-space-50: 4px;
     --submitted-space-100: 8px;
@@ -564,7 +535,6 @@ const submittedStyles = `
     --submitted-space-400: 24px;
     --submitted-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     --submitted-shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --submitted-use-gradient: true;
   }
 
   .submitted-root {
@@ -685,10 +655,6 @@ const submittedStyles = `
     box-shadow: var(--submitted-shadow);
     transition: box-shadow 0.2s ease;
     overflow: hidden;
-  }
-
-  .submitted-card[data-use-gradient="true"] {
-    background: linear-gradient(135deg, var(--submitted-gradient-start), var(--submitted-gradient-end));
   }
 
   .submitted-divider {
@@ -821,14 +787,11 @@ const injectSubmittedStyles = () => {
 // Initialize styles
 injectSubmittedStyles();
 
+// Export the applySubmittedColorSettings function
+export { applySubmittedColorSettings };
 
-
-
-
-
-
-
-
+// Export the mount function as default
+export default mountSubmitted;
 
 
 
@@ -1012,23 +975,34 @@ injectSubmittedStyles();
 //   const root = document.documentElement;
 //   const setVar = (key, value) => root.style.setProperty(key, value);
 
-//   const colorMap = [
+//   // Apply colors to CSS variables
+//   [
 //     ["cardBg", "--submitted-bg-surface"],
 //     ["buttonBg", "--submitted-primary"],
 //     ["buttonText", "--submitted-primary-text"],
 //     ["textColor", "--submitted-text"],
-//   ];
-
-//   for (const [key, cssVar] of colorMap) {
+//     ["gradientStart", "--submitted-gradient-start"],
+//     ["gradientEnd", "--submitted-gradient-end"],
+//   ].forEach(([key, cssVar]) => {
 //     if (settings[key]) {
 //       setVar(cssVar, settings[key]);
 //     }
+//   });
+
+//   // Handle gradient toggle
+//   if (typeof settings.useGradient !== 'undefined') {
+//     setVar("--submitted-use-gradient", settings.useGradient ? "true" : "false");
 //   }
 
-//   // Handle gradient settings
-//   if (settings.useGradient && settings.gradientStart && settings.gradientEnd) {
-//     setVar("--submitted-bg-surface", `linear-gradient(135deg, ${settings.gradientStart}, ${settings.gradientEnd})`);
-//   }
+//   // Apply gradient or solid background to cards
+//   const submittedCards = document.querySelectorAll('.submitted-card');
+//   submittedCards.forEach(card => {
+//     if (settings.useGradient) {
+//       card.setAttribute('data-use-gradient', 'true');
+//     } else {
+//       card.setAttribute('data-use-gradient', 'false');
+//     }
+//   });
 // };
 
 // const createHeader = (t) => {
@@ -1076,7 +1050,7 @@ injectSubmittedStyles();
 //       .join("");
 
 //     return `
-//       <div class="${CSS_CLASSES.card}">
+//       <div class="${CSS_CLASSES.card}" data-use-gradient="true">
 //         <div class="submitted-stack submitted-gap-100 submitted-p-2">
 //           <div class="submitted-row submitted-row-between submitted-row-center submitted-mb-2">
 //             <h3 class="submitted-heading-md">${getTranslation(
@@ -1146,7 +1120,7 @@ injectSubmittedStyles();
 //       .join("");
 
 //     return `
-//       <div class="${CSS_CLASSES.card}">
+//       <div class="${CSS_CLASSES.card}" data-use-gradient="true">
 //         <div class="submitted-stack submitted-gap-100 submitted-p-2">
 //           <div class="submitted-mb-2">
 //             <h3 class="submitted-heading-md">${getTranslation(
@@ -1269,6 +1243,18 @@ injectSubmittedStyles();
 //     const initialColors = proxy.getColorSettings?.();
 //     if (initialColors) {
 //       applySubmittedColorSettings(initialColors);
+//     } else {
+//       // Apply Green-Yellow theme as default if no color settings
+//       const greenYellowTheme = {
+//         useGradient: true,
+//         gradientStart: "#72D9A3",
+//         gradientEnd: "#F3EEA5",
+//         cardBg: "#ffffff",
+//         buttonBg: "#5a9a5a",
+//         buttonText: "#ffffff",
+//         textColor: "#202223",
+//       };
+//       applySubmittedColorSettings(greenYellowTheme);
 //     }
 
 //     // Subscribe to changes
@@ -1287,6 +1273,18 @@ injectSubmittedStyles();
 //     const extColors = extProxy.getColorSettings?.();
 //     if (extColors) {
 //       applySubmittedColorSettings(extColors);
+//     } else {
+//       // Apply Green-Yellow theme as default if no color settings
+//       const greenYellowTheme = {
+//         useGradient: true,
+//         gradientStart: "#72D9A3",
+//         gradientEnd: "#F3EEA5",
+//         cardBg: "#ffffff",
+//         buttonBg: "#5a9a5a",
+//         buttonText: "#ffffff",
+//         textColor: "#202223",
+//       };
+//       applySubmittedColorSettings(greenYellowTheme);
 //     }
 
 //     // Subscribe to external proxy changes
@@ -1362,6 +1360,8 @@ injectSubmittedStyles();
 //     --submitted-primary-dark: #006e52;
 //     --submitted-primary-light: #edfff6;
 //     --submitted-primary-text: #ffffff;
+//     --submitted-gradient-start: #72D9A3;
+//     --submitted-gradient-end: #F3EEA5;
 //     --submitted-radius: 12px;
 //     --submitted-space-50: 4px;
 //     --submitted-space-100: 8px;
@@ -1371,6 +1371,7 @@ injectSubmittedStyles();
 //     --submitted-space-400: 24px;
 //     --submitted-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 //     --submitted-shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+//     --submitted-use-gradient: true;
 //   }
 
 //   .submitted-root {
@@ -1491,6 +1492,10 @@ injectSubmittedStyles();
 //     box-shadow: var(--submitted-shadow);
 //     transition: box-shadow 0.2s ease;
 //     overflow: hidden;
+//   }
+
+//   .submitted-card[data-use-gradient="true"] {
+//     background: linear-gradient(135deg, var(--submitted-gradient-start), var(--submitted-gradient-end));
 //   }
 
 //   .submitted-divider {
