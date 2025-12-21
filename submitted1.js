@@ -22,7 +22,7 @@ const DEFAULT_CLAIMED_ITEMS = [
   {
     id: 2,
     name: "Luxury Rose Perfume",
-    description: "Classic fragrance collection", 
+    description: "Classic fragrance collection",
     image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
     price: "€7.50",
     qty: 1,
@@ -32,17 +32,17 @@ const DEFAULT_CLAIMED_ITEMS = [
     id: 3,
     name: "Ocean Breeze Cologne",
     description: "Fresh summer collection",
-    image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product", 
+    image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
     price: "€6.25",
     qty: 1,
     eligible: true
   }
 ];
 
-// Green-Yellow theme default colors (matching Setup.js)
+// Green-Yellow theme default colors (matching SubmittedController)
 const DEFAULT_GREEN_YELLOW_COLORS = {
-  buttonBg: "#5a9a5a",
-  buttonText: "#ffffff",
+  buttonBg: "#5a9a5a", // Green color from Green-Yellow theme
+  buttonText: "#ffffff", // White text for contrast
 };
 
 // CSS class constants for consistent styling
@@ -151,13 +151,12 @@ const createInfoRow = (label, valueText) => {
   return `
     <div class="submitted-inline submitted-gap-100">
       <span class="submitted-text submitted-text-subdued submitted-minw-110 submitted-text-sm">${labelText}</span>
-      ${
-        hasValue
-          ? `<span class="submitted-text submitted-text-sm">${String(
-              valueText
-            )}</span>`
-          : ""
-      }
+      ${hasValue
+      ? `<span class="submitted-text submitted-text-sm">${String(
+        valueText
+      )}</span>`
+      : ""
+    }
     </div>
   `;
 };
@@ -178,9 +177,8 @@ const createClaimedItemBox = (item, reasonLabel) => {
 
   return `
     <div class="${CSS_CLASSES.item.box}">
-      <img class="${
-        CSS_CLASSES.item.image
-      }" src="${itemImage}" alt="${itemName}" />
+      <img class="${CSS_CLASSES.item.image
+    }" src="${itemImage}" alt="${itemName}" />
       <div class="${CSS_CLASSES.item.textWrap}">
         <span class="submitted-text submitted-text-md submitted-semibold submitted-block">${itemName}</span>
         <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">${itemDescription}</span>
@@ -188,8 +186,8 @@ const createClaimedItemBox = (item, reasonLabel) => {
       </div>
       <div class="${CSS_CLASSES.item.priceWrap}">
         <span class="submitted-text submitted-text-md submitted-semibold">${quantity} x €${price.toFixed(
-    2
-  )} EUR</span>
+      2
+    )} EUR</span>
       </div>
     </div>
   `;
@@ -234,10 +232,10 @@ const createHeader = (t) => {
     "←"
   )}</button>
       <h2 class="submitted-title">${getTranslation(
-          t,
-          "SubmittedDesignJs.title",
-          "Submitted"
-        )}</h2>
+    t,
+    "SubmittedDesignJs.title",
+    "Submitted"
+  )}</h2>
       </div>
       <button class="${CSS_CLASSES.btn.primary}">${getTranslation(
     t,
@@ -273,10 +271,10 @@ const render = (container, props) => {
         <div class="submitted-stack submitted-gap-100 submitted-p-2">
           <div class="submitted-row submitted-row-between submitted-row-center submitted-mb-2">
             <h3 class="submitted-heading-md">${getTranslation(
-              t,
-              "SubmittedDesignJs.statusTitle",
-              "Claim status"
-            )}</h3>
+      t,
+      "SubmittedDesignJs.statusTitle",
+      "Claim status"
+    )}</h3>
             <span class="${CSS_CLASSES.badge}">${getTranslation(
       t,
       "SubmittedDesignJs.statusBadge",
@@ -285,10 +283,10 @@ const render = (container, props) => {
           </div>
           <span class="submitted-text submitted-subdued submitted-text-md">
             ${getTranslation(
-              t,
-              "SubmittedDesignJs.statusText",
-              "Your claim is currently pending review."
-            )}
+      t,
+      "SubmittedDesignJs.statusText",
+      "Your claim is currently pending review."
+    )}
           </span>
           <div class="submitted-divider"></div>
           <h3 class="submitted-heading-md submitted-mb-2">
@@ -343,26 +341,26 @@ const render = (container, props) => {
         <div class="submitted-stack submitted-gap-100 submitted-p-2">
           <div class="submitted-mb-2">
             <h3 class="submitted-heading-md">${getTranslation(
-              t,
-              "SubmittedDesignJs.reorderTitle",
-              "Reorder"
-            )}</h3>
+      t,
+      "SubmittedDesignJs.reorderTitle",
+      "Reorder"
+    )}</h3>
             <span class="submitted-text submitted-subdued submitted-text-md">
               ${getTranslation(
-                t,
-                "SubmittedDesignJs.reorderText",
-                "Reordering same item(s). This will create a new order."
-              )}
+      t,
+      "SubmittedDesignJs.reorderText",
+      "Reordering same item(s). This will create a new order."
+    )}
             </span>
           </div>
           <div class="submitted-divider"></div>
           <div class="submitted-p-2">
             <h3 class="submitted-heading-md submitted-mb-2">
               ${getTranslation(
-                t,
-                "SubmittedDesignJs.giTitle1",
-                "General information"
-              )}
+      t,
+      "SubmittedDesignJs.giTitle1",
+      "General information"
+    )}
             </h3>
             ${infoItemsHtml}
           </div>
@@ -455,7 +453,7 @@ function mountSubmitted(container, props = {}) {
   mountPoint.className = "submitted-mount";
   host.appendChild(mountPoint);
 
-  // Add proxy object like Setup.js
+  // Add proxy object like 
   const proxy = {
     contentSettings: null,
     colorSettings: {
@@ -516,35 +514,39 @@ function mountSubmitted(container, props = {}) {
     },
   };
 
-  // Setup proxy integration for color settings
+  // proxy integration for color settings
   let proxyUnsubscribe = null;
   if (typeof window !== 'undefined' && window.SubmittedProxy) {
     const localProxy = window.SubmittedProxy;
-    
+
     // Apply initial colors if available
     const initialColors = localProxy.getColorSettings?.();
     if (initialColors) {
+      proxy.updateColorSettings(initialColors);
       proxy.applyColorSettings(initialColors);
     } else {
       // Apply Green-Yellow theme as default
+      proxy.updateColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
       proxy.applyColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
     }
 
     // Subscribe to changes
     proxyUnsubscribe = localProxy.subscribe?.((snapshot) => {
       if (snapshot.colorSettings) {
+        proxy.updateColorSettings(snapshot.colorSettings);
         proxy.applyColorSettings(snapshot.colorSettings);
       }
     });
   } else {
     // Apply Green-Yellow theme as default
+    proxy.updateColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
     proxy.applyColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
   }
 
   // Also check for external Submitted proxy integration
   if (typeof window !== 'undefined' && window.Submitted?.proxy) {
     const extProxy = window.Submitted.proxy;
-    
+
     // Apply initial colors from external proxy
     const extColors = extProxy.getColorSettings?.();
     if (extColors) {
@@ -576,12 +578,12 @@ function mountSubmitted(container, props = {}) {
       '<div class="submitted-error">Error loading component</div>';
   }
 
-  // Set the proxy globally like Setup.js
+  // Set the proxy globally like 
   if (typeof window !== "undefined") {
     if (window.ClaimSubmitted) {
       window.ClaimSubmitted.proxy = proxy;
     }
-    
+
     // Also set up window.Submitted.proxy for ExternalSubmitted integration
     if (!window.Submitted) {
       window.Submitted = {};
@@ -620,14 +622,14 @@ function mountSubmitted(container, props = {}) {
       }
     },
 
-    proxy, // Expose proxy like Setup.js
+    proxy, // Expose proxy like 
   };
 }
 
 // Inject original complete CSS styles
 const ensureSubmittedStyles = () => {
   if (document.getElementById(SUBMITTED_STYLE_ID)) return;
-  
+
   const style = document.createElement('style');
   style.id = SUBMITTED_STYLE_ID;
   style.textContent = `
@@ -902,13 +904,13 @@ const injectSubmittedStyles = () => {
 // Initialize styles
 injectSubmittedStyles();
 
-// Make it available globally like Setup.js
+// Make it available globally like 
 if (typeof window !== "undefined") {
-  window.ClaimSubmitted = { 
+  window.ClaimSubmitted = {
     init: mountSubmitted,
     proxy: null // Will be set when component is initialized
   };
-  
+
   // Also make it available as expected by ExternalSubmitted.jsx
   window.mountSubmitted = mountSubmitted;
   window.mountClaimSubmitted = mountSubmitted;
@@ -921,6 +923,10 @@ export { applySubmittedColorSettings };
 
 // Export the mount function as default
 export default mountSubmitted;
+
+
+
+
 
 
 
@@ -1512,8 +1518,16 @@ export default mountSubmitted;
 //   }
 
 //   // Set the proxy globally like Setup.js
-//   if (typeof window !== "undefined" && window.ClaimSubmitted) {
-//     window.ClaimSubmitted.proxy = proxy;
+//   if (typeof window !== "undefined") {
+//     if (window.ClaimSubmitted) {
+//       window.ClaimSubmitted.proxy = proxy;
+//     }
+    
+//     // Also set up window.Submitted.proxy for ExternalSubmitted integration
+//     if (!window.Submitted) {
+//       window.Submitted = {};
+//     }
+//     window.Submitted.proxy = proxy;
 //   }
 
 //   // Return component instance
