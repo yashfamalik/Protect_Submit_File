@@ -159,6 +159,34 @@ const createClaimedItemBox = (item, reasonLabel) => {
  */
 const getTranslation = (t, key, fallback) => t?.(key, fallback) ?? fallback;
 
+/**
+ * Apply color settings to CSS variables for submitted component
+ * @param {Object} settings - Color settings object
+ */
+const applySubmittedColorSettings = (settings) => {
+  if (!settings) return;
+  const root = document.documentElement;
+  const setVar = (key, value) => root.style.setProperty(key, value);
+
+  const colorMap = [
+    ["cardBg", "--submitted-bg-surface"],
+    ["buttonBg", "--submitted-primary"],
+    ["buttonText", "--submitted-primary-text"],
+    ["textColor", "--submitted-text"],
+  ];
+
+  for (const [key, cssVar] of colorMap) {
+    if (settings[key]) {
+      setVar(cssVar, settings[key]);
+    }
+  }
+
+  // Handle gradient settings
+  if (settings.useGradient && settings.gradientStart && settings.gradientEnd) {
+    setVar("--submitted-bg-surface", `linear-gradient(135deg, ${settings.gradientStart}, ${settings.gradientEnd})`);
+  }
+};
+
 const createHeader = (t) => {
   return `
     <div class="${CSS_CLASSES.row}">
@@ -388,6 +416,51 @@ export default function mountSubmitted(container, props = {}) {
   mountPoint.className = "submitted-mount";
   host.appendChild(mountPoint);
 
+  // Setup proxy integration for color settings
+  let proxyUnsubscribe = null;
+  if (typeof window !== 'undefined' && window.SubmittedProxy) {
+    const proxy = window.SubmittedProxy;
+    
+    // Apply initial colors if available
+    const initialColors = proxy.getColorSettings?.();
+    if (initialColors) {
+      applySubmittedColorSettings(initialColors);
+    }
+
+    // Subscribe to changes
+    proxyUnsubscribe = proxy.subscribe?.((snapshot) => {
+      if (snapshot.colorSettings) {
+        applySubmittedColorSettings(snapshot.colorSettings);
+      }
+    });
+  }
+
+  // Also check for external Submitted proxy integration
+  if (typeof window !== 'undefined' && window.Submitted?.proxy) {
+    const extProxy = window.Submitted.proxy;
+    
+    // Apply initial colors from external proxy
+    const extColors = extProxy.getColorSettings?.();
+    if (extColors) {
+      applySubmittedColorSettings(extColors);
+    }
+
+    // Subscribe to external proxy changes
+    const extUnsubscribe = extProxy.subscribe?.((snapshot) => {
+      if (snapshot.colorSettings) {
+        applySubmittedColorSettings(snapshot.colorSettings);
+      }
+    });
+
+    if (extUnsubscribe) {
+      const originalCleanup = proxyUnsubscribe;
+      proxyUnsubscribe = () => {
+        if (originalCleanup) originalCleanup();
+        extUnsubscribe();
+      };
+    }
+  }
+
   // Initial render with error handling
   try {
     render(mountPoint, currentProps);
@@ -404,6 +477,9 @@ export default function mountSubmitted(container, props = {}) {
      */
     destroy() {
       try {
+        if (proxyUnsubscribe) {
+          proxyUnsubscribe();
+        }
         if (mountPoint?.parentNode) {
           mountPoint.parentNode.removeChild(mountPoint);
         }
