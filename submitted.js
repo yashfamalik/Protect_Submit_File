@@ -577,8 +577,16 @@ function mountSubmitted(container, props = {}) {
   }
 
   // Set the proxy globally like Setup.js
-  if (typeof window !== "undefined" && window.ClaimSubmitted) {
-    window.ClaimSubmitted.proxy = proxy;
+  if (typeof window !== "undefined") {
+    if (window.ClaimSubmitted) {
+      window.ClaimSubmitted.proxy = proxy;
+    }
+    
+    // Also set up window.Submitted.proxy for ExternalSubmitted integration
+    if (!window.Submitted) {
+      window.Submitted = {};
+    }
+    window.Submitted.proxy = proxy;
   }
 
   // Return component instance
@@ -925,13 +933,6 @@ export default mountSubmitted;
 
 
 
-
-
-
-
-
-
-
 // // Submitted Component - Clean Code with Original Design
 // const SUBMITTED_STYLE_ID = "vanilla-submitted-styles";
 
@@ -940,6 +941,43 @@ export default mountSubmitted;
 //   id: "20250816083974262",
 //   email: "abcd@gmail.com",
 //   created: "Aug 16, 08:39 am",
+// };
+
+// // Default claimed items - sample products
+// const DEFAULT_CLAIMED_ITEMS = [
+//   {
+//     id: 1,
+//     name: "AHMED Aqua perfume by Laiba",
+//     description: "Premium fragrance collection",
+//     image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+//     price: "€5.95",
+//     qty: 2,
+//     eligible: true
+//   },
+//   {
+//     id: 2,
+//     name: "Luxury Rose Perfume",
+//     description: "Classic fragrance collection", 
+//     image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+//     price: "€7.50",
+//     qty: 1,
+//     eligible: true
+//   },
+//   {
+//     id: 3,
+//     name: "Ocean Breeze Cologne",
+//     description: "Fresh summer collection",
+//     image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product", 
+//     price: "€6.25",
+//     qty: 1,
+//     eligible: true
+//   }
+// ];
+
+// // Green-Yellow theme default colors (matching Setup.js)
+// const DEFAULT_GREEN_YELLOW_COLORS = {
+//   buttonBg: "#5a9a5a",
+//   buttonText: "#ffffff",
 // };
 
 // // CSS class constants for consistent styling
@@ -993,9 +1031,16 @@ export default mountSubmitted;
 
 //   // Filter eligible items from order data
 //   const items = ORDER_DATA?.items || [];
-//   return items
+//   const derivedItems = items
 //     .filter((item) => item?.eligible && (quantities[item.id] ?? 1) >= 1)
 //     .map((item) => ({ ...item, qty: quantities[item.id] ?? 1 }));
+
+//   // If no items found, return default claimed items
+//   if (derivedItems.length === 0) {
+//     return DEFAULT_CLAIMED_ITEMS;
+//   }
+
+//   return derivedItems;
 // };
 
 // /**
@@ -1010,7 +1055,10 @@ export default mountSubmitted;
 //   if (reasonLabel?.trim()) return reasonLabel;
 
 //   // Find matching claim option
-//   if (!Array.isArray(CLAIM_OPTIONS) || !selectedClaimOption) return "";
+//   if (!Array.isArray(CLAIM_OPTIONS) || !selectedClaimOption) {
+//     // Return default reason if no options provided
+//     return "Product damaged";
+//   }
 
 //   const matchedOption = CLAIM_OPTIONS.find((option) =>
 //     typeof option === "object"
@@ -1018,7 +1066,7 @@ export default mountSubmitted;
 //       : option === selectedClaimOption
 //   );
 
-//   return matchedOption?.label || matchedOption || "";
+//   return matchedOption?.label || matchedOption || "Product damaged";
 // };
 
 // /**
@@ -1346,8 +1394,7 @@ export default mountSubmitted;
 //   const proxy = {
 //     contentSettings: null,
 //     colorSettings: {
-//       buttonBg: "#5a9a5a",
-//       buttonText: "#ffffff",
+//       ...DEFAULT_GREEN_YELLOW_COLORS, // Use Green-Yellow theme as default
 //     },
 //     isLiveMode: true,
 //     subscribers: new Set(),
@@ -1414,12 +1461,8 @@ export default mountSubmitted;
 //     if (initialColors) {
 //       proxy.applyColorSettings(initialColors);
 //     } else {
-//       // Apply default button colors
-//       const defaultButtonColors = {
-//         buttonBg: "#5a9a5a",
-//         buttonText: "#ffffff",
-//       };
-//       proxy.applyColorSettings(defaultButtonColors);
+//       // Apply Green-Yellow theme as default
+//       proxy.applyColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
 //     }
 
 //     // Subscribe to changes
@@ -1429,12 +1472,8 @@ export default mountSubmitted;
 //       }
 //     });
 //   } else {
-//     // Apply default button colors
-//     const defaultButtonColors = {
-//       buttonBg: "#5a9a5a",
-//       buttonText: "#ffffff",
-//     };
-//     proxy.applyColorSettings(defaultButtonColors);
+//     // Apply Green-Yellow theme as default
+//     proxy.applyColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
 //   }
 
 //   // Also check for external Submitted proxy integration
@@ -1526,8 +1565,8 @@ export default mountSubmitted;
 //     --submitted-border-strong: #d1d5db;
 //     --submitted-text: #202223;
 //     --submitted-text-subdued: #6b7280;
-//     --submitted-primary: #008060;
-//     --submitted-primary-dark: #006e52;
+//     --submitted-primary: #5a9a5a;
+//     --submitted-primary-dark: #4a8a4a;
 //     --submitted-primary-light: #edfff6;
 //     --submitted-primary-text: #ffffff;
 //     --submitted-radius: 12px;
@@ -1622,14 +1661,14 @@ export default mountSubmitted;
 //     background: var(--submitted-primary);
 //     border-color: var(--submitted-primary);
 //     color: var(--submitted-primary-text);
-//     box-shadow: 0 2px 4px rgba(0, 128, 96, 0.2);
+//     box-shadow: 0 2px 4px rgba(90, 154, 90, 0.2);
 //   }
 
 //   .submitted-btn-primary:hover {
 //     background: var(--submitted-primary-dark);
 //     border-color: var(--submitted-primary-dark);
 //     transform: translateY(-1px);
-//     box-shadow: 0 4px 6px rgba(0, 128, 96, 0.3);
+//     box-shadow: 0 4px 6px rgba(90, 154, 90, 0.3);
 //   }
 
 //   .submitted-btn-tertiary {
