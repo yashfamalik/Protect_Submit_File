@@ -1,7 +1,5 @@
-/**
- * Submitted Claim Design Component
- * Displays the submitted claim status and details
- */
+// Submitted Component - Clean Code with Original Design
+const SUBMITTED_STYLE_ID = "vanilla-submitted-styles";
 
 // Default claim information
 const DEFAULT_CLAIM_INFO = {
@@ -389,6 +387,8 @@ const render = (container, props) => {
  * @returns {Object} Component instance with destroy and update methods
  */
 function mountSubmitted(container, props = {}) {
+  ensureSubmittedStyles();
+
   // Validate container
   if (!container) {
     throw new Error("mountSubmitted: container is required");
@@ -408,30 +408,99 @@ function mountSubmitted(container, props = {}) {
   mountPoint.className = "submitted-mount";
   host.appendChild(mountPoint);
 
+  // Add proxy object like Setup.js
+  const proxy = {
+    contentSettings: null,
+    colorSettings: {
+      buttonBg: "#5a9a5a",
+      buttonText: "#ffffff",
+    },
+    isLiveMode: true,
+    subscribers: new Set(),
+
+    subscribe(cb) {
+      this.subscribers.add(cb);
+      return () => this.subscribers.delete(cb);
+    },
+
+    notify() {
+      for (const cb of this.subscribers)
+        cb({
+          contentSettings: this.contentSettings,
+          colorSettings: this.colorSettings,
+          isLiveMode: this.isLiveMode,
+        });
+    },
+
+    updateContentSettings(settings) {
+      this.contentSettings =
+        typeof settings === "function"
+          ? settings(this.contentSettings)
+          : { ...this.contentSettings, ...settings };
+      this.notify();
+    },
+
+    updateColorSettings(settings) {
+      this.colorSettings =
+        typeof settings === "function"
+          ? settings(this.colorSettings)
+          : { ...this.colorSettings, ...settings };
+      this.notify();
+      this.applyColorSettings(this.colorSettings);
+    },
+
+    getContentSettings() {
+      return this.contentSettings;
+    },
+
+    getColorSettings() {
+      return this.colorSettings;
+    },
+
+    applyColorSettings(settings) {
+      if (!settings || !this.isLiveMode) return;
+      applySubmittedColorSettings(settings);
+    },
+
+    toggleLiveMode() {
+      this.isLiveMode = !this.isLiveMode;
+      this.applyColorSettings(this.colorSettings);
+      this.notify();
+      return this.isLiveMode;
+    },
+  };
+
   // Setup proxy integration for color settings
   let proxyUnsubscribe = null;
   if (typeof window !== 'undefined' && window.SubmittedProxy) {
-    const proxy = window.SubmittedProxy;
+    const localProxy = window.SubmittedProxy;
     
     // Apply initial colors if available
-    const initialColors = proxy.getColorSettings?.();
+    const initialColors = localProxy.getColorSettings?.();
     if (initialColors) {
-      applySubmittedColorSettings(initialColors);
+      proxy.applyColorSettings(initialColors);
     } else {
       // Apply default button colors
       const defaultButtonColors = {
         buttonBg: "#5a9a5a",
         buttonText: "#ffffff",
       };
-      applySubmittedColorSettings(defaultButtonColors);
+      proxy.applyColorSettings(defaultButtonColors);
     }
 
     // Subscribe to changes
-    proxyUnsubscribe = proxy.subscribe?.((snapshot) => {
+    proxyUnsubscribe = localProxy.subscribe?.((snapshot) => {
       if (snapshot.colorSettings) {
-        applySubmittedColorSettings(snapshot.colorSettings);
+        proxy.applyColorSettings(snapshot.colorSettings);
       }
     });
+  } else {
+    // Apply default button colors
+    const defaultButtonColors = {
+      buttonBg: "#5a9a5a",
+      buttonText: "#ffffff",
+    };
+    proxy.applyColorSettings(defaultButtonColors);
   }
 
   // Also check for external Submitted proxy integration
@@ -441,20 +510,13 @@ function mountSubmitted(container, props = {}) {
     // Apply initial colors from external proxy
     const extColors = extProxy.getColorSettings?.();
     if (extColors) {
-      applySubmittedColorSettings(extColors);
-    } else {
-      // Apply default button colors
-      const defaultButtonColors = {
-        buttonBg: "#5a9a5a",
-        buttonText: "#ffffff",
-      };
-      applySubmittedColorSettings(defaultButtonColors);
+      proxy.applyColorSettings(extColors);
     }
 
     // Subscribe to external proxy changes
     const extUnsubscribe = extProxy.subscribe?.((snapshot) => {
       if (snapshot.colorSettings) {
-        applySubmittedColorSettings(snapshot.colorSettings);
+        proxy.applyColorSettings(snapshot.colorSettings);
       }
     });
 
@@ -474,6 +536,11 @@ function mountSubmitted(container, props = {}) {
     console.error("Failed to render submitted component:", error);
     mountPoint.innerHTML =
       '<div class="submitted-error">Error loading component</div>';
+  }
+
+  // Set the proxy globally like Setup.js
+  if (typeof window !== "undefined" && window.ClaimSubmitted) {
+    window.ClaimSubmitted.proxy = proxy;
   }
 
   // Return component instance
@@ -506,13 +573,18 @@ function mountSubmitted(container, props = {}) {
         console.error("Failed to update component:", error);
       }
     },
+
+    proxy, // Expose proxy like Setup.js
   };
 }
 
-/**
- * CSS Styles for the submitted component
- */
-const submittedStyles = `
+// Inject original complete CSS styles
+const ensureSubmittedStyles = () => {
+  if (document.getElementById(SUBMITTED_STYLE_ID)) return;
+  
+  const style = document.createElement('style');
+  style.id = SUBMITTED_STYLE_ID;
+  style.textContent = `
   :root {
     --submitted-bg-surface: #ffffff;
     --submitted-bg-muted: #f9f9f9;
@@ -762,7 +834,9 @@ const submittedStyles = `
     display: flex;
     flex-direction: column;
   }
-`;
+  `;
+  document.head.appendChild(style);
+};
 
 /**
  * Injects styles into document head
@@ -771,27 +845,36 @@ const submittedStyles = `
 const injectSubmittedStyles = () => {
   if (
     typeof document === "undefined" ||
-    document.getElementById("submitted-styles")
+    document.getElementById(SUBMITTED_STYLE_ID)
   ) {
     return;
   }
 
-  const styleElement = document.createElement("style");
-  styleElement.id = "submitted-styles";
-  styleElement.textContent = submittedStyles;
-  document.head.appendChild(styleElement);
+  ensureSubmittedStyles();
 };
 
 // Initialize styles
 injectSubmittedStyles();
+
+// Make it available globally like Setup.js
+if (typeof window !== "undefined") {
+  window.ClaimSubmitted = { 
+    init: mountSubmitted,
+    proxy: null // Will be set when component is initialized
+  };
+  
+  // Also make it available as expected by ExternalSubmitted.jsx
+  window.mountSubmitted = mountSubmitted;
+  window.mountClaimSubmitted = mountSubmitted;
+  window.initSubmitted = mountSubmitted;
+  window.applySubmittedColorSettings = applySubmittedColorSettings;
+}
 
 // Export the applySubmittedColorSettings function
 export { applySubmittedColorSettings };
 
 // Export the mount function as default
 export default mountSubmitted;
-
-
 
 
 
