@@ -1462,8 +1462,12 @@ export default function mountSetup(container, props = {}) {
   }
 
   // Set the proxy globally
-  if (typeof window !== "undefined" && window.ClaimSetup) {
-    window.ClaimSetup.proxy = proxy;
+  if (typeof window !== "undefined") {
+    if (window.ClaimSetup) {
+      window.ClaimSetup.proxy = proxy;
+    }
+    // Also expose as SetupProxy for storage bridge
+    window.SetupProxy = proxy;
   }
 
   return {
@@ -1484,12 +1488,54 @@ if (typeof window !== "undefined") {
     init: mountSetup,
     proxy: null // Will be set when component is initialized
   };
+  
+  // Initialize SetupProxy immediately if not already set
+  if (!window.SetupProxy) {
+    // Create a temporary proxy that will be replaced when mountSetup is called
+    window.SetupProxy = {
+      contentSettings: null,
+      colorSettings: null,
+      subscribers: new Set(),
+
+      subscribe(cb) {
+        this.subscribers.add(cb);
+        return () => this.subscribers.delete(cb);
+      },
+
+      notify() {
+        for (const cb of this.subscribers)
+          cb({
+            contentSettings: this.contentSettings,
+            colorSettings: this.colorSettings,
+          });
+      },
+
+      updateContentSettings(settings) {
+        this.contentSettings =
+          typeof settings === "function"
+            ? settings(this.contentSettings)
+            : { ...this.contentSettings, ...settings };
+        this.notify();
+      },
+
+      updateColorSettings(settings) {
+        this.colorSettings =
+          typeof settings === "function"
+            ? settings(this.colorSettings)
+            : { ...this.colorSettings, ...settings };
+        this.notify();
+      },
+
+      getContentSettings() {
+        return this.contentSettings;
+      },
+
+      getColorSettings() {
+        return this.colorSettings;
+      },
+    };
+  }
 }
-
-
-
-
-
 
 
 
@@ -1658,12 +1704,12 @@ if (typeof window !== "undefined") {
 //   .setup-card-body .setup-item-card:last-child { margin-bottom: 0; }
 
 //   .setup-item-card:hover {
-//     border-color: var(--setup-primary);
-//     background-color: var(--setup-surface-hover);
+//     border-color: var(--setup-primary-color);
+//     background-color: var(--setup-primary-light);
 //   }
 
 //   .setup-item-card:hover .setup-item-name {
-//     color: var(--setup-primary);
+//     color: var(--setup-primary-color);
 //   }
 
 //   .setup-item-card.selected {
@@ -1781,7 +1827,7 @@ if (typeof window !== "undefined") {
 //     justify-content: center;
 //     transition: color 0.2s;
 //   }
-//   .setup-qty button:hover { color: var(--setup-primary); }
+//   .setup-qty button:hover { color: var(--setup-primary-color); }
 
 //   .setup-qty-value {
 //     font-size: 14px;
@@ -1881,9 +1927,9 @@ if (typeof window !== "undefined") {
 //   }
 
 //   .setup-action-card:hover {
-//     border-color: #cbd5e0;
+//     border-color: var(--setup-primary-border);
 //     box-shadow: var(--setup-shadow-hover);
-//     border-color: var(--setup-primary);
+//     background: var(--setup-primary-light);
 //   }
 
 //   .setup-action-card.selected {
@@ -1978,8 +2024,8 @@ if (typeof window !== "undefined") {
 //   }
 
 //   .setup-button:hover:not([disabled]) {
-//     background: var(--setup-surface-hover);
-//     border-color: #cbd5e0;
+//     background: var(--setup-primary-light);
+//     border-color: var(--setup-primary-border);
 //   }
 
 //   .setup-button.primary {
