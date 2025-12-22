@@ -153,7 +153,7 @@ const ensureSetupStyles = () => {
 
   .setup-item-card {
     background: var(--setup-surface);
-    border: 1px solid var(--setup-border);
+    border: 2px solid var(--setup-border);
     border-radius: var(--setup-radius-md);
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -165,18 +165,15 @@ const ensureSetupStyles = () => {
   .setup-card-body .setup-item-card:last-child { margin-bottom: 0; }
 
   .setup-item-card:hover {
-    border-color: var(--setup-selected-item-border);
+    border-color: var(--setup-primary-border);
   }
 
-  .setup-item-card:hover .setup-item-name {
-    color: var(--setup-primary-color);
-  }
 
   .setup-item-card.selected {
     background: var(--setup-primary-light);
     border-color: var(--setup-primary-border);
     color: var(--setup-primary-border);
-    box-shadow: 0 0 0 1px var(--setup-primary-border) inset;
+    // box-shadow: 0 0 0 1px var(--setup-primary-border) inset;
   }
 
   /* Apply gradient to selected items when gradient is enabled */
@@ -394,7 +391,8 @@ const ensureSetupStyles = () => {
   .setup-action-card:hover {
     border-color: var(--setup-primary-border);
     box-shadow: var(--setup-shadow-hover);
-    background: var(--setup-primary-light);
+    box-shadow: 0 0 0 1px var(--setup-primary-border) inset;
+    // background: var(--setup-primary-light);
   }
 
   .setup-action-card.selected {
@@ -512,7 +510,6 @@ const ensureSetupStyles = () => {
     cursor: not-allowed;
   }
 
-  .setup-margin-top { margin-top: var(--setup-space-lg); }
   .setup-margin-bottom { margin-bottom: var(--setup-space-md); }
   .setup-spacer { margin-top: var(--setup-space-md); }
   .setup-mt-8 { margin-top: 8px; }
@@ -1412,8 +1409,8 @@ export default function mountSetup(container, props = {}) {
           </div>
         </div>
         <div class="setup-card-body">
-          <div class="setup-text-subdued setup-spacer">${descriptions[actionType]}</div>
-          <div class="setup-heading setup-margin-top">What happens next:</div>
+          <div class="setup-text-subdued">${descriptions[actionType]}</div>
+          <div class="setup-heading setup-spacer">What happens next:</div>
           <div class="setup-action-summary-list">${stepsHTML}</div>
         </div>
       </div>
@@ -1624,14 +1621,15 @@ if (typeof window !== "undefined") {
 
 
 
+
 // // SVG Icons defined as constants
 // const ICONS = {
-//     reorder: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M3.5 9.25a.75.75 0 0 0 1.5 0 3 3 0 0 1 3-3h6.566l-1.123 1.248a.75.75 0 1 0 1.114 1.004l2.25-2.5a.75.75 0 0 0-.027-1.032l-2.25-2.25a.75.75 0 1 0-1.06 1.06l.97.97h-6.44a4.5 4.5 0 0 0-4.5 4.5Z"></path><path d="M16.5 10.75a.75.75 0 0 0-1.5 0 3 3 0 0 1-3 3h-6.566l1.123-1.248a.75.75 0 1 0-1.114-1.004l-2.25 2.5a.75.75 0 0 0 .027 1.032l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h6.44a4.5 4.5 0 0 0 4.5-4.5Z"></path></svg>',
-//     refund: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle; fill: var(--setup-svg-color);"><path fill-rule="evenodd" d="M12.379 4h-7.258c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v3.008c0 .395 0 .736.023 1.017.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.121.01.254.016.397.019.001.243.006.46.022.65.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.28.023.622.023 1.017.023h7.258c.395 0 .736 0 1.017-.023.297-.024.592-.078.875-.222.424-.216.768-.56.984-.984.144-.283.198-.578.222-.875.023-.28.023-.622.023-1.017v-3.008c0-.395 0-.736-.023-1.017-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.983-.984-.284-.144-.58-.198-.876-.222-.121-.01-.254-.016-.397-.019-.001-.243-.006-.46-.022-.65-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.984-.984-.283-.144-.578-.198-.875-.222-.28-.023-.622-.023-1.017-.023Zm1.62 2.75h-6.378c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v1.874c-.104-.002-.194-.006-.274-.013-.204-.017-.28-.045-.316-.064-.142-.072-.256-.186-.328-.327-.02-.038-.047-.113-.064-.317-.017-.212-.018-.492-.018-.924v-2.95c0-.432 0-.712.018-.924.017-.204.045-.28.064-.316.072-.142.186-.256.328-.328.037-.02.112-.047.316-.064.212-.017.492-.018.924-.018h7.2c.432 0 .712 0 .924.018.204.017.28.045.317.064.14.072.255.186.327.328.02.037.047.112.064.316.011.138.016.305.017.524Zm-6.349 7.75h1.178c-.515-.796-.828-1.848-.828-3 0-1.278.385-2.43 1.002-3.25h-1.352c-.432 0-.712 0-.924.018-.204.017-.28.045-.316.064-.142.072-.256.186-.328.328-.02.037-.047.112-.064.316-.017.212-.018.492-.018.924v2.95c0 .432 0 .712.018.924.017.204.045.28.064.317.072.14.186.255.328.327.037.02.112.047.316.064.212.017.492.018.924.018Zm6.85-3c0-1.278-.384-2.43-1.002-3.25h1.352c.432 0 .712 0 .924.018.204.017.28.045.316.064.142.072.256.186.328.328.02.037.047.112.064.316.017.212.018.492.018.924v2.95c0 .432 0 .712-.018.924-.017.204-.045.28-.064.317-.072.14-.186.255-.328.327-.037.02-.112.047-.316.064-.212.017-.492.018-.924.018h-1.178c.515-.796.828-1.848.828-3Zm-4.332 2.304c-.384-.532-.668-1.342-.668-2.304 0-.962.284-1.772.668-2.304.385-.533.787-.696 1.082-.696.295 0 .697.163 1.082.696.384.532.668 1.342.668 2.304 0 .962-.284 1.772-.668 2.304-.385.533-.787.696-1.082.696-.295 0-.697-.163-1.082-.696Z"></path></svg>',
-//     claimedItems: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M13 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path><path fill-rule="evenodd" d="M11.276 3.5a3.75 3.75 0 0 0-2.701 1.149l-4.254 4.417a2.75 2.75 0 0 0 .036 3.852l2.898 2.898a2.5 2.5 0 0 0 3.502.033l4.747-4.571a3.25 3.25 0 0 0 .996-2.341v-2.187a3.25 3.25 0 0 0-3.25-3.25h-1.974Zm-1.62 2.19a2.25 2.25 0 0 1 1.62-.69h1.974c.966 0 1.75.784 1.75 1.75v2.187c0 .475-.194.93-.536 1.26l-4.747 4.572a1 1 0 0 1-1.401-.014l-2.898-2.898a1.25 1.25 0 0 1-.016-1.75l4.253-4.418Z"></path></svg>',
-//     selectedItem: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M4.63 8.81a5.5 5.5 0 0 1 6.56-4.18.75.75 0 0 0 .325-1.464 7 7 0 1 0 5.32 8.35.75.75 0 0 0-1.465-.325 5.5 5.5 0 1 1-10.74-2.38Z"></path><path d="M16.03 6.78a.75.75 0 0 0-1.06-1.06l-4.97 4.97-2.22-2.22a.75.75 0 0 0-1.06 1.06l2.75 2.75a.75.75 0 0 0 1.06 0l5.5-5.5Z"></path></svg>',
-//     claimDetails: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z"></path><path d="M11 13a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path><path fill-rule="evenodd" d="M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Zm-1.5 0a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0Z"></path></svg>',
-//     ineligibleItems: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14ZM4.5 10a5.5 5.5 0 0 1 9.546-3.768l-7.814 7.814A5.476 5.476 0 0 1 4.5 10Zm1.732 4.268 7.814-7.814a5.5 5.5 0 0 1-7.814 7.814Z"></path></svg>'
+//     reorder: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M3.5 9.25a.75.75 0 0 0 1.5 0 3 3 0 0 1 3-3h6.566l-1.123 1.248a.75.75 0 1 0 1.114 1.004l2.25-2.5a.75.75 0 0 0-.027-1.032l-2.25-2.25a.75.75 0 1 0-1.06 1.06l.97.97h-6.44a4.5 4.5 0 0 0-4.5 4.5Z"></path><path d="M16.5 10.75a.75.75 0 0 0-1.5 0 3 3 0 0 1-3 3h-6.566l1.123-1.248a.75.75 0 1 0-1.114-1.004l-2.25 2.5a.75.75 0 0 0 .027 1.032l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h6.44a4.5 4.5 0 0 0 4.5-4.5Z"></path></svg>',
+//     refund: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path fill-rule="evenodd" d="M12.379 4h-7.258c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v3.008c0 .395 0 .736.023 1.017.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.121.01.254.016.397.019.001.243.006.46.022.65.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.28.023.622.023 1.017.023h7.258c.395 0 .736 0 1.017-.023.297-.024.592-.078.875-.222.424-.216.768-.56.984-.984.144-.283.198-.578.222-.875.023-.28.023-.622.023-1.017v-3.008c0-.395 0-.736-.023-1.017-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.983-.984-.284-.144-.58-.198-.876-.222-.121-.01-.254-.016-.397-.019-.001-.243-.006-.46-.022-.65-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.984-.984-.283-.144-.578-.198-.875-.222-.28-.023-.622-.023-1.017-.023Zm1.62 2.75h-6.378c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v1.874c-.104-.002-.194-.006-.274-.013-.204-.017-.28-.045-.316-.064-.142-.072-.256-.186-.328-.327-.02-.038-.047-.113-.064-.317-.017-.212-.018-.492-.018-.924v-2.95c0-.432 0-.712.018-.924.017-.204.045-.28.064-.316.072-.142.186-.256.328-.328.037-.02.112-.047.316-.064.212-.017.492-.018.924-.018h7.2c.432 0 .712 0 .924.018.204.017.28.045.317.064.14.072.255.186.327.328.02.037.047.112.064.316.011.138.016.305.017.524Zm-6.349 7.75h1.178c-.515-.796-.828-1.848-.828-3 0-1.278.385-2.43 1.002-3.25h-1.352c-.432 0-.712 0-.924.018-.204.017-.28.045-.316.064-.142.072-.256.186-.328.328-.02.037-.047.112-.064.316-.017.212-.018.492-.018.924v2.95c0 .432 0 .712.018.924.017.204.045.28.064.317.072.14.186.255.328.327.037.02.112.047.316.064.212.017.492.018.924.018Zm6.85-3c0-1.278-.384-2.43-1.002-3.25h1.352c.432 0 .712 0 .924.018.204.017.28.045.316.064.142.072.256.186.328.328.02.037.047.112.064.316.017.212.018.492.018.924v2.95c0 .432 0 .712-.018.924-.017.204-.045.28-.064.317-.072.14-.186.255-.328.327-.037.02-.112.047-.316.064-.212.017-.492.018-.924.018h-1.178c.515-.796.828-1.848.828-3Zm-4.332 2.304c-.384-.532-.668-1.342-.668-2.304 0-.962.284-1.772.668-2.304.385-.533.787-.696 1.082-.696.295 0 .697.163 1.082.696.384.532.668 1.342.668 2.304 0 .962-.284 1.772-.668 2.304-.385.533-.787.696-1.082.696-.295 0-.697-.163-1.082-.696Z"></path></svg>',
+//     claimedItems: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M13 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path><path fill-rule="evenodd" d="M11.276 3.5a3.75 3.75 0 0 0-2.701 1.149l-4.254 4.417a2.75 2.75 0 0 0 .036 3.852l2.898 2.898a2.5 2.5 0 0 0 3.502.033l4.747-4.571a3.25 3.25 0 0 0 .996-2.341v-2.187a3.25 3.25 0 0 0-3.25-3.25h-1.974Zm-1.62 2.19a2.25 2.25 0 0 1 1.62-.69h1.974c.966 0 1.75.784 1.75 1.75v2.187c0 .475-.194.93-.536 1.26l-4.747 4.572a1 1 0 0 1-1.401-.014l-2.898-2.898a1.25 1.25 0 0 1-.016-1.75l4.253-4.418Z"></path></svg>',
+//     selectedItem: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M4.63 8.81a5.5 5.5 0 0 1 6.56-4.18.75.75 0 0 0 .325-1.464 7 7 0 1 0 5.32 8.35.75.75 0 0 0-1.465-.325 5.5 5.5 0 1 1-10.74-2.38Z"></path><path d="M16.03 6.78a.75.75 0 0 0-1.06-1.06l-4.97 4.97-2.22-2.22a.75.75 0 0 0-1.06 1.06l2.75 2.75a.75.75 0 0 0 1.06 0l5.5-5.5Z"></path></svg>',
+//     claimDetails: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z"></path><path d="M11 13a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path><path fill-rule="evenodd" d="M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Zm-1.5 0a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0Z"></path></svg>',
+//     ineligibleItems: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14ZM4.5 10a5.5 5.5 0 0 1 9.546-3.768l-7.814 7.814A5.476 5.476 0 0 1 4.5 10Zm1.732 4.268 7.814-7.814a5.5 5.5 0 0 1-7.814 7.814Z"></path></svg>'
 // };
 
 // // Setup Component - Clean Code with Original Design
@@ -1760,6 +1758,7 @@ if (typeof window !== "undefined") {
 //   .setup-heading , .setup-action-title{
 //    display: flex;
 //     align-items: center;
+//     gap: 10px;
 //   }
   
 //   .setup-text-subdued {
@@ -1838,19 +1837,18 @@ if (typeof window !== "undefined") {
 //   .setup-item img {
 //     width: 56px;
 //     height: 56px;
-//     border-radius: var(--setup-radius-sm);
+//     border-radius: var(--setup-radius-md);
 //     object-fit: cover;
 //     border: 1px solid var(--setup-border);
 //     background: #f1f5f9;
 //   }
 
-//   .setup-item-info { flex: 1; }
+// //   .setup-item-info { flex: 1; }
   
 //   .setup-item-name {
 //     font-size: 14px;
 //     font-weight: 600;
 //     color: var(--setup-text-heading);
-//     margin-bottom: 2px;
 //   }
   
 //   .setup-item-collection {
@@ -1946,6 +1944,8 @@ if (typeof window !== "undefined") {
 //   .setup-textarea {
 //     min-height: 100px;
 //     resize: vertical;
+//     border-radius: var(--setup-radius-md);
+//         border: 2px solid var(--setup-border);
 //   }
 
 //   .setup-select:focus, .setup-input:focus, .setup-textarea:focus {
@@ -1964,6 +1964,10 @@ if (typeof window !== "undefined") {
 //     font-size: 13px;
 //     cursor: pointer;
 //     transition: all 0.2s;
+//     height: 150px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
 //   }
 //   .setup-upload:hover {
 //     border-color: var(--setup-primary-border);
@@ -2076,10 +2080,9 @@ if (typeof window !== "undefined") {
 
 //   .setup-green-dot {
 //     display: inline-block;
-//     width: 10px; height: 10px;
+//     width: 15px; height: 15px;
 //     background: var(--setup-success);
 //     border-radius: 50%;
-//     margin-right: 10px;
 //     box-shadow: 0 0 0 3px var(--setup-success-bg);
 //   }
 
@@ -2139,7 +2142,7 @@ if (typeof window !== "undefined") {
 //   .setup-mt-8 { margin-top: 8px; }
 //   .setup-hidden { display: none; }
 //   .setup-text-critical { color: var(--setup-critical); }
-//   .setup-text-warning { color: var(--setup-warning); }
+//   .setup-text-warning { font-size: 21px; color: var(--setup-warning); }
 //   .setup-text-light { color: var(--setup-text-muted); font-weight: 400; }
 //   .setup-disabled-area { opacity: 0.5; pointer-events: none; filter: grayscale(1); }
   
@@ -2646,7 +2649,7 @@ if (typeof window !== "undefined") {
 //         if (!ineligibleItems.length) return null;
 
 //         const card = createElement(`
-//       <div class="setup-card setup-margin-top">
+//       <div class="setup-card">
 //         <div class="setup-card-header">
 //           <div class="setup-heading">
 //             ${ICONS.ineligibleItems}
@@ -2682,7 +2685,7 @@ if (typeof window !== "undefined") {
 //           <select class="setup-select"></select>
 //           <div class="setup-spacer"></div>
           
-//           <label class="setup-label setup-margin-top">
+//           <label class="setup-label">
 //             ${t("ManualClaim.claimDetails.additionalDetailsLabel")} 
 //             <span class="setup-text-light">${t("ManualClaim.claimDetails.additionalDetailsOptional")}</span>
 //           </label>
@@ -2690,7 +2693,7 @@ if (typeof window !== "undefined") {
 //                     placeholder="${t("ManualClaim.claimDetails.additionalDetailsPlaceholder")}"></textarea>
 //           <div class="setup-spacer"></div>
           
-//           <label class="setup-label setup-margin-top">
+//           <label class="setup-label">
 //             ${t("ManualClaim.claimDetails.supportingEvidenceLabel")} 
 //             <span class="setup-text-light">${t("ManualClaim.claimDetails.supportingEvidenceOptional")}</span>
 //           </label>
@@ -2822,7 +2825,7 @@ if (typeof window !== "undefined") {
 //     function createTotalBar() {
 //         return createElement(`
 //       <div class="setup-total">
-//         <div>
+//         <div style='display: flex; align-items: center; gap: 10px;'>
 //           <span class="setup-green-dot"></span>
 //           <span>${t("ManualClaim.orderTotal.label")}</span>
 //         </div>
@@ -2954,10 +2957,11 @@ if (typeof window !== "undefined") {
 //         const card = createElement(`
 //       <div class="setup-action-card${isSelected ? ' selected' : ''}">
 //         <div class="setup-action-head">
-//           <div class="setup-action-title">${title}</div>
+//           <div class="setup-action-title">${title}:
+//           <div class="setup-text-subdued">${description}</div>
+//           </div>
 //           <input type="radio" name="setup-action" ${isSelected ? 'checked' : ''} 
 //                  aria-checked="${isSelected ? 'true' : 'false'}">
-//         <div class="setup-text-subdued">${description}</div>
 //         </div>
 //       </div>
 //     `);
