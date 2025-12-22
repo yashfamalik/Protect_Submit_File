@@ -216,9 +216,9 @@ const ensureSetupStyles = () => {
     object-fit: cover;
     border: 1px solid var(--setup-border);
     background: #f1f5f9;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
   }
 
 //   .setup-item-info { flex: 1; }
@@ -1314,7 +1314,7 @@ export default function mountSetup(container, props = {}) {
         ">
           <div class="setup-item-header" style="padding: 0;">
             <div class="setup-item">
-              <img src="${item.image}" alt="${item.name}">
+              <div class="setup-item-image-bg" style="background-image: url('${item.image}')"></div>
               <div class="setup-item-info">
                 <div class="setup-item-name">${item.name}</div>
                 <div class="setup-text-subdued">
@@ -1364,7 +1364,7 @@ export default function mountSetup(container, props = {}) {
         return createElement(`
       <div class="setup-item-wrapper">
         <div class="setup-item">
-          <img src="${item.image}" alt="${item.name}"
+          <div class="setup-item-image-bg" style="background-image: url('${item.image}')"></div>
           <div class="setup-item-info">
             <div class="setup-item-name">${item.name}</div>
             <div class="setup-text-subdued">${quantity} x ${item.price}</div>
@@ -1631,8 +1631,6 @@ if (typeof window !== "undefined") {
 
 
 
-
-
 // // SVG Icons defined as constants
 // const ICONS = {
 //     reorder: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M3.5 9.25a.75.75 0 0 0 1.5 0 3 3 0 0 1 3-3h6.566l-1.123 1.248a.75.75 0 1 0 1.114 1.004l2.25-2.5a.75.75 0 0 0-.027-1.032l-2.25-2.25a.75.75 0 1 0-1.06 1.06l.97.97h-6.44a4.5 4.5 0 0 0-4.5 4.5Z"></path><path d="M16.5 10.75a.75.75 0 0 0-1.5 0 3 3 0 0 1-3 3h-6.566l1.123-1.248a.75.75 0 1 0-1.114-1.004l-2.25 2.5a.75.75 0 0 0 .027 1.032l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h6.44a4.5 4.5 0 0 0 4.5-4.5Z"></path></svg>',
@@ -1844,13 +1842,16 @@ if (typeof window !== "undefined") {
 //     flex: 1;
 //   }
 
-//   .setup-item img {
+//   .setup-item img, .setup-item-image-bg {
 //     width: 56px;
 //     height: 56px;
 //     border-radius: var(--setup-radius-md);
 //     object-fit: cover;
 //     border: 1px solid var(--setup-border);
 //     background: #f1f5f9;
+//     background-size: cover;
+//     background-position: center;
+//     background-repeat: no-repeat;
 //   }
 
 // //   .setup-item-info { flex: 1; }
@@ -2885,7 +2886,7 @@ if (typeof window !== "undefined") {
 //       <div class="setup-item-card${selected ? ' selected' : ''}"${selected ? ' data-use-gradient="true"' : ''}>
 //         <div class="setup-item-header">
 //           <div class="setup-item">
-//             <img src="${item.image}" alt="${item.name}">
+//             <div class="setup-item-image-bg" style="background-image: url('${item.image}')"></div>
 //             <div class="setup-item-info">
 //               <div class="setup-item-name">${item.name}</div>
 //               <div class="setup-text-subdued">
