@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 // ===== VARIABLES =====
 const ICONS = {
     reorder: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M3.5 9.25a.75.75 0 0 0 1.5 0 3 3 0 0 1 3-3h6.566l-1.123 1.248a.75.75 0 1 0 1.114 1.004l2.25-2.5a.75.75 0 0 0-.027-1.032l-2.25-2.25a.75.75 0 1 0-1.06 1.06l.97.97h-6.44a4.5 4.5 0 0 0-4.5 4.5Z"></path><path d="M16.5 10.75a.75.75 0 0 0-1.5 0 3 3 0 0 1-3 3h-6.566l1.123-1.248a.75.75 0 1 0-1.114-1.004l-2.25 2.5a.75.75 0 0 0 .027 1.032l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h6.44a4.5 4.5 0 0 0 4.5-4.5Z"></path></svg>',
@@ -31,15 +25,6 @@ const DEFAULT_CLAIMED_ITEMS = [
         image: "https://picsum.photos/seed/perfume-a/72",
         price: "€5.95",
         qty: 2,
-        eligible: true
-    },
-    {
-        id: 2,
-        name: "Luxury Rose Perfume",
-        description: "Classic fragrance collection",
-        image: "https://picsum.photos/seed/perfume-b/72",
-        price: "€7.50",
-        qty: 1,
         eligible: true
     }
 ];
@@ -129,7 +114,9 @@ const ensureSubmittedStyles = () => {
   .submitted-gap-100 { column-gap: var(--submitted-space-100); }
   .submitted-Header {
   display:flex;
-  column-gap: var(--submitted-space-400); }
+  column-gap: var(--submitted-space-200); 
+  align-items: center;
+  }
   .submitted-mb-2 { margin-bottom: var(--submitted-space-100); }
   .submitted-mt-2 { margin-top: 4px; }
   .submitted-minw-110 { min-width: 110px; }
@@ -194,13 +181,7 @@ const ensureSubmittedStyles = () => {
     transform: translateY(-1px);
     box-shadow: 0 4px 6px rgba(90, 154, 90, 0.3);
   }
-
-  .submitted-btn-tertiary {
-    padding: 15px;
-    min-width: 40px;
-    border-radius: 50%;
-  }
-
+    
   .submitted-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -444,12 +425,12 @@ const createClaimedItemBox = (item, reasonLabel) => {
 
 const createHeader = (t) => {
     return `
-    <div class="submitted-row">
-        <div style="display:flex; justify-contetn: space-between; align-itmes: center;">
+    <div>
+        <div style="display:flex; justify-content: space-between; align-itmes: center;">
             <div class="submitted-Header">
-                <button class="submitted-btn submitted-btn-tertiary">
+                <button>
                     ${getTranslation(t, "SubmittedDesignJs.backButton",
-                `<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 20px; height: 20px;"><path fill-rule="evenodd" d="M16.5 10a.75.75 0 0 1-.75.75h-9.69l2.72 2.72a.75.75 0 0 1-1.06 1.06l-4-4a.75.75 0 0 1 0-1.06l4-4a.75.75 0 1 1 1.06 1.06l-2.72 2.72h9.69a.75.75 0 0 1 .75.75Z"></path></svg>`
+                `<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 25px; height: 25px;"><path fill-rule="evenodd" d="M16.5 10a.75.75 0 0 1-.75.75h-9.69l2.72 2.72a.75.75 0 0 1-1.06 1.06l-4-4a.75.75 0 0 1 0-1.06l4-4a.75.75 0 1 1 1.06 1.06l-2.72 2.72h9.69a.75.75 0 0 1 .75.75Z"></path></svg>`
                     )}
                 </button>
                 <h2 class="submitted-title">
@@ -915,10 +896,6 @@ export default mountSubmitted;
 
 
 
-
-
-
-
 // // ===== VARIABLES =====
 // const ICONS = {
 //     reorder: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M3.5 9.25a.75.75 0 0 0 1.5 0 3 3 0 0 1 3-3h6.566l-1.123 1.248a.75.75 0 1 0 1.114 1.004l2.25-2.5a.75.75 0 0 0-.027-1.032l-2.25-2.25a.75.75 0 1 0-1.06 1.06l.97.97h-6.44a4.5 4.5 0 0 0-4.5 4.5Z"></path><path d="M16.5 10.75a.75.75 0 0 0-1.5 0 3 3 0 0 1-3 3h-6.566l1.123-1.248a.75.75 0 1 0-1.114-1.004l-2.25 2.5a.75.75 0 0 0 .027 1.032l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h6.44a4.5 4.5 0 0 0 4.5-4.5Z"></path></svg>',
@@ -1334,21 +1311,24 @@ export default mountSubmitted;
 //     const reason = reasonLabel ?? "No reason specified";
 
 //     return `
-//     <div class="submitted-item-box">
-//       <div class="submitted-item-image" style="background-image: url('${itemImage}')"></div>
-//       <div class="submitted-item-textwrap">
-//         <span class="submitted-text submitted-text-md submitted-semibold submitted-block">${itemName}</span>
-//         <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">${itemDescription}</span>
-//         <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">Reason: ${reason}</span>
-//       </div>
-//       <div class="submitted-price-wrap">
-//         <span class="submitted-text submitted-text-md submitted-semibold">${quantity} x €${price.toFixed(
-//         2
-//     )} EUR</span>
-//       </div>
-//       <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
-//           <span class="setup-badge critical">Reason: ${reason}</span>
-//         </div>
+//     <div>
+//         <div class="submitted-item-box">
+//             <div class="submitted-item-image" style="background-image: url('${itemImage}')">
+//             </div>
+//             <div class="submitted-item-textwrap">
+//                 <span class="submitted-text submitted-text-md submitted-semibold submitted-block">${itemName}</span>
+//                 <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">${itemDescription}</span>
+//                 <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">Reason: ${reason}</span>
+//             </div>
+//             </div>
+//             <div class="submitted-price-wrap">
+//                 <span class="submitted-text submitted-text-md submitted-semibold">${quantity} x €${price.toFixed(
+//                 2
+//             )} EUR</span>
+//             </div>
+//             <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+//                 <span class="setup-badge critical">Reason: ${reason}</span>
+//             </div>
 //     </div>
 //   `;
 // };
@@ -1356,23 +1336,29 @@ export default mountSubmitted;
 // const createHeader = (t) => {
 //     return `
 //     <div class="submitted-row">
-//       <div class="submitted-Header">
-//         <button class="submitted-btn submitted-btn-tertiary">${getTranslation(
-//         t,
-//         "SubmittedDesignJs.backButton",
-//         "←"
-//     )}</button>
-//       <h2 class="submitted-title">${getTranslation(
-//         t,
-//         "SubmittedDesignJs.title",
-//         "Submitted"
-//     )}</h2>
-//       </div>
-//       <button class="submitted-btn submitted-btn-primary">${getTranslation(
-//         t,
-//         "SubmittedDesignJs.createNewBtn",
-//         "Create new"
-//     )}</button>
+//         <div style="display:flex; justify-contetn: space-between; align-itmes: center;">
+//             <div class="submitted-Header">
+//                 <button class="submitted-btn submitted-btn-tertiary">
+//                     ${getTranslation(t, "SubmittedDesignJs.backButton",
+//                 `<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 20px; height: 20px;"><path fill-rule="evenodd" d="M16.5 10a.75.75 0 0 1-.75.75h-9.69l2.72 2.72a.75.75 0 0 1-1.06 1.06l-4-4a.75.75 0 0 1 0-1.06l4-4a.75.75 0 1 1 1.06 1.06l-2.72 2.72h9.69a.75.75 0 0 1 .75.75Z"></path></svg>`
+//                     )}
+//                 </button>
+//                 <h2 class="submitted-title">
+//                     ${getTranslation(
+//                         t,
+//                         "SubmittedDesignJs.title",
+//                         "Submitted"
+//                     )}
+//                 </h2>
+//             </div>
+//             <button class="submitted-btn submitted-btn-primary">
+//                 ${getTranslation(
+//                     t,
+//                     "SubmittedDesignJs.createNewBtn",
+//                     "Create new"
+//                 )}
+//             </button>
+//         </div>
 //     </div>
 //   `;
 // };
@@ -1458,7 +1444,7 @@ export default mountSubmitted;
 //             return `
 //       <div class="submitted-card">
 //         <div class="submitted-stack submitted-gap-100 ">
-//           <div class="submitted-mb-2">
+//           <div class="submitted-row">
 //             <h3 class="submitted-heading-md">${getTranslation(
 //                 t,
 //                 "SubmittedDesignJs.reorderTitle",
@@ -1473,7 +1459,7 @@ export default mountSubmitted;
 //             </span>
 //           </div>
 //           <div class="submitted-divider"></div>
-//           <div class="">
+//           <div class="submitted-items">
 //             <h3 class="submitted-heading-md submitted-mb-2">
 //               ${getTranslation(
 //                 t,
