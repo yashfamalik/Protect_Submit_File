@@ -660,7 +660,7 @@ export default function mountSetup(container, props = {}) {
         "ManualClaim.actionOptions.reorder.title": "Reorder",
         "ManualClaim.actionOptions.reorder.description": "Reorder same items. This will create a new order.",
         "ManualClaim.actionOptions.refund.title": "Refund",
-        "ManualClaim.actionOptions.refund.description": "Payment will be refunded to original payment method.",
+        "ManualClaim.actionOptions.refund.description": "Refund will go to your original payment method.",
         "ManualClaim.claimedItems.heading": "Claimed items",
         "ManualClaim.badgeReasons.reason": "Reason:",
         "ManualClaim.orderTotal.label": "Order Total:",
@@ -672,7 +672,7 @@ export default function mountSetup(container, props = {}) {
         "ManualClaim.actionSummary.reorder.title": "Reorder",
         "ManualClaim.actionSummary.reorder.description": "Reordering same item(s). This will create a new order.",
         "ManualClaim.actionSummary.refund.title": "Refund",
-        "ManualClaim.actionSummary.refund.description": "Payment will be refunded to original payment method."
+        "ManualClaim.actionSummary.refund.description": "Refund will go to your original payment method."
     };
 
     const t = (key, opts) => {
@@ -692,7 +692,7 @@ export default function mountSetup(container, props = {}) {
                 sku: "PERF-001",
                 qty: 2,
                 price: "€5.95 EUR",
-                image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+                image: "https://picsum.photos/seed/perfume-a/72",
                 status: "In Stock",
                 eligible: true,
                 rating: 4.8,
@@ -706,7 +706,7 @@ export default function mountSetup(container, props = {}) {
                 sku: "PERF-001",
                 qty: 1,
                 price: "€5.95",
-                image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+                image: "https://picsum.photos/seed/perfume-b/72",
                 status: "Out Of Stock",
                 eligible: false,
                 rating: 4.8,
@@ -720,7 +720,7 @@ export default function mountSetup(container, props = {}) {
                 sku: "PERF-022",
                 qty: 3,
                 price: "€7.50 EUR",
-                image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+                image: "https://picsum.photos/seed/perfume-c/72",
                 status: "In Stock",
                 eligible: true,
                 rating: 4.5,
@@ -1322,15 +1322,15 @@ export default function mountSetup(container, props = {}) {
             </div>
        <div>
             <span class="setup-badge">${item.status}</span>
+            </div>
+            </div>
+            </div>
+            </div>
+            `);
+    }
             // <div style="display: flex; justify-content: flex-end; margin-top: 4px; font-size: 13px;">
             //   <div class="setup-text-subdued">${item.price}</div>
             // </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `);
-    }
 
     function renderActionOption(value, title, description) {
         const isSelected = state.selectedAction === value;
@@ -1630,8 +1630,6 @@ if (typeof window !== "undefined") {
 
 
 
-
-
 // // SVG Icons defined as constants
 // const ICONS = {
 //     reorder: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M3.5 9.25a.75.75 0 0 0 1.5 0 3 3 0 0 1 3-3h6.566l-1.123 1.248a.75.75 0 1 0 1.114 1.004l2.25-2.5a.75.75 0 0 0-.027-1.032l-2.25-2.25a.75.75 0 1 0-1.06 1.06l.97.97h-6.44a4.5 4.5 0 0 0-4.5 4.5Z"></path><path d="M16.5 10.75a.75.75 0 0 0-1.5 0 3 3 0 0 1-3 3h-6.566l1.123-1.248a.75.75 0 1 0-1.114-1.004l-2.25 2.5a.75.75 0 0 0 .027 1.032l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h6.44a4.5 4.5 0 0 0 4.5-4.5Z"></path></svg>',
@@ -1709,19 +1707,21 @@ if (typeof window !== "undefined") {
 //     background-color: transparent;
 //     display: flex;
 //     flex-direction: column;
-//     gap: var(--setup-space-lg);
+//     gap: var(--setup-space-md);
 //     max-width: 1200px;
 //     margin: 0 auto;
 //     width: 100%;
 //     box-sizing: border-box;
 //     -webkit-font-smoothing: antialiased;
+//     padding: 20px;
+//     box-sizing: border-box !important;
 //   }
 
 //   .setup-container * { box-sizing: border-box; }
 
 //   .setup-row {
 //     display: flex;
-//     gap: var(--setup-space-lg);
+//     gap: var(--setup-space-md);
 //     align-items: flex-start;
 //   }
 //   @media (max-width: 850px) {
@@ -1732,7 +1732,7 @@ if (typeof window !== "undefined") {
 //     flex: 1;
 //     display: flex;
 //     flex-direction: column;
-//     gap: var(--setup-space-lg);
+//     gap: var(--setup-space-md);
 //     min-width: 0;
 //   }
 
@@ -1831,7 +1831,7 @@ if (typeof window !== "undefined") {
 //     align-items: center;
 //     padding: var(--setup-space-md);
 //     gap: var(--setup-space-md);
-//     border-bottom: 1px solid var(--setup-border);
+//     // border-bottom: 1px solid var(--setup-border);
 //   }
 
 //   .setup-item {
@@ -2832,7 +2832,7 @@ if (typeof window !== "undefined") {
 //     function createTotalBar() {
 //         return createElement(`
 //       <div class="setup-total">
-//         <div style='display: flex; align-items: center; gap: 10px;'>
+//         <div style='display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500;'>
 //           <span class="setup-green-dot"></span>
 //           <span>${t("ManualClaim.orderTotal.label")}</span>
 //         </div>
@@ -2937,7 +2937,10 @@ if (typeof window !== "undefined") {
 //     function renderIneligibleItem(item) {
 //         return createElement(`
 //       <div class="setup-item-wrapper">
-//         <div style="display: flex; flex-direction: column; padding: var(--setup-space-md) 0; border-bottom: 1px solid var(--setup-border);">
+//         <div style="display: flex; flex-direction: column; 
+//         // padding: var(--setup-space-md) 0; 
+//         // border-bottom: 1px solid var(--setup-border);
+//         ">
 //           <div class="setup-item-header" style="padding: 0;">
 //             <div class="setup-item">
 //               <img src="${item.image}" alt="${item.name}">
@@ -2949,10 +2952,12 @@ if (typeof window !== "undefined") {
 //                 <div class="setup-item-collection">${item.collection}</div>
 //               </div>
 //             </div>
+//        <div>
 //             <span class="setup-badge">${item.status}</span>
-//           </div>
-//           <div style="display: flex; justify-content: flex-end; margin-top: 4px; font-size: 13px;">
-//             <div class="setup-text-subdued">${item.price}</div>
+//             // <div style="display: flex; justify-content: flex-end; margin-top: 4px; font-size: 13px;">
+//             //   <div class="setup-text-subdued">${item.price}</div>
+//             // </div>
+//             </div>
 //           </div>
 //         </div>
 //       </div>
