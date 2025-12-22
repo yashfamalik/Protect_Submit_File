@@ -179,8 +179,7 @@ const createClaimedItemBox = (item, reasonLabel) => {
 
     return `
     <div class="${CSS_CLASSES.item.box}">
-      <img class="${CSS_CLASSES.item.image
-        }" src="${itemImage}" alt="${itemName}" onerror="this.src='https://picsum.photos/seed/perfume-c/72'" />
+      <div class="${CSS_CLASSES.item.image}" style="background-image: url('${itemImage}')"></div>
       <div class="${CSS_CLASSES.item.textWrap}">
         <span class="submitted-text submitted-text-md submitted-semibold submitted-block">${itemName}</span>
         <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">${itemDescription}</span>
@@ -832,11 +831,13 @@ const ensureSubmittedStyles = () => {
   .submitted-item-image {
     width: 56px;
     height: 56px;
-    object-fit: cover;
     border-radius: 6px;
     background: #f1f5f9;
     border: 1px solid var(--submitted-border);
     margin-right: var(--submitted-space-200);
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
   }
 
   .submitted-item-box:hover .submitted-item-image {
@@ -1023,6 +1024,7 @@ export default mountSubmitted;
 
 
 
+
 // const ICONS = {
 //     reorder: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M3.5 9.25a.75.75 0 0 0 1.5 0 3 3 0 0 1 3-3h6.566l-1.123 1.248a.75.75 0 1 0 1.114 1.004l2.25-2.5a.75.75 0 0 0-.027-1.032l-2.25-2.25a.75.75 0 1 0-1.06 1.06l.97.97h-6.44a4.5 4.5 0 0 0-4.5 4.5Z"></path><path d="M16.5 10.75a.75.75 0 0 0-1.5 0 3 3 0 0 1-3 3h-6.566l1.123-1.248a.75.75 0 1 0-1.114-1.004l-2.25 2.5a.75.75 0 0 0 .027 1.032l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h6.44a4.5 4.5 0 0 0 4.5-4.5Z"></path></svg>',
 //     refund: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path fill-rule="evenodd" d="M12.379 4h-7.258c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v3.008c0 .395 0 .736.023 1.017.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.121.01.254.016.397.019.001.243.006.46.022.65.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.28.023.622.023 1.017.023h7.258c.395 0 .736 0 1.017-.023.297-.024.592-.078.875-.222.424-.216.768-.56.984-.984.144-.283.198-.578.222-.875.023-.28.023-.622.023-1.017v-3.008c0-.395 0-.736-.023-1.017-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.983-.984-.284-.144-.58-.198-.876-.222-.121-.01-.254-.016-.397-.019-.001-.243-.006-.46-.022-.65-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.984-.984-.283-.144-.578-.198-.875-.222-.28-.023-.622-.023-1.017-.023Zm1.62 2.75h-6.378c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v1.874c-.104-.002-.194-.006-.274-.013-.204-.017-.28-.045-.316-.064-.142-.072-.256-.186-.328-.327-.02-.038-.047-.113-.064-.317-.017-.212-.018-.492-.018-.924v-2.95c0-.432 0-.712.018-.924.017-.204.045-.28.064-.316.072-.142.186-.256.328-.328.037-.02.112-.047.316-.064.212-.017.492-.018.924-.018h7.2c.432 0 .712 0 .924.018.204.017.28.045.317.064.14.072.255.186.327.328.02.037.047.112.064.316.011.138.016.305.017.524Zm-6.349 7.75h1.178c-.515-.796-.828-1.848-.828-3 0-1.278.385-2.43 1.002-3.25h-1.352c-.432 0-.712 0-.924.018-.204.017-.28.045-.316.064-.142.072-.256.186-.328.328-.02.037-.047.112-.064.316-.017.212-.018.492-.018.924v2.95c0 .432 0 .712.018.924.017.204.045.28.064.317.072.14.186.255.328.327.037.02.112.047.316.064.212.017.492.018.924.018Zm6.85-3c0-1.278-.384-2.43-1.002-3.25h1.352c.432 0 .712 0 .924.018.204.017.28.045.316.064.142.072.256.186.328.328.02.037.047.112.064.316.017.212.018.492.018.924v2.95c0 .432 0 .712-.018.924-.017.204-.045.28-.064.317-.072.14-.186.255-.328.327-.037.02-.112.047-.316.064-.212.017-.492.018-.924.018h-1.178c.515-.796.828-1.848.828-3Zm-4.332 2.304c-.384-.532-.668-1.342-.668-2.304 0-.962.284-1.772.668-2.304.385-.533.787-.696 1.082-.696.295 0 .697.163 1.082.696.384.532.668 1.342.668 2.304 0 .962-.284 1.772-.668 2.304-.385.533-.787.696-1.082.696-.295 0-.697-.163-1.082-.696Z"></path></svg>',
@@ -1049,7 +1051,7 @@ export default mountSubmitted;
 //         id: 1,
 //         name: "AHMED Aqua perfume by Laiba",
 //         description: "Premium fragrance collection",
-//         image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+//         image: "https://picsum.photos/seed/perfume-a/72",
 //         price: "€5.95",
 //         qty: 2,
 //         eligible: true
@@ -1058,7 +1060,7 @@ export default mountSubmitted;
 //         id: 2,
 //         name: "Luxury Rose Perfume",
 //         description: "Classic fragrance collection",
-//         image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+//         image: "https://picsum.photos/seed/perfume-b/72",
 //         price: "€7.50",
 //         qty: 1,
 //         eligible: true
@@ -1198,13 +1200,13 @@ export default mountSubmitted;
 //     const price = parsePriceToNumber(item?.price ?? 0);
 //     const itemName = item?.name ?? "Unknown Item";
 //     const itemDescription = item?.description ?? "No description available";
-//     const itemImage = item?.image || "https://via.placeholder.com/72x72/f0f0f0/666?text=Product";
+//     const itemImage = item?.image || "https://picsum.photos/seed/perfume-c/72";
 //     const reason = reasonLabel ?? "No reason specified";
 
 //     return `
 //     <div class="${CSS_CLASSES.item.box}">
 //       <img class="${CSS_CLASSES.item.image
-//         }" src="${itemImage}" alt="${itemName}" onerror="this.src='https://via.placeholder.com/72x72/f0f0f0/666?text=Product'" />
+//         }" src="${itemImage}" alt="${itemName}" onerror="this.src='https://picsum.photos/seed/perfume-c/72'" />
 //       <div class="${CSS_CLASSES.item.textWrap}">
 //         <span class="submitted-text submitted-text-md submitted-semibold submitted-block">${itemName}</span>
 //         <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">${itemDescription}</span>
