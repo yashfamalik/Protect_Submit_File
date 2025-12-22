@@ -467,7 +467,7 @@ function mountSubmitted(container, props = {}) {
     mountPoint.className = "submitted-mount";
     host.appendChild(mountPoint);
 
-    // Add proxy object like 
+    // Add proxy object with loop prevention
     const proxy = {
         contentSettings: null,
         colorSettings: {
@@ -475,6 +475,7 @@ function mountSubmitted(container, props = {}) {
         },
         isLiveMode: true,
         subscribers: new Set(),
+        _updating: false, // Flag to prevent circular updates
 
         subscribe(cb) {
             this.subscribers.add(cb);
@@ -482,6 +483,7 @@ function mountSubmitted(container, props = {}) {
         },
 
         notify() {
+            if (this._updating) return; // Prevent circular notifications
             for (const cb of this.subscribers)
                 cb({
                     contentSettings: this.contentSettings,
@@ -491,20 +493,32 @@ function mountSubmitted(container, props = {}) {
         },
 
         updateContentSettings(settings) {
-            this.contentSettings =
-                typeof settings === "function"
-                    ? settings(this.contentSettings)
-                    : { ...this.contentSettings, ...settings };
-            this.notify();
+            if (this._updating) return; // Prevent circular updates
+            this._updating = true;
+            try {
+                this.contentSettings =
+                    typeof settings === "function"
+                        ? settings(this.contentSettings)
+                        : { ...this.contentSettings, ...settings };
+                this.notify();
+            } finally {
+                this._updating = false;
+            }
         },
 
         updateColorSettings(settings) {
-            this.colorSettings =
-                typeof settings === "function"
-                    ? settings(this.colorSettings)
-                    : { ...this.colorSettings, ...settings };
-            this.notify();
-            this.applyColorSettings(this.colorSettings);
+            if (this._updating) return; // Prevent circular updates
+            this._updating = true;
+            try {
+                this.colorSettings =
+                    typeof settings === "function"
+                        ? settings(this.colorSettings)
+                        : { ...this.colorSettings, ...settings };
+                this.notify();
+                this.applyColorSettings(this.colorSettings);
+            } finally {
+                this._updating = false;
+            }
         },
 
         getContentSettings() {
@@ -528,60 +542,18 @@ function mountSubmitted(container, props = {}) {
         },
     };
 
-    // proxy integration for color settings
+    // DISABLED: proxy integration to prevent infinite loops
+    // The following proxy integration code is disabled to prevent circular updates
     let proxyUnsubscribe = null;
-    if (typeof window !== 'undefined' && window.SubmittedProxy) {
-        const localProxy = window.SubmittedProxy;
+    
+    // Only apply default colors without subscribing to prevent loops
+    proxy.updateColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
+    proxy.applyColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
 
-        // Apply initial colors if available
-        const initialColors = localProxy.getColorSettings?.();
-        if (initialColors) {
-            proxy.updateColorSettings(initialColors);
-            proxy.applyColorSettings(initialColors);
-        } else {
-            // Apply Green-Yellow theme as default
-            proxy.updateColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
-            proxy.applyColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
-        }
-
-        // Subscribe to changes
-        proxyUnsubscribe = localProxy.subscribe?.((snapshot) => {
-            if (snapshot.colorSettings) {
-                proxy.updateColorSettings(snapshot.colorSettings);
-                proxy.applyColorSettings(snapshot.colorSettings);
-            }
-        });
-    } else {
-        // Apply Green-Yellow theme as default
-        proxy.updateColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
-        proxy.applyColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
-    }
-
-    // Also check for external Submitted proxy integration
-    if (typeof window !== 'undefined' && window.Submitted?.proxy) {
-        const extProxy = window.Submitted.proxy;
-
-        // Apply initial colors from external proxy
-        const extColors = extProxy.getColorSettings?.();
-        if (extColors) {
-            proxy.applyColorSettings(extColors);
-        }
-
-        // Subscribe to external proxy changes
-        const extUnsubscribe = extProxy.subscribe?.((snapshot) => {
-            if (snapshot.colorSettings) {
-                proxy.applyColorSettings(snapshot.colorSettings);
-            }
-        });
-
-        if (extUnsubscribe) {
-            const originalCleanup = proxyUnsubscribe;
-            proxyUnsubscribe = () => {
-                if (originalCleanup) originalCleanup();
-                extUnsubscribe();
-            };
-        }
-    }
+    // DISABLED: External proxy integration to prevent loops
+    // if (typeof window !== 'undefined' && window.Submitted?.proxy) {
+    //     // This code is disabled to prevent infinite loops
+    // }
 
     // Initial render with error handling
     try {
@@ -964,6 +936,7 @@ if (typeof window !== "undefined") {
             },
             isLiveMode: true,
             subscribers: new Set(),
+            _updating: false, // Flag to prevent circular updates
 
             subscribe(cb) {
                 this.subscribers.add(cb);
@@ -971,6 +944,7 @@ if (typeof window !== "undefined") {
             },
 
             notify() {
+                if (this._updating) return; // Prevent circular notifications
                 for (const cb of this.subscribers)
                     cb({
                         contentSettings: this.contentSettings,
@@ -980,20 +954,32 @@ if (typeof window !== "undefined") {
             },
 
             updateContentSettings(settings) {
-                this.contentSettings =
-                    typeof settings === "function"
-                        ? settings(this.contentSettings)
-                        : { ...this.contentSettings, ...settings };
-                this.notify();
+                if (this._updating) return; // Prevent circular updates
+                this._updating = true;
+                try {
+                    this.contentSettings =
+                        typeof settings === "function"
+                            ? settings(this.contentSettings)
+                            : { ...this.contentSettings, ...settings };
+                    this.notify();
+                } finally {
+                    this._updating = false;
+                }
             },
 
             updateColorSettings(settings) {
-                this.colorSettings =
-                    typeof settings === "function"
-                        ? settings(this.colorSettings)
-                        : { ...this.colorSettings, ...settings };
-                this.notify();
-                this.applyColorSettings(this.colorSettings);
+                if (this._updating) return; // Prevent circular updates
+                this._updating = true;
+                try {
+                    this.colorSettings =
+                        typeof settings === "function"
+                            ? settings(this.colorSettings)
+                            : { ...this.colorSettings, ...settings };
+                    this.notify();
+                    this.applyColorSettings(this.colorSettings);
+                } finally {
+                    this._updating = false;
+                }
             },
 
             getContentSettings() {
@@ -1024,7 +1010,6 @@ export { applySubmittedColorSettings };
 
 // Export the mount function as default
 export default mountSubmitted;
-
 
 
 
