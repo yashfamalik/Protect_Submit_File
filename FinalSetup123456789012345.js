@@ -209,13 +209,16 @@ const ensureSetupStyles = () => {
     flex: 1;
   }
 
-  .setup-item img {
+  .setup-item img, .setup-item-image-bg {
     width: 56px;
     height: 56px;
     border-radius: var(--setup-radius-md);
     object-fit: cover;
     border: 1px solid var(--setup-border);
     background: #f1f5f9;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 
 //   .setup-item-info { flex: 1; }
@@ -1250,7 +1253,7 @@ export default function mountSetup(container, props = {}) {
       <div class="setup-item-card${selected ? ' selected' : ''}"${selected ? ' data-use-gradient="true"' : ''}>
         <div class="setup-item-header">
           <div class="setup-item">
-            <img src="${item.image}" alt="${item.name}">
+            <div class="setup-item-image-bg" style="background-image: url('${item.image}')"></div>
             <div class="setup-item-info">
               <div class="setup-item-name">${item.name}</div>
               <div class="setup-text-subdued">
@@ -2292,7 +2295,7 @@ if (typeof window !== "undefined") {
 //         "ManualClaim.actionOptions.reorder.title": "Reorder",
 //         "ManualClaim.actionOptions.reorder.description": "Reorder same items. This will create a new order.",
 //         "ManualClaim.actionOptions.refund.title": "Refund",
-//         "ManualClaim.actionOptions.refund.description": "Payment will be refunded to original payment method.",
+//         "ManualClaim.actionOptions.refund.description": "Refund will go to your original payment method.",
 //         "ManualClaim.claimedItems.heading": "Claimed items",
 //         "ManualClaim.badgeReasons.reason": "Reason:",
 //         "ManualClaim.orderTotal.label": "Order Total:",
@@ -2304,7 +2307,7 @@ if (typeof window !== "undefined") {
 //         "ManualClaim.actionSummary.reorder.title": "Reorder",
 //         "ManualClaim.actionSummary.reorder.description": "Reordering same item(s). This will create a new order.",
 //         "ManualClaim.actionSummary.refund.title": "Refund",
-//         "ManualClaim.actionSummary.refund.description": "Payment will be refunded to original payment method."
+//         "ManualClaim.actionSummary.refund.description": "Refund will go to your original payment method."
 //     };
 
 //     const t = (key, opts) => {
@@ -2324,7 +2327,7 @@ if (typeof window !== "undefined") {
 //                 sku: "PERF-001",
 //                 qty: 2,
 //                 price: "€5.95 EUR",
-//                 image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+//                 image: "https://picsum.photos/seed/perfume-a/72",
 //                 status: "In Stock",
 //                 eligible: true,
 //                 rating: 4.8,
@@ -2338,7 +2341,7 @@ if (typeof window !== "undefined") {
 //                 sku: "PERF-001",
 //                 qty: 1,
 //                 price: "€5.95",
-//                 image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+//                 image: "https://picsum.photos/seed/perfume-b/72",
 //                 status: "Out Of Stock",
 //                 eligible: false,
 //                 rating: 4.8,
@@ -2352,7 +2355,7 @@ if (typeof window !== "undefined") {
 //                 sku: "PERF-022",
 //                 qty: 3,
 //                 price: "€7.50 EUR",
-//                 image: "https://via.placeholder.com/72x72/f0f0f0/666?text=Product",
+//                 image: "https://picsum.photos/seed/perfume-c/72",
 //                 status: "In Stock",
 //                 eligible: true,
 //                 rating: 4.5,
@@ -2954,15 +2957,15 @@ if (typeof window !== "undefined") {
 //             </div>
 //        <div>
 //             <span class="setup-badge">${item.status}</span>
+//             </div>
+//             </div>
+//             </div>
+//             </div>
+//             `);
+//     }
 //             // <div style="display: flex; justify-content: flex-end; margin-top: 4px; font-size: 13px;">
 //             //   <div class="setup-text-subdued">${item.price}</div>
 //             // </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     `);
-//     }
 
 //     function renderActionOption(value, title, description) {
 //         const isSelected = state.selectedAction === value;
