@@ -1005,7 +1005,7 @@ export default function mountSetup(container, props = {}) {
     const card = createElement(`
       <div class="setup-card setup-margin-top">
         <div class="setup-card-header">
-          <d class="setup-heading">
+          <div class="setup-heading">
             ${ICONS.ineligibleItems}
             ${t("ManualClaim.ineligibleItems.heading")}
           </div>
