@@ -1,4 +1,10 @@
 
+
+
+
+
+
+
 // ===== VARIABLES =====
 const ICONS = {
     reorder: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M3.5 9.25a.75.75 0 0 0 1.5 0 3 3 0 0 1 3-3h6.566l-1.123 1.248a.75.75 0 1 0 1.114 1.004l2.25-2.5a.75.75 0 0 0-.027-1.032l-2.25-2.25a.75.75 0 1 0-1.06 1.06l.97.97h-6.44a4.5 4.5 0 0 0-4.5 4.5Z"></path><path d="M16.5 10.75a.75.75 0 0 0-1.5 0 3 3 0 0 1-3 3h-6.566l1.123-1.248a.75.75 0 1 0-1.114-1.004l-2.25 2.5a.75.75 0 0 0 .027 1.032l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h6.44a4.5 4.5 0 0 0 4.5-4.5Z"></path></svg>',
@@ -414,21 +420,24 @@ const createClaimedItemBox = (item, reasonLabel) => {
     const reason = reasonLabel ?? "No reason specified";
 
     return `
-    <div class="submitted-item-box">
-      <div class="submitted-item-image" style="background-image: url('${itemImage}')"></div>
-      <div class="submitted-item-textwrap">
-        <span class="submitted-text submitted-text-md submitted-semibold submitted-block">${itemName}</span>
-        <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">${itemDescription}</span>
-        <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">Reason: ${reason}</span>
-      </div>
-      <div class="submitted-price-wrap">
-        <span class="submitted-text submitted-text-md submitted-semibold">${quantity} x €${price.toFixed(
-        2
-    )} EUR</span>
-      </div>
-      <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
-          <span class="setup-badge critical">Reason: ${reason}</span>
-        </div>
+    <div>
+        <div class="submitted-item-box">
+            <div class="submitted-item-image" style="background-image: url('${itemImage}')">
+            </div>
+            <div class="submitted-item-textwrap">
+                <span class="submitted-text submitted-text-md submitted-semibold submitted-block">${itemName}</span>
+                <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">${itemDescription}</span>
+                <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">Reason: ${reason}</span>
+            </div>
+            </div>
+            <div class="submitted-price-wrap">
+                <span class="submitted-text submitted-text-md submitted-semibold">${quantity} x €${price.toFixed(
+                2
+            )} EUR</span>
+            </div>
+            <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+                <span class="setup-badge critical">Reason: ${reason}</span>
+            </div>
     </div>
   `;
 };
@@ -436,23 +445,29 @@ const createClaimedItemBox = (item, reasonLabel) => {
 const createHeader = (t) => {
     return `
     <div class="submitted-row">
-      <div class="submitted-Header">
-        <button class="submitted-btn submitted-btn-tertiary">${getTranslation(
-        t,
-        "SubmittedDesignJs.backButton",
-        "←"
-    )}</button>
-      <h2 class="submitted-title">${getTranslation(
-        t,
-        "SubmittedDesignJs.title",
-        "Submitted"
-    )}</h2>
-      </div>
-      <button class="submitted-btn submitted-btn-primary">${getTranslation(
-        t,
-        "SubmittedDesignJs.createNewBtn",
-        "Create new"
-    )}</button>
+        <div style="display:flex; justify-contetn: space-between; align-itmes: center;">
+            <div class="submitted-Header">
+                <button class="submitted-btn submitted-btn-tertiary">
+                    ${getTranslation(t, "SubmittedDesignJs.backButton",
+                <svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 20px; height: 20px;"><path fill-rule="evenodd" d="M16.5 10a.75.75 0 0 1-.75.75h-9.69l2.72 2.72a.75.75 0 0 1-1.06 1.06l-4-4a.75.75 0 0 1 0-1.06l4-4a.75.75 0 1 1 1.06 1.06l-2.72 2.72h9.69a.75.75 0 0 1 .75.75Z"></path></svg>
+                    )}
+                </button>
+                <h2 class="submitted-title">
+                    ${getTranslation(
+                        t,
+                        "SubmittedDesignJs.title",
+                        "Submitted"
+                    )}
+                </h2>
+            </div>
+            <button class="submitted-btn submitted-btn-primary">
+                ${getTranslation(
+                    t,
+                    "SubmittedDesignJs.createNewBtn",
+                    "Create new"
+                )}
+            </button>
+        </div>
     </div>
   `;
 };
@@ -538,7 +553,7 @@ const render = (container, props) => {
             return `
       <div class="submitted-card">
         <div class="submitted-stack submitted-gap-100 ">
-          <div class="submitted-mb-2">
+          <div class="submitted-row">
             <h3 class="submitted-heading-md">${getTranslation(
                 t,
                 "SubmittedDesignJs.reorderTitle",
@@ -553,7 +568,7 @@ const render = (container, props) => {
             </span>
           </div>
           <div class="submitted-divider"></div>
-          <div class="">
+          <div class="submitted-items">
             <h3 class="submitted-heading-md submitted-mb-2">
               ${getTranslation(
                 t,
@@ -897,6 +912,14 @@ export default mountSubmitted;
 
 
 
+
+
+
+
+
+
+
+// // ===== VARIABLES =====
 // const ICONS = {
 //     reorder: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M3.5 9.25a.75.75 0 0 0 1.5 0 3 3 0 0 1 3-3h6.566l-1.123 1.248a.75.75 0 1 0 1.114 1.004l2.25-2.5a.75.75 0 0 0-.027-1.032l-2.25-2.25a.75.75 0 1 0-1.06 1.06l.97.97h-6.44a4.5 4.5 0 0 0-4.5 4.5Z"></path><path d="M16.5 10.75a.75.75 0 0 0-1.5 0 3 3 0 0 1-3 3h-6.566l1.123-1.248a.75.75 0 1 0-1.114-1.004l-2.25 2.5a.75.75 0 0 0 .027 1.032l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h6.44a4.5 4.5 0 0 0 4.5-4.5Z"></path></svg>',
 //     refund: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path fill-rule="evenodd" d="M12.379 4h-7.258c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v3.008c0 .395 0 .736.023 1.017.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.121.01.254.016.397.019.001.243.006.46.022.65.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.28.023.622.023 1.017.023h7.258c.395 0 .736 0 1.017-.023.297-.024.592-.078.875-.222.424-.216.768-.56.984-.984.144-.283.198-.578.222-.875.023-.28.023-.622.023-1.017v-3.008c0-.395 0-.736-.023-1.017-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.983-.984-.284-.144-.58-.198-.876-.222-.121-.01-.254-.016-.397-.019-.001-.243-.006-.46-.022-.65-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.984-.984-.283-.144-.578-.198-.875-.222-.28-.023-.622-.023-1.017-.023Zm1.62 2.75h-6.378c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v1.874c-.104-.002-.194-.006-.274-.013-.204-.017-.28-.045-.316-.064-.142-.072-.256-.186-.328-.327-.02-.038-.047-.113-.064-.317-.017-.212-.018-.492-.018-.924v-2.95c0-.432 0-.712.018-.924.017-.204.045-.28.064-.316.072-.142.186-.256.328-.328.037-.02.112-.047.316-.064.212-.017.492-.018.924-.018h7.2c.432 0 .712 0 .924.018.204.017.28.045.317.064.14.072.255.186.327.328.02.037.047.112.064.316.011.138.016.305.017.524Zm-6.349 7.75h1.178c-.515-.796-.828-1.848-.828-3 0-1.278.385-2.43 1.002-3.25h-1.352c-.432 0-.712 0-.924.018-.204.017-.28.045-.316.064-.142.072-.256.186-.328.328-.02.037-.047.112-.064.316-.017.212-.018.492-.018.924v2.95c0 .432 0 .712.018.924.017.204.045.28.064.317.072.14.186.255.328.327.037.02.112.047.316.064.212.017.492.018.924.018Zm6.85-3c0-1.278-.384-2.43-1.002-3.25h1.352c.432 0 .712 0 .924.018.204.017.28.045.316.064.142.072.256.186.328.328.02.037.047.112.064.316.017.212.018.492.018.924v2.95c0 .432 0 .712-.018.924-.017.204-.045.28-.064.317-.072.14-.186.255-.328.327-.037.02-.112.047-.316.064-.212.017-.492.018-.924.018h-1.178c.515-.796.828-1.848.828-3Zm-4.332 2.304c-.384-.532-.668-1.342-.668-2.304 0-.962.284-1.772.668-2.304.385-.533.787-.696 1.082-.696.295 0 .697.163 1.082.696.384.532.668 1.342.668 2.304 0 .962-.284 1.772-.668 2.304-.385.533-.787.696-1.082.696-.295 0-.697-.163-1.082-.696Z"></path></svg>',
@@ -906,18 +929,14 @@ export default mountSubmitted;
 //     ineligibleItems: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14ZM4.5 10a5.5 5.5 0 0 1 9.546-3.768l-7.814 7.814A5.476 5.476 0 0 1 4.5 10Zm1.732 4.268 7.814-7.814a5.5 5.5 0 0 1-7.814 7.814Z"></path></svg>'
 // };
 
-
-// // Submitted Component - Clean Code with Original Design
 // const SUBMITTED_STYLE_ID = "vanilla-submitted-styles";
 
-// // Default claim information
 // const DEFAULT_CLAIM_INFO = {
 //     id: "20250816083974262",
 //     email: "abcd@gmail.com",
 //     created: "Aug 16, 08:39 am",
 // };
 
-// // Default claimed items - sample products
 // const DEFAULT_CLAIMED_ITEMS = [
 //     {
 //         id: 1,
@@ -939,586 +958,12 @@ export default mountSubmitted;
 //     }
 // ];
 
-// // Green-Yellow theme default colors (matching SubmittedController)
 // const DEFAULT_GREEN_YELLOW_COLORS = {
-//     buttonBg: "#5a9a5a", // Green color from Green-Yellow theme
-//     buttonText: "#ffffff", // White text for contrast
+//     buttonBg: "#5a9a5a",
+//     buttonText: "#ffffff",
 // };
 
-// // CSS class constants for consistent styling
-// const CSS_CLASSES = {
-//     root: "submitted-root",
-//     row: "submitted-row",
-//     inline: "submitted-gap-400 submitted-row-center",
-//     btn: {
-//         base: "submitted-btn",
-//         primary: "submitted-btn submitted-btn-primary",
-//         tertiary: "submitted-btn submitted-btn-tertiary",
-//     },
-//     card: "submitted-card",
-//     grid: "submitted-grid",
-//     badge: "submitted-badge submitted-badge-warning",
-//     item: {
-//         box: "submitted-item-box",
-//         image: "submitted-item-image",
-//         textWrap: "submitted-item-textwrap",
-//         priceWrap: "submitted-price-wrap",
-//     },
-// };
-
-// /**
-//  * Utility Functions
-//  */
-
-// /**
-//  * Converts price string to number
-//  * @param {string|number} price - Price value
-//  * @returns {number} Parsed price or 0 if invalid
-//  */
-// const parsePriceToNumber = (price) => {
-//     if (typeof price === "number") return price;
-//     const numericValue = parseFloat(String(price).replace(/[^\d.]/g, ""));
-//     return Number.isFinite(numericValue) ? numericValue : 0;
-// };
-
-// /**
-//  * Derives claimed items from input data
-//  * @param {Object} input - Input data containing claimedItems, ORDER_DATA, quantities
-//  * @returns {Array} Array of claimed items
-//  */
-// const deriveClaimedItems = (input) => {
-//     const { claimedItems, ORDER_DATA, quantities = {} } = input || {};
-
-//     // Return existing claimed items if available
-//     if (Array.isArray(claimedItems) && claimedItems.length > 0) {
-//         return claimedItems;
-//     }
-
-//     // Filter eligible items from order data
-//     const items = ORDER_DATA?.items || [];
-//     const derivedItems = items
-//         .filter((item) => item?.eligible && (quantities[item.id] ?? 1) >= 1)
-//         .map((item) => ({ ...item, qty: quantities[item.id] ?? 1 }));
-
-//     // If no items found, return default claimed items
-//     if (derivedItems.length === 0) {
-//         return DEFAULT_CLAIMED_ITEMS;
-//     }
-
-//     return derivedItems;
-// };
-
-// /**
-//  * Derives reason label from claim options
-//  * @param {Object} input - Input data containing reasonLabel, CLAIM_OPTIONS, selectedClaimOption
-//  * @returns {string} Reason label or empty string
-//  */
-// const deriveReasonLabel = (input) => {
-//     const { reasonLabel, CLAIM_OPTIONS, selectedClaimOption } = input || {};
-
-//     // Return existing reason label if available
-//     if (reasonLabel?.trim()) return reasonLabel;
-
-//     // Find matching claim option
-//     if (!Array.isArray(CLAIM_OPTIONS) || !selectedClaimOption) {
-//         // Return default reason if no options provided
-//         return "Product damaged";
-//     }
-
-//     const matchedOption = CLAIM_OPTIONS.find((option) =>
-//         typeof option === "object"
-//             ? option.value === selectedClaimOption
-//             : option === selectedClaimOption
-//     );
-
-//     return matchedOption?.label || matchedOption || "Product damaged";
-// };
-
-// /**
-//  * HTML Template Generators
-//  */
-
-// /**
-//  * Creates an information row with label and value
-//  * @param {string} label - Label text
-//  * @param {string} valueText - Value text
-//  * @returns {string} HTML string
-//  */
-// const createInfoRow = (label, valueText) => {
-//     const labelText = String(label ?? "");
-//     const hasValue = valueText != null && String(valueText).length > 0;
-
-//     return `
-//     <div class="submitted-gap-100">
-//       <span class="submitted-text submitted-text-subdued submitted-minw-110 submitted-text-sm">${labelText}</span>
-//       ${hasValue
-//             ? `<span class="submitted-text submitted-text-sm">${String(
-//                 valueText
-//             )}</span>`
-//             : ""
-//         }
-//     </div>
-//   `;
-// };
-
-// /**
-//  * Creates a claimed item box
-//  * @param {Object} item - Item data
-//  * @param {string} reasonLabel - Reason for claim
-//  * @returns {string} HTML string
-//  */
-// const createClaimedItemBox = (item, reasonLabel) => {
-//     const quantity = item?.qty ?? 1;
-//     const price = parsePriceToNumber(item?.price ?? 0);
-//     const itemName = item?.name ?? "Unknown Item";
-//     const itemDescription = item?.description ?? "No description available";
-//     const itemImage = item?.image || "https://picsum.photos/seed/perfume-c/72";
-//     const reason = reasonLabel ?? "No reason specified";
-
-//     return `
-//     <div class="${CSS_CLASSES.item.box}">
-//       <div class="${CSS_CLASSES.item.image}" style="background-image: url('${itemImage}')"></div>
-//       <div class="${CSS_CLASSES.item.textWrap}">
-//         <span class="submitted-text submitted-text-md submitted-semibold submitted-block">${itemName}</span>
-//         <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">${itemDescription}</span>
-//         <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">Reason: ${reason}</span>
-//       </div>
-//       <div class="${CSS_CLASSES.item.priceWrap}">
-//         <span class="submitted-text submitted-text-md submitted-semibold">${quantity} x €${price.toFixed(
-//         2
-//     )} EUR</span>
-//       </div>
-//       <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
-//           <span class="setup-badge critical">Reason: ${reason}</span>
-//         </div>
-//     </div>
-//   `;
-// };
-
-// /**
-//  * Gets translation with fallback
-//  * @param {Function} t - Translation function
-//  * @param {string} key - Translation key
-//  * @param {string} fallback - Fallback text
-//  * @returns {string} Translated text or fallback
-//  */
-// const getTranslation = (t, key, fallback) => t?.(key, fallback) ?? fallback;
-
-// /**
-//  * Apply color settings to CSS variables for submitted component
-//  * @param {Object} settings - Color settings object
-//  */
-// const applySubmittedColorSettings = (settings) => {
-//     if (!settings) return;
-//     const root = document.documentElement;
-//     const setVar = (key, value) => root.style.setProperty(key, value);
-
-//     // Apply only button colors to CSS variables
-//     [
-//         ["buttonBg", "--submitted-primary"],
-//         ["buttonText", "--submitted-primary-text"],
-//     ].forEach(([key, cssVar]) => {
-//         if (settings[key]) {
-//             setVar(cssVar, settings[key]);
-//         }
-//     });
-// };
-
-// const createHeader = (t) => {
-//     return `
-//     <div class="${CSS_CLASSES.row}">
-//       <div class="${CSS_CLASSES.inline}">
-//         <button class="${CSS_CLASSES.btn.tertiary}">${getTranslation(
-//         t,
-//         "SubmittedDesignJs.backButton",
-//         "←"
-//     )}</button>
-//       <h2 class="submitted-title">${getTranslation(
-//         t,
-//         "SubmittedDesignJs.title",
-//         "Submitted"
-//     )}</h2>
-//       </div>
-//       <button class="${CSS_CLASSES.btn.primary}">${getTranslation(
-//         t,
-//         "SubmittedDesignJs.createNewBtn",
-//         "Create new"
-//     )}</button>
-//     </div>
-//   `;
-// };
-
-// /**
-//  * Main render function
-//  * @param {HTMLElement} container - Container element
-//  * @param {Object} props - Component props
-//  */
-// const render = (container, props) => {
-//     try {
-//         const { t } = props || {};
-//         const claimInfo = props?.claimInfo || DEFAULT_CLAIM_INFO;
-//         const claimedItems = deriveClaimedItems(props);
-//         const reason = deriveReasonLabel(props);
-
-//         // Validate required data
-//         if (!Array.isArray(claimedItems) || claimedItems.length === 0) {
-//             console.warn('No claimed items found, using default items');
-//         }
-
-//         /**
-//          * Creates the left card containing claim status and items
-//          * @returns {string} HTML string
-//          */
-//         const createLeftCard = () => {
-//             const itemsHtml = claimedItems
-//                 .map((item) => createClaimedItemBox(item, reason))
-//                 .join("");
-
-//             return `
-//       <div class="${CSS_CLASSES.card}">
-//         <div class="submitted-stack submitted-gap-100">
-//           <div class="submitted-row">
-//           <div class="submitted-row-head">
-          
-//           <div class="submitted-Heading-text">
-//             ${ICONS.selectedItem} 
-//           <h3 class="submitted-heading-md">${getTranslation(t, "SubmittedDesignJs.statusTitle", "Claim status")}</h3>
-//           </div>
-//           <span class="${CSS_CLASSES.badge}">${getTranslation(t, "SubmittedDesignJs.statusBadge", "Pending")}</span>
-//           </div>
-
-//             <span class="submitted-text submitted-subdued submitted-text-md">
-//               ${getTranslation(t, "SubmittedDesignJs.statusText", "Your claim is currently pending review.")}
-//             </span>
-//           </div>
-//           <div class="submitted-divider"></div>
-//           <div class="submitted-items ">
-//           <h3 class="submitted-heading-md submitted-mb-2">
-//             ${getTranslation(t, "SubmittedDesignJs.itemsHead", "Claimed items")}
-//           </h3>
-//             ${itemsHtml}
-//           </div>
-//         </div>
-//       </div>
-//     `;
-//         };
-
-//         /**
-//          * Creates the right card containing reorder info and general information
-//          * @returns {string} HTML string
-//          */
-//         const createRightCard = () => {
-//             const infoItems = [
-//                 {
-//                     labelKey: "SubmittedDesignJs.giCidLabel",
-//                     label: "Claim ID",
-//                     value: claimInfo.id,
-//                 },
-//                 {
-//                     labelKey: "SubmittedDesignJs.giEmailLabel",
-//                     label: "Customer contact",
-//                     value: claimInfo.email,
-//                 },
-//                 {
-//                     labelKey: "SubmittedDesignJs.giCreatedLabel",
-//                     label: "Created time",
-//                     value: claimInfo.created,
-//                 },
-//             ];
-
-//             const infoItemsHtml = infoItems
-//                 .map(
-//                     ({ labelKey, label, value }) => `
-//         <h4 class="submitted-heading-sm">${getTranslation(
-//                         t,
-//                         labelKey,
-//                         label
-//                     )}</h4>
-//         ${createInfoRow(label, value)}
-//       `
-//                 )
-//                 .join("");
-
-//             return `
-//       <div class="${CSS_CLASSES.card}">
-//         <div class="submitted-stack submitted-gap-100 ">
-//           <div class="submitted-mb-2">
-//             <h3 class="submitted-heading-md">${getTranslation(
-//                 t,
-//                 "SubmittedDesignJs.reorderTitle",
-//                 "Reorder"
-//             )}</h3>
-//             <span class="submitted-text submitted-subdued submitted-text-md">
-//               ${getTranslation(
-//                 t,
-//                 "SubmittedDesignJs.reorderText",
-//                 "Reordering same item(s). This will create a new order."
-//             )}
-//             </span>
-//           </div>
-//           <div class="submitted-divider"></div>
-//           <div class="">
-//             <h3 class="submitted-heading-md submitted-mb-2">
-//               ${getTranslation(
-//                 t,
-//                 "SubmittedDesignJs.giTitle1",
-//                 "General information"
-//             )}
-//             </h3>
-//             ${infoItemsHtml}
-//           </div>
-//         </div>
-//       </div>
-//     `;
-//         };
-
-//         /**
-//          * Creates the footer with action buttons
-//          * @returns {string} HTML string
-//          */
-//         const createFooter = () => {
-//             const buttons = [
-//                 {
-//                     key: "SubmittedDesignJs.btn1",
-//                     text: "Download Receipt",
-//                     className: CSS_CLASSES.btn.base,
-//                 },
-//                 {
-//                     key: "SubmittedDesignJs.btn2",
-//                     text: "Contact Support",
-//                     className: CSS_CLASSES.btn.base,
-//                 },
-//                 {
-//                     key: "SubmittedDesignJs.btn3",
-//                     text: "Track Status",
-//                     className: CSS_CLASSES.btn.primary,
-//                 },
-//             ];
-
-//             const buttonsHtml = buttons
-//                 .map(
-//                     ({ key, text, className }) =>
-//                         `<button class="${className}">${getTranslation(
-//                             t,
-//                             key,
-//                             text
-//                         )}</button>`
-//                 )
-//                 .join("");
-
-//             return `
-//       <div class="submitted-footer">
-//         ${buttonsHtml}
-//       </div>
-//     `;
-//         };
-
-//         // Generate complete HTML template
-//         const htmlTemplate = `
-//     <div class="${CSS_CLASSES.root}">
-//       ${createHeader(t)}
-//       <div class="${CSS_CLASSES.grid}">
-//         ${createLeftCard()}
-//         ${createRightCard()}
-//       </div>
-//       ${createFooter()}
-//     </div>
-//   `;
-
-//         container.innerHTML = htmlTemplate;
-//     } catch (error) {
-//         console.error('Error rendering submitted component:', error);
-//         container.innerHTML = `
-//             <div class="submitted-error">
-//                 <h3>Error Loading Component</h3>
-//                 <p>There was an error loading the submitted component. Please try refreshing the page.</p>
-//                 <details>
-//                     <summary>Error Details</summary>
-//                     <pre>${error.message}</pre>
-//                 </details>
-//             </div>
-//         `;
-//     }
-// };
-
-// /**
-//  * Main mount function for the submitted component
-//  * @param {HTMLElement|string} container - Container element or selector
-//  * @param {Object} props - Component properties
-//  * @returns {Object} Component instance with destroy and update methods
-//  */
-// function mountSubmitted(container, props = {}) {
-//     ensureSubmittedStyles();
-
-//     // Validate container
-//     if (!container) {
-//         throw new Error("mountSubmitted: container is required");
-//     }
-
-//     const host =
-//         container instanceof HTMLElement
-//             ? container
-//             : document.querySelector(container);
-//     if (!host) {
-//         throw new Error("mountSubmitted: container not found");
-//     }
-
-//     // Initialize component state
-//     let currentProps = { ...props };
-
-//     const mountPoint = document.createElement("div");
-//     mountPoint.className = "submitted-mount";
-//     host.appendChild(mountPoint);
-
-//     // Add proxy object with loop prevention
-//     const proxy = {
-//         contentSettings: null,
-//         colorSettings: {
-//             ...DEFAULT_GREEN_YELLOW_COLORS, // Use Green-Yellow theme as default
-//         },
-//         isLiveMode: true,
-//         subscribers: new Set(),
-//         _updating: false, // Flag to prevent circular updates
-
-//         subscribe(cb) {
-//             this.subscribers.add(cb);
-//             return () => this.subscribers.delete(cb);
-//         },
-
-//         notify() {
-//             if (this._updating) return; // Prevent circular notifications
-//             for (const cb of this.subscribers)
-//                 cb({
-//                     contentSettings: this.contentSettings,
-//                     colorSettings: this.colorSettings,
-//                     isLiveMode: this.isLiveMode,
-//                 });
-//         },
-
-//         updateContentSettings(settings) {
-//             if (this._updating) return; // Prevent circular updates
-//             this._updating = true;
-//             try {
-//                 this.contentSettings =
-//                     typeof settings === "function"
-//                         ? settings(this.contentSettings)
-//                         : { ...this.contentSettings, ...settings };
-//                 this.notify();
-//             } finally {
-//                 this._updating = false;
-//             }
-//         },
-
-//         updateColorSettings(settings) {
-//             if (this._updating) return; // Prevent circular updates
-//             this._updating = true;
-//             try {
-//                 this.colorSettings =
-//                     typeof settings === "function"
-//                         ? settings(this.colorSettings)
-//                         : { ...this.colorSettings, ...settings };
-//                 this.notify();
-//                 this.applyColorSettings(this.colorSettings);
-//             } finally {
-//                 this._updating = false;
-//             }
-//         },
-
-//         getContentSettings() {
-//             return this.contentSettings;
-//         },
-
-//         getColorSettings() {
-//             return this.colorSettings;
-//         },
-
-//         applyColorSettings(settings) {
-//             if (!settings || !this.isLiveMode) return;
-//             applySubmittedColorSettings(settings);
-//         },
-
-//         toggleLiveMode() {
-//             this.isLiveMode = !this.isLiveMode;
-//             this.applyColorSettings(this.colorSettings);
-//             this.notify();
-//             return this.isLiveMode;
-//         },
-//     };
-
-//     // DISABLED: proxy integration to prevent infinite loops
-//     // The following proxy integration code is disabled to prevent circular updates
-//     let proxyUnsubscribe = null;
-
-//     // Only apply default colors without subscribing to prevent loops
-//     proxy.updateColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
-//     proxy.applyColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
-
-//     // DISABLED: External proxy integration to prevent loops
-//     // if (typeof window !== 'undefined' && window.Submitted?.proxy) {
-//     //     // This code is disabled to prevent infinite loops
-//     // }
-
-//     // Initial render with error handling
-//     try {
-//         render(mountPoint, currentProps);
-//     } catch (error) {
-//         console.error("Failed to render submitted component:", error);
-//         mountPoint.innerHTML =
-//             '<div class="submitted-error">Error loading component</div>';
-//     }
-
-//     // Set the proxy globally like 
-//     if (typeof window !== "undefined") {
-//         if (window.ClaimSubmitted) {
-//             window.ClaimSubmitted.proxy = proxy;
-//         }
-
-//         // Also set up window.Submitted.proxy for ExternalSubmitted integration
-//         if (!window.Submitted) {
-//             window.Submitted = {};
-//         }
-//         window.Submitted.proxy = proxy;
-
-//         // Also expose as SubmittedProxy for storage bridge
-//         window.SubmittedProxy = proxy;
-//     }
-
-//     // Return component instance
-//     return {
-//         /**
-//          * Destroys the component and cleans up DOM
-//          */
-//         destroy() {
-//             try {
-//                 if (proxyUnsubscribe) {
-//                     proxyUnsubscribe();
-//                 }
-//                 if (mountPoint?.parentNode) {
-//                     mountPoint.parentNode.removeChild(mountPoint);
-//                 }
-//             } catch (error) {
-//                 console.warn("Failed to destroy component:", error);
-//             }
-//         },
-
-//         /**
-//          * Updates component with new props
-//          * @param {Object} nextProps - New properties to merge
-//          */
-//         update(nextProps = {}) {
-//             try {
-//                 currentProps = { ...currentProps, ...nextProps };
-//                 render(mountPoint, currentProps);
-//             } catch (error) {
-//                 console.error("Failed to update component:", error);
-//             }
-//         },
-
-//         proxy, // Expose proxy like 
-//     };
-// }
-
-// // Inject original complete CSS styles
+// // ===== CSS STYLES =====
 // const ensureSubmittedStyles = () => {
 //     if (document.getElementById(SUBMITTED_STYLE_ID)) return;
 
@@ -1596,7 +1041,9 @@ export default mountSubmitted;
 //     }
 
 //   .submitted-gap-100 { column-gap: var(--submitted-space-100); }
-//   .submitted-gap-400 { column-gap: var(--submitted-space-400); }
+//   .submitted-Header {
+//   display:flex;
+//   column-gap: var(--submitted-space-400); }
 //   .submitted-mb-2 { margin-bottom: var(--submitted-space-100); }
 //   .submitted-mt-2 { margin-top: 4px; }
 //   .submitted-minw-110 { min-width: 110px; }
@@ -1663,9 +1110,7 @@ export default mountSubmitted;
 //   }
 
 //   .submitted-btn-tertiary {
-//     background: transparent;
-//     border-color: transparent;
-//     padding: 8px;
+//     padding: 15px;
 //     min-width: 40px;
 //     border-radius: 50%;
 //   }
@@ -1695,7 +1140,6 @@ export default mountSubmitted;
 //     height: 1px;
 //     width: 100%;
 //     background: var(--submitted-border);
-//     margin: var(--submitted-space-200) 0;
 //   }
 
 //   .submitted-badge {
@@ -1802,10 +1246,461 @@ export default mountSubmitted;
 //     document.head.appendChild(style);
 // };
 
-// /**
-//  * Injects styles into document head
-//  * Prevents duplicate style injection by checking for existing style element
-//  */
+// // ===== UTILITY FUNCTIONS =====
+// const parsePriceToNumber = (price) => {
+//     if (typeof price === "number") return price;
+//     const numericValue = parseFloat(String(price).replace(/[^\d.]/g, ""));
+//     return Number.isFinite(numericValue) ? numericValue : 0;
+// };
+
+// const deriveClaimedItems = (input) => {
+//     const { claimedItems, ORDER_DATA, quantities = {} } = input || {};
+
+//     if (Array.isArray(claimedItems) && claimedItems.length > 0) {
+//         return claimedItems;
+//     }
+
+//     const items = ORDER_DATA?.items || [];
+//     const derivedItems = items
+//         .filter((item) => item?.eligible && (quantities[item.id] ?? 1) >= 1)
+//         .map((item) => ({ ...item, qty: quantities[item.id] ?? 1 }));
+
+//     if (derivedItems.length === 0) {
+//         return DEFAULT_CLAIMED_ITEMS;
+//     }
+
+//     return derivedItems;
+// };
+
+// const deriveReasonLabel = (input) => {
+//     const { reasonLabel, CLAIM_OPTIONS, selectedClaimOption } = input || {};
+
+//     if (reasonLabel?.trim()) return reasonLabel;
+
+//     if (!Array.isArray(CLAIM_OPTIONS) || !selectedClaimOption) {
+//         return "Product damaged";
+//     }
+
+//     const matchedOption = CLAIM_OPTIONS.find((option) =>
+//         typeof option === "object"
+//             ? option.value === selectedClaimOption
+//             : option === selectedClaimOption
+//     );
+
+//     return matchedOption?.label || matchedOption || "Product damaged";
+// };
+
+// const getTranslation = (t, key, fallback) => t?.(key, fallback) ?? fallback;
+
+// const applySubmittedColorSettings = (settings) => {
+//     if (!settings) return;
+//     const root = document.documentElement;
+//     const setVar = (key, value) => root.style.setProperty(key, value);
+
+//     [
+//         ["buttonBg", "--submitted-primary"],
+//         ["buttonText", "--submitted-primary-text"],
+//     ].forEach(([key, cssVar]) => {
+//         if (settings[key]) {
+//             setVar(cssVar, settings[key]);
+//         }
+//     });
+// };
+
+// // ===== HTML TEMPLATE GENERATORS =====
+// const createInfoRow = (label, valueText) => {
+//     const labelText = String(label ?? "");
+//     const hasValue = valueText != null && String(valueText).length > 0;
+
+//     return `
+//     <div class="submitted-gap-100">
+//       <span class="submitted-text submitted-text-subdued submitted-minw-110 submitted-text-sm">${labelText}</span>
+//       ${hasValue
+//             ? `<span class="submitted-text submitted-text-sm">${String(
+//                 valueText
+//             )}</span>`
+//             : ""
+//         }
+//     </div>
+//   `;
+// };
+
+// const createClaimedItemBox = (item, reasonLabel) => {
+//     const quantity = item?.qty ?? 1;
+//     const price = parsePriceToNumber(item?.price ?? 0);
+//     const itemName = item?.name ?? "Unknown Item";
+//     const itemDescription = item?.description ?? "No description available";
+//     const itemImage = item?.image || "https://picsum.photos/seed/perfume-c/72";
+//     const reason = reasonLabel ?? "No reason specified";
+
+//     return `
+//     <div class="submitted-item-box">
+//       <div class="submitted-item-image" style="background-image: url('${itemImage}')"></div>
+//       <div class="submitted-item-textwrap">
+//         <span class="submitted-text submitted-text-md submitted-semibold submitted-block">${itemName}</span>
+//         <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">${itemDescription}</span>
+//         <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">Reason: ${reason}</span>
+//       </div>
+//       <div class="submitted-price-wrap">
+//         <span class="submitted-text submitted-text-md submitted-semibold">${quantity} x €${price.toFixed(
+//         2
+//     )} EUR</span>
+//       </div>
+//       <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+//           <span class="setup-badge critical">Reason: ${reason}</span>
+//         </div>
+//     </div>
+//   `;
+// };
+
+// const createHeader = (t) => {
+//     return `
+//     <div class="submitted-row">
+//       <div class="submitted-Header">
+//         <button class="submitted-btn submitted-btn-tertiary">${getTranslation(
+//         t,
+//         "SubmittedDesignJs.backButton",
+//         "←"
+//     )}</button>
+//       <h2 class="submitted-title">${getTranslation(
+//         t,
+//         "SubmittedDesignJs.title",
+//         "Submitted"
+//     )}</h2>
+//       </div>
+//       <button class="submitted-btn submitted-btn-primary">${getTranslation(
+//         t,
+//         "SubmittedDesignJs.createNewBtn",
+//         "Create new"
+//     )}</button>
+//     </div>
+//   `;
+// };
+
+// // ===== MAIN RENDER FUNCTION =====
+// const render = (container, props) => {
+//     try {
+//         const { t } = props || {};
+//         const claimInfo = props?.claimInfo || DEFAULT_CLAIM_INFO;
+//         const claimedItems = deriveClaimedItems(props);
+//         const reason = deriveReasonLabel(props);
+
+//         if (!Array.isArray(claimedItems) || claimedItems.length === 0) {
+//             console.warn('No claimed items found, using default items');
+//         }
+
+//         const createLeftCard = () => {
+//             const itemsHtml = claimedItems
+//                 .map((item) => createClaimedItemBox(item, reason))
+//                 .join("");
+
+//             return `
+//       <div class="submitted-card">
+//         <div class="submitted-stack submitted-gap-100">
+//           <div class="submitted-row">
+//           <div class="submitted-row-head">
+          
+//           <div class="submitted-Heading-text">
+//             ${ICONS.selectedItem} 
+//           <h3 class="submitted-heading-md">${getTranslation(t, "SubmittedDesignJs.statusTitle", "Claim status")}</h3>
+//           </div>
+//           <span class="submitted-badge submitted-badge-warning">${getTranslation(t, "SubmittedDesignJs.statusBadge", "Pending")}</span>
+//           </div>
+
+//             <span class="submitted-text submitted-subdued submitted-text-md">
+//               ${getTranslation(t, "SubmittedDesignJs.statusText", "Your claim is currently pending review.")}
+//             </span>
+//           </div>
+//           <div class="submitted-divider"></div>
+//           <div class="submitted-items ">
+//           <h3 class="submitted-heading-md submitted-mb-2">
+//             ${getTranslation(t, "SubmittedDesignJs.itemsHead", "Claimed items")}
+//           </h3>
+//             ${itemsHtml}
+//           </div>
+//         </div>
+//       </div>
+//     `;
+//         };
+
+//         const createRightCard = () => {
+//             const infoItems = [
+//                 {
+//                     labelKey: "SubmittedDesignJs.giCidLabel",
+//                     label: "Claim ID",
+//                     value: claimInfo.id,
+//                 },
+//                 {
+//                     labelKey: "SubmittedDesignJs.giEmailLabel",
+//                     label: "Customer contact",
+//                     value: claimInfo.email,
+//                 },
+//                 {
+//                     labelKey: "SubmittedDesignJs.giCreatedLabel",
+//                     label: "Created time",
+//                     value: claimInfo.created,
+//                 },
+//             ];
+
+//             const infoItemsHtml = infoItems
+//                 .map(
+//                     ({ labelKey, label, value }) => `
+//         <h4 class="submitted-heading-sm">${getTranslation(
+//                         t,
+//                         labelKey,
+//                         label
+//                     )}</h4>
+//         ${createInfoRow(label, value)}
+//       `
+//                 )
+//                 .join("");
+
+//             return `
+//       <div class="submitted-card">
+//         <div class="submitted-stack submitted-gap-100 ">
+//           <div class="submitted-mb-2">
+//             <h3 class="submitted-heading-md">${getTranslation(
+//                 t,
+//                 "SubmittedDesignJs.reorderTitle",
+//                 "Reorder"
+//             )}</h3>
+//             <span class="submitted-text submitted-subdued submitted-text-md">
+//               ${getTranslation(
+//                 t,
+//                 "SubmittedDesignJs.reorderText",
+//                 "Reordering same item(s). This will create a new order."
+//             )}
+//             </span>
+//           </div>
+//           <div class="submitted-divider"></div>
+//           <div class="">
+//             <h3 class="submitted-heading-md submitted-mb-2">
+//               ${getTranslation(
+//                 t,
+//                 "SubmittedDesignJs.giTitle1",
+//                 "General information"
+//             )}
+//             </h3>
+//             ${infoItemsHtml}
+//           </div>
+//         </div>
+//       </div>
+//     `;
+//         };
+
+//         const createFooter = () => {
+//             const buttons = [
+//                 {
+//                     key: "SubmittedDesignJs.btn1",
+//                     text: "Download Receipt",
+//                     className: "submitted-btn",
+//                 },
+//                 {
+//                     key: "SubmittedDesignJs.btn2",
+//                     text: "Contact Support",
+//                     className: "submitted-btn",
+//                 },
+//                 {
+//                     key: "SubmittedDesignJs.btn3",
+//                     text: "Track Status",
+//                     className: "submitted-btn submitted-btn-primary",
+//                 },
+//             ];
+
+//             const buttonsHtml = buttons
+//                 .map(
+//                     ({ key, text, className }) =>
+//                         `<button class="${className}">${getTranslation(
+//                             t,
+//                             key,
+//                             text
+//                         )}</button>`
+//                 )
+//                 .join("");
+
+//             return `
+//       <div class="submitted-footer">
+//         ${buttonsHtml}
+//       </div>
+//     `;
+//         };
+
+//         const htmlTemplate = `
+//     <div class="submitted-root">
+//       ${createHeader(t)}
+//       <div class="submitted-grid">
+//         ${createLeftCard()}
+//         ${createRightCard()}
+//       </div>
+//       ${createFooter()}
+//     </div>
+//   `;
+
+//         container.innerHTML = htmlTemplate;
+//     } catch (error) {
+//         console.error('Error rendering submitted component:', error);
+//         container.innerHTML = `
+//             <div class="submitted-error">
+//                 <h3>Error Loading Component</h3>
+//                 <p>There was an error loading the submitted component. Please try refreshing the page.</p>
+//                 <details>
+//                     <summary>Error Details</summary>
+//                     <pre>${error.message}</pre>
+//                 </details>
+//             </div>
+//         `;
+//     }
+// };
+
+// // ===== MAIN MOUNT FUNCTION & INITIALIZATION =====
+// function mountSubmitted(container, props = {}) {
+//     ensureSubmittedStyles();
+
+//     if (!container) {
+//         throw new Error("mountSubmitted: container is required");
+//     }
+
+//     const host =
+//         container instanceof HTMLElement
+//             ? container
+//             : document.querySelector(container);
+//     if (!host) {
+//         throw new Error("mountSubmitted: container not found");
+//     }
+
+//     let currentProps = { ...props };
+
+//     const mountPoint = document.createElement("div");
+//     mountPoint.className = "submitted-mount";
+//     host.appendChild(mountPoint);
+
+//     const proxy = {
+//         contentSettings: null,
+//         colorSettings: {
+//             ...DEFAULT_GREEN_YELLOW_COLORS,
+//         },
+//         isLiveMode: true,
+//         subscribers: new Set(),
+//         _updating: false,
+
+//         subscribe(cb) {
+//             this.subscribers.add(cb);
+//             return () => this.subscribers.delete(cb);
+//         },
+
+//         notify() {
+//             if (this._updating) return;
+//             for (const cb of this.subscribers)
+//                 cb({
+//                     contentSettings: this.contentSettings,
+//                     colorSettings: this.colorSettings,
+//                     isLiveMode: this.isLiveMode,
+//                 });
+//         },
+
+//         updateContentSettings(settings) {
+//             if (this._updating) return;
+//             this._updating = true;
+//             try {
+//                 this.contentSettings =
+//                     typeof settings === "function"
+//                         ? settings(this.contentSettings)
+//                         : { ...this.contentSettings, ...settings };
+//                 this.notify();
+//             } finally {
+//                 this._updating = false;
+//             }
+//         },
+
+//         updateColorSettings(settings) {
+//             if (this._updating) return;
+//             this._updating = true;
+//             try {
+//                 this.colorSettings =
+//                     typeof settings === "function"
+//                         ? settings(this.colorSettings)
+//                         : { ...this.colorSettings, ...settings };
+//                 this.notify();
+//                 this.applyColorSettings(this.colorSettings);
+//             } finally {
+//                 this._updating = false;
+//             }
+//         },
+
+//         getContentSettings() {
+//             return this.contentSettings;
+//         },
+
+//         getColorSettings() {
+//             return this.colorSettings;
+//         },
+
+//         applyColorSettings(settings) {
+//             if (!settings || !this.isLiveMode) return;
+//             applySubmittedColorSettings(settings);
+//         },
+
+//         toggleLiveMode() {
+//             this.isLiveMode = !this.isLiveMode;
+//             this.applyColorSettings(this.colorSettings);
+//             this.notify();
+//             return this.isLiveMode;
+//         },
+//     };
+
+//     let proxyUnsubscribe = null;
+
+//     proxy.updateColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
+//     proxy.applyColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
+
+//     try {
+//         render(mountPoint, currentProps);
+//     } catch (error) {
+//         console.error("Failed to render submitted component:", error);
+//         mountPoint.innerHTML =
+//             '<div class="submitted-error">Error loading component</div>';
+//     }
+
+//     if (typeof window !== "undefined") {
+//         if (window.ClaimSubmitted) {
+//             window.ClaimSubmitted.proxy = proxy;
+//         }
+
+//         if (!window.Submitted) {
+//             window.Submitted = {};
+//         }
+//         window.Submitted.proxy = proxy;
+
+//         window.SubmittedProxy = proxy;
+//     }
+
+//     return {
+//         destroy() {
+//             try {
+//                 if (proxyUnsubscribe) {
+//                     proxyUnsubscribe();
+//                 }
+//                 if (mountPoint?.parentNode) {
+//                     mountPoint.parentNode.removeChild(mountPoint);
+//                 }
+//             } catch (error) {
+//                 console.warn("Failed to destroy component:", error);
+//             }
+//         },
+
+//         update(nextProps = {}) {
+//             try {
+//                 currentProps = { ...currentProps, ...nextProps };
+//                 render(mountPoint, currentProps);
+//             } catch (error) {
+//                 console.error("Failed to update component:", error);
+//             }
+//         },
+
+//         proxy,
+//     };
+// }
+
 // const injectSubmittedStyles = () => {
 //     if (
 //         typeof document === "undefined" ||
@@ -1817,34 +1712,29 @@ export default mountSubmitted;
 //     ensureSubmittedStyles();
 // };
 
-// // Initialize styles
 // injectSubmittedStyles();
 
-// // Make it available globally like 
 // if (typeof window !== "undefined") {
 //     window.ClaimSubmitted = {
 //         init: mountSubmitted,
-//         proxy: null // Will be set when component is initialized
+//         proxy: null
 //     };
 
-//     // Also make it available as expected by ExternalSubmitted.jsx
 //     window.mountSubmitted = mountSubmitted;
 //     window.mountClaimSubmitted = mountSubmitted;
 //     window.initSubmitted = mountSubmitted;
 //     window.applySubmittedColorSettings = applySubmittedColorSettings;
 
-//     // Initialize SubmittedProxy immediately if not already set
 //     if (!window.SubmittedProxy) {
-//         // Create a temporary proxy that will be replaced when mountSubmitted is called
 //         window.SubmittedProxy = {
 //             contentSettings: null,
 //             colorSettings: {
-//                 buttonBg: "#5a9a5a", // Green-Yellow theme default
+//                 buttonBg: "#5a9a5a",
 //                 buttonText: "#ffffff",
 //             },
 //             isLiveMode: true,
 //             subscribers: new Set(),
-//             _updating: false, // Flag to prevent circular updates
+//             _updating: false,
 
 //             subscribe(cb) {
 //                 this.subscribers.add(cb);
@@ -1852,7 +1742,7 @@ export default mountSubmitted;
 //             },
 
 //             notify() {
-//                 if (this._updating) return; // Prevent circular notifications
+//                 if (this._updating) return;
 //                 for (const cb of this.subscribers)
 //                     cb({
 //                         contentSettings: this.contentSettings,
@@ -1862,7 +1752,7 @@ export default mountSubmitted;
 //             },
 
 //             updateContentSettings(settings) {
-//                 if (this._updating) return; // Prevent circular updates
+//                 if (this._updating) return;
 //                 this._updating = true;
 //                 try {
 //                     this.contentSettings =
@@ -1876,7 +1766,7 @@ export default mountSubmitted;
 //             },
 
 //             updateColorSettings(settings) {
-//                 if (this._updating) return; // Prevent circular updates
+//                 if (this._updating) return;
 //                 this._updating = true;
 //                 try {
 //                     this.colorSettings =
@@ -1913,8 +1803,5 @@ export default mountSubmitted;
 //     }
 // }
 
-// // Export the applySubmittedColorSettings function
 // export { applySubmittedColorSettings };
-
-// // Export the mount function as default
 // export default mountSubmitted;
