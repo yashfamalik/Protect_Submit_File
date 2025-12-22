@@ -4,7 +4,8 @@ const ICONS = {
   refund: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"><path fill-rule="evenodd" d="M12.379 4h-7.258c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v3.008c0 .395 0 .736.023 1.017.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.121.01.254.016.397.019.001.243.006.46.022.65.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.28.023.622.023 1.017.023h7.258c.395 0 .736 0 1.017-.023.297-.024.592-.078.875-.222.424-.216.768-.56.984-.984.144-.283.198-.578.222-.875.023-.28.023-.622.023-1.017v-3.008c0-.395 0-.736-.023-1.017-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.983-.984-.284-.144-.58-.198-.876-.222-.121-.01-.254-.016-.397-.019-.001-.243-.006-.46-.022-.65-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.984-.984-.283-.144-.578-.198-.875-.222-.28-.023-.622-.023-1.017-.023Zm1.62 2.75h-6.378c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v1.874c-.104-.002-.194-.006-.274-.013-.204-.017-.28-.045-.316-.064-.142-.072-.256-.186-.328-.327-.02-.038-.047-.113-.064-.317-.017-.212-.018-.492-.018-.924v-2.95c0-.432 0-.712.018-.924.017-.204.045-.28.064-.316.072-.142.186-.256.328-.328.037-.02.112-.047.316-.064.212-.017.492-.018.924-.018h7.2c.432 0 .712 0 .924.018.204.017.28.045.317.064.14.072.255.186.327.328.02.037.047.112.064.316.011.138.016.305.017.524Zm-6.349 7.75h1.178c-.515-.796-.828-1.848-.828-3 0-1.278.385-2.43 1.002-3.25h-1.352c-.432 0-.712 0-.924.018-.204.017-.28.045-.316.064-.142.072-.256.186-.328.328-.02.037-.047.112-.064.316-.017.212-.018.492-.018.924v2.95c0 .432 0 .712.018.924.017.204.045.28.064.317.072.14.186.255.328.327.037.02.112.047.316.064.212.017.492.018.924.018Zm6.85-3c0-1.278-.384-2.43-1.002-3.25h1.352c.432 0 .712 0 .924.018.204.017.28.045.316.064.142.072.256.186.328.328.02.037.047.112.064.316.017.212.018.492.018.924v2.95c0 .432 0 .712-.018.924-.017.204-.045.28-.064.317-.072.14-.186.255-.328.327-.037.02-.112.047-.316.064-.212.017-.492.018-.924.018h-1.178c.515-.796.828-1.848.828-3Zm-4.332 2.304c-.384-.532-.668-1.342-.668-2.304 0-.962.284-1.772.668-2.304.385-.533.787-.696 1.082-.696.295 0 .697.163 1.082.696.384.532.668 1.342.668 2.304 0 .962-.284 1.772-.668 2.304-.385.533-.787.696-1.082.696-.295 0-.697-.163-1.082-.696Z"></path></svg>',
   claimedItems: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"><path d="M13 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path><path fill-rule="evenodd" d="M11.276 3.5a3.75 3.75 0 0 0-2.701 1.149l-4.254 4.417a2.75 2.75 0 0 0 .036 3.852l2.898 2.898a2.5 2.5 0 0 0 3.502.033l4.747-4.571a3.25 3.25 0 0 0 .996-2.341v-2.187a3.25 3.25 0 0 0-3.25-3.25h-1.974Zm-1.62 2.19a2.25 2.25 0 0 1 1.62-.69h1.974c.966 0 1.75.784 1.75 1.75v2.187c0 .475-.194.93-.536 1.26l-4.747 4.572a1 1 0 0 1-1.401-.014l-2.898-2.898a1.25 1.25 0 0 1-.016-1.75l4.253-4.418Z"></path></svg>',
   selectedItem: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"><path d="M4.63 8.81a5.5 5.5 0 0 1 6.56-4.18.75.75 0 0 0 .325-1.464 7 7 0 1 0 5.32 8.35.75.75 0 0 0-1.465-.325 5.5 5.5 0 1 1-10.74-2.38Z"></path><path d="M16.03 6.78a.75.75 0 0 0-1.06-1.06l-4.97 4.97-2.22-2.22a.75.75 0 0 0-1.06 1.06l2.75 2.75a.75.75 0 0 0 1.06 0l5.5-5.5Z"></path></svg>',
-  claimDetails: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"><path d="M10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z"></path><path d="M11 13a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path><path fill-rule="evenodd" d="M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Zm-1.5 0a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0Z"></path></svg>'
+  claimDetails: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"><path d="M10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z"></path><path d="M11 13a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path><path fill-rule="evenodd" d="M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Zm-1.5 0a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0Z"></path></svg>',
+  ineligibleItems: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle; fill: var(--setup-primary-color);"><path d="M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14ZM4.5 10a5.5 5.5 0 0 1 9.546-3.768l-7.814 7.814A5.476 5.476 0 0 1 4.5 10Zm1.732 4.268 7.814-7.814a5.5 5.5 0 0 1-7.814 7.814Z"></path></svg>'
 };
 
 // Setup Component - Clean Code with Original Design
@@ -1004,7 +1005,10 @@ export default function mountSetup(container, props = {}) {
     const card = createElement(`
       <div class="setup-card setup-margin-top">
         <div class="setup-card-header">
-          <div class="setup-heading">${t("ManualClaim.ineligibleItems.heading")}</div>
+          <d class="setup-heading">
+            ${ICONS.ineligibleItems}
+            ${t("ManualClaim.ineligibleItems.heading")}
+          </div>
         </div>
         <div class="setup-card-body setup-disabled-area"></div>
       </div>
@@ -1365,10 +1369,18 @@ export default function mountSetup(container, props = {}) {
       refund: "Payment will be refunded to original payment method."
     };
 
+    const icons = {
+      reorder: ICONS.reorder,
+      refund: ICONS.refund
+    };
+
     return createElement(`
       <div class="setup-card">
         <div class="setup-card-header">
-          <div class="setup-heading">${titles[actionType]}</div>
+          <div class="setup-heading">
+            ${icons[actionType]}
+            ${titles[actionType]}
+          </div>
         </div>
         <div class="setup-card-body">
           <div class="setup-text-subdued setup-spacer">${descriptions[actionType]}</div>
@@ -1585,8 +1597,14 @@ if (typeof window !== "undefined") {
 
 
 
-
-
+// // SVG Icons defined as constants
+// const ICONS = {
+//   reorder: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"><path d="M3.5 9.25a.75.75 0 0 0 1.5 0 3 3 0 0 1 3-3h6.566l-1.123 1.248a.75.75 0 1 0 1.114 1.004l2.25-2.5a.75.75 0 0 0-.027-1.032l-2.25-2.25a.75.75 0 1 0-1.06 1.06l.97.97h-6.44a4.5 4.5 0 0 0-4.5 4.5Z"></path><path d="M16.5 10.75a.75.75 0 0 0-1.5 0 3 3 0 0 1-3 3h-6.566l1.123-1.248a.75.75 0 1 0-1.114-1.004l-2.25 2.5a.75.75 0 0 0 .027 1.032l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h6.44a4.5 4.5 0 0 0 4.5-4.5Z"></path></svg>',
+//   refund: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"><path fill-rule="evenodd" d="M12.379 4h-7.258c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v3.008c0 .395 0 .736.023 1.017.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.121.01.254.016.397.019.001.243.006.46.022.65.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.28.023.622.023 1.017.023h7.258c.395 0 .736 0 1.017-.023.297-.024.592-.078.875-.222.424-.216.768-.56.984-.984.144-.283.198-.578.222-.875.023-.28.023-.622.023-1.017v-3.008c0-.395 0-.736-.023-1.017-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.983-.984-.284-.144-.58-.198-.876-.222-.121-.01-.254-.016-.397-.019-.001-.243-.006-.46-.022-.65-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.984-.984-.283-.144-.578-.198-.875-.222-.28-.023-.622-.023-1.017-.023Zm1.62 2.75h-6.378c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v1.874c-.104-.002-.194-.006-.274-.013-.204-.017-.28-.045-.316-.064-.142-.072-.256-.186-.328-.327-.02-.038-.047-.113-.064-.317-.017-.212-.018-.492-.018-.924v-2.95c0-.432 0-.712.018-.924.017-.204.045-.28.064-.316.072-.142.186-.256.328-.328.037-.02.112-.047.316-.064.212-.017.492-.018.924-.018h7.2c.432 0 .712 0 .924.018.204.017.28.045.317.064.14.072.255.186.327.328.02.037.047.112.064.316.011.138.016.305.017.524Zm-6.349 7.75h1.178c-.515-.796-.828-1.848-.828-3 0-1.278.385-2.43 1.002-3.25h-1.352c-.432 0-.712 0-.924.018-.204.017-.28.045-.316.064-.142.072-.256.186-.328.328-.02.037-.047.112-.064.316-.017.212-.018.492-.018.924v2.95c0 .432 0 .712.018.924.017.204.045.28.064.317.072.14.186.255.328.327.037.02.112.047.316.064.212.017.492.018.924.018Zm6.85-3c0-1.278-.384-2.43-1.002-3.25h1.352c.432 0 .712 0 .924.018.204.017.28.045.316.064.142.072.256.186.328.328.02.037.047.112.064.316.017.212.018.492.018.924v2.95c0 .432 0 .712-.018.924-.017.204-.045.28-.064.317-.072.14-.186.255-.328.327-.037.02-.112.047-.316.064-.212.017-.492.018-.924.018h-1.178c.515-.796.828-1.848.828-3Zm-4.332 2.304c-.384-.532-.668-1.342-.668-2.304 0-.962.284-1.772.668-2.304.385-.533.787-.696 1.082-.696.295 0 .697.163 1.082.696.384.532.668 1.342.668 2.304 0 .962-.284 1.772-.668 2.304-.385.533-.787.696-1.082.696-.295 0-.697-.163-1.082-.696Z"></path></svg>',
+//   claimedItems: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"><path d="M13 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path><path fill-rule="evenodd" d="M11.276 3.5a3.75 3.75 0 0 0-2.701 1.149l-4.254 4.417a2.75 2.75 0 0 0 .036 3.852l2.898 2.898a2.5 2.5 0 0 0 3.502.033l4.747-4.571a3.25 3.25 0 0 0 .996-2.341v-2.187a3.25 3.25 0 0 0-3.25-3.25h-1.974Zm-1.62 2.19a2.25 2.25 0 0 1 1.62-.69h1.974c.966 0 1.75.784 1.75 1.75v2.187c0 .475-.194.93-.536 1.26l-4.747 4.572a1 1 0 0 1-1.401-.014l-2.898-2.898a1.25 1.25 0 0 1-.016-1.75l4.253-4.418Z"></path></svg>',
+//   selectedItem: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"><path d="M4.63 8.81a5.5 5.5 0 0 1 6.56-4.18.75.75 0 0 0 .325-1.464 7 7 0 1 0 5.32 8.35.75.75 0 0 0-1.465-.325 5.5 5.5 0 1 1-10.74-2.38Z"></path><path d="M16.03 6.78a.75.75 0 0 0-1.06-1.06l-4.97 4.97-2.22-2.22a.75.75 0 0 0-1.06 1.06l2.75 2.75a.75.75 0 0 0 1.06 0l5.5-5.5Z"></path></svg>',
+//   claimDetails: '<svg viewBox="0 0 20 20" class="Icon_Icon__uZZKy" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;"><path d="M10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5a.75.75 0 0 1 .75-.75Z"></path><path d="M11 13a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path><path fill-rule="evenodd" d="M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Zm-1.5 0a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0Z"></path></svg>'
+// };
 
 // // Setup Component - Clean Code with Original Design
 // const SETUP_STYLE_ID = "vanilla-setup-styles";
@@ -2097,7 +2115,7 @@ if (typeof window !== "undefined") {
 // };
 
 // // Helper functions
-// const parsePrice = (priceStr) => {
+// const parsePrice = (priceStr) => {  
 //   const num = parseFloat(String(priceStr).replace(/[^\d.]/g, ""));
 //   return isNaN(num) ? 0 : num;
 // };
@@ -2107,7 +2125,12 @@ if (typeof window !== "undefined") {
 // const createIcon = (type) => {
 //   const icons = {
 //     minus: '<svg width="16" height="16" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="2" rx="1" fill="currentColor"></rect></svg>',
-//     plus: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path></svg>'
+//     plus: '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path></svg>',
+//     reorder: 'Reorder',
+//     refund: 'Refund',
+//     claimedItems: 'Claimed items',
+//     selectedItem: 'Selected Item',
+//     claimDetails: 'Claim Details'
 //   };
 //   return icons[type] || '';
 // };
@@ -2518,10 +2541,10 @@ if (typeof window !== "undefined") {
 //   // Set initial selection and quantities
 //   if (eligibleItems.length) {
 //     state.selectedEligibleId = eligibleItems[0]?.id;
-//     // Initialize all eligible items with quantity 0
+//     // Initialize all eligible items with quantity 1 (default value)
 //     eligibleItems.forEach(item => {
 //       if (state.quantities[item.id] === undefined) {
-//         state.quantities[item.id] = 0;
+//         state.quantities[item.id] = 1;
 //       }
 //     });
 //   }
@@ -2559,7 +2582,10 @@ if (typeof window !== "undefined") {
 //     const card = createElement(`
 //       <div class="setup-card">
 //         <div class="setup-card-header">
-//           <div class="setup-heading">${t("ManualClaim.selectedItems.heading")}</div>
+//           <div class="setup-heading">
+//             ${ICONS.selectedItem}
+//             ${t("ManualClaim.selectedItems.heading")}
+//           </div>
 //           ${isAllVerified ? `<span class="setup-badge success">${t("ManualClaim.selectedItems.verifiedBadge")}</span>` : ''}
 //         </div>
 //         <div class="setup-card-body"></div>
@@ -2592,7 +2618,10 @@ if (typeof window !== "undefined") {
 //     const card = createElement(`
 //       <div class="setup-card">
 //         <div class="setup-card-header">
-//           <div class="setup-heading">${t("ManualClaim.claimDetails.heading")}</div>
+//           <div class="setup-heading">
+//             ${ICONS.claimDetails}
+//             ${t("ManualClaim.claimDetails.heading")}
+//           </div>
 //           <div class="setup-text-subdued">${t("ManualClaim.claimDetails.helpText")}</div>
 //         </div>
 //         <div class="setup-card-body">
@@ -2690,13 +2719,23 @@ if (typeof window !== "undefined") {
 //     `);
 
 //     const grid = section.querySelector('.setup-action-grid');
-//     ["reorder", "refund"].forEach(type => {
-//       grid.appendChild(renderActionOption(
-//         type,
-//         t(`ManualClaim.actionOptions.${type}.title`),
-//         t(`ManualClaim.actionOptions.${type}.description`)
-//       ));
-//     });
+    
+//     // Add Reorder option with SVG
+//     const reorderCard = renderActionOption(
+//       "reorder",
+//       `${ICONS.reorder}Reorder`,
+//       t(`ManualClaim.actionOptions.reorder.description`)
+//     );
+    
+//     // Add Refund option with SVG
+//     const refundCard = renderActionOption(
+//       "refund",
+//       `${ICONS.refund}Refund`,
+//       t(`ManualClaim.actionOptions.refund.description`)
+//     );
+    
+//     grid.appendChild(reorderCard);
+//     grid.appendChild(refundCard);
 //     return section;
 //   }
 
@@ -2704,7 +2743,10 @@ if (typeof window !== "undefined") {
 //     const card = createElement(`
 //       <div class="setup-card">
 //         <div class="setup-card-header">
-//           <div class="setup-heading">${t("ManualClaim.claimedItems.heading")}</div>
+//           <div class="setup-heading">
+//             ${ICONS.claimedItems}
+//             ${t("ManualClaim.claimedItems.heading")}
+//           </div>
 //         </div>
 //         <div class="setup-card-body"></div>
 //       </div>
@@ -3052,8 +3094,12 @@ if (typeof window !== "undefined") {
 //   }
 
 //   // Set the proxy globally
-//   if (typeof window !== "undefined" && window.ClaimSetup) {
-//     window.ClaimSetup.proxy = proxy;
+//   if (typeof window !== "undefined") {
+//     if (window.ClaimSetup) {
+//       window.ClaimSetup.proxy = proxy;
+//     }
+//     // Also expose as SetupProxy for storage bridge
+//     window.SetupProxy = proxy;
 //   }
 
 //   return {
@@ -3074,4 +3120,51 @@ if (typeof window !== "undefined") {
 //     init: mountSetup,
 //     proxy: null // Will be set when component is initialized
 //   };
+  
+//   // Initialize SetupProxy immediately if not already set
+//   if (!window.SetupProxy) {
+//     // Create a temporary proxy that will be replaced when mountSetup is called
+//     window.SetupProxy = {
+//       contentSettings: null,
+//       colorSettings: null,
+//       subscribers: new Set(),
+
+//       subscribe(cb) {
+//         this.subscribers.add(cb);
+//         return () => this.subscribers.delete(cb);
+//       },
+
+//       notify() {
+//         for (const cb of this.subscribers)
+//           cb({
+//             contentSettings: this.contentSettings,
+//             colorSettings: this.colorSettings,
+//           });
+//       },
+
+//       updateContentSettings(settings) {
+//         this.contentSettings =
+//           typeof settings === "function"
+//             ? settings(this.contentSettings)
+//             : { ...this.contentSettings, ...settings };
+//         this.notify();
+//       },
+
+//       updateColorSettings(settings) {
+//         this.colorSettings =
+//           typeof settings === "function"
+//             ? settings(this.colorSettings)
+//             : { ...this.colorSettings, ...settings };
+//         this.notify();
+//       },
+
+//       getContentSettings() {
+//         return this.contentSettings;
+//       },
+
+//       getColorSettings() {
+//         return this.colorSettings;
+//       },
+//     };
+//   }
 // }
