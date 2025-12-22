@@ -75,19 +75,21 @@ const ensureSetupStyles = () => {
     background-color: transparent;
     display: flex;
     flex-direction: column;
-    gap: var(--setup-space-lg);
+    gap: var(--setup-space-md);
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
+    padding: 20px;
+    box-sizing: border-box !important;
   }
 
   .setup-container * { box-sizing: border-box; }
 
   .setup-row {
     display: flex;
-    gap: var(--setup-space-lg);
+    gap: var(--setup-space-md);
     align-items: flex-start;
   }
   @media (max-width: 850px) {
@@ -98,7 +100,7 @@ const ensureSetupStyles = () => {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: var(--setup-space-lg);
+    gap: var(--setup-space-md);
     min-width: 0;
   }
 
@@ -197,7 +199,7 @@ const ensureSetupStyles = () => {
     align-items: center;
     padding: var(--setup-space-md);
     gap: var(--setup-space-md);
-    border-bottom: 1px solid var(--setup-border);
+    // border-bottom: 1px solid var(--setup-border);
   }
 
   .setup-item {
@@ -1198,7 +1200,7 @@ export default function mountSetup(container, props = {}) {
     function createTotalBar() {
         return createElement(`
       <div class="setup-total">
-        <div style='display: flex; align-items: center; gap: 10px;'>
+        <div style='display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500;'>
           <span class="setup-green-dot"></span>
           <span>${t("ManualClaim.orderTotal.label")}</span>
         </div>
@@ -1303,7 +1305,10 @@ export default function mountSetup(container, props = {}) {
     function renderIneligibleItem(item) {
         return createElement(`
       <div class="setup-item-wrapper">
-        <div style="display: flex; flex-direction: column; padding: var(--setup-space-md) 0; border-bottom: 1px solid var(--setup-border);">
+        <div style="display: flex; flex-direction: column; 
+        // padding: var(--setup-space-md) 0; 
+        // border-bottom: 1px solid var(--setup-border);
+        ">
           <div class="setup-item-header" style="padding: 0;">
             <div class="setup-item">
               <img src="${item.image}" alt="${item.name}">
@@ -1315,10 +1320,12 @@ export default function mountSetup(container, props = {}) {
                 <div class="setup-item-collection">${item.collection}</div>
               </div>
             </div>
+       <div>
             <span class="setup-badge">${item.status}</span>
-          </div>
-          <div style="display: flex; justify-content: flex-end; margin-top: 4px; font-size: 13px;">
-            <div class="setup-text-subdued">${item.price}</div>
+            // <div style="display: flex; justify-content: flex-end; margin-top: 4px; font-size: 13px;">
+            //   <div class="setup-text-subdued">${item.price}</div>
+            // </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1622,6 +1629,9 @@ if (typeof window !== "undefined") {
 
 
 
+
+
+
 // // SVG Icons defined as constants
 // const ICONS = {
 //     reorder: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M3.5 9.25a.75.75 0 0 0 1.5 0 3 3 0 0 1 3-3h6.566l-1.123 1.248a.75.75 0 1 0 1.114 1.004l2.25-2.5a.75.75 0 0 0-.027-1.032l-2.25-2.25a.75.75 0 1 0-1.06 1.06l.97.97h-6.44a4.5 4.5 0 0 0-4.5 4.5Z"></path><path d="M16.5 10.75a.75.75 0 0 0-1.5 0 3 3 0 0 1-3 3h-6.566l1.123-1.248a.75.75 0 1 0-1.114-1.004l-2.25 2.5a.75.75 0 0 0 .027 1.032l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h6.44a4.5 4.5 0 0 0 4.5-4.5Z"></path></svg>',
@@ -1777,7 +1787,7 @@ if (typeof window !== "undefined") {
 
 //   .setup-item-card {
 //     background: var(--setup-surface);
-//     border: 1px solid var(--setup-border);
+//     border: 2px solid var(--setup-border);
 //     border-radius: var(--setup-radius-md);
 //     cursor: pointer;
 //     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1789,18 +1799,15 @@ if (typeof window !== "undefined") {
 //   .setup-card-body .setup-item-card:last-child { margin-bottom: 0; }
 
 //   .setup-item-card:hover {
-//     border-color: var(--setup-selected-item-border);
+//     border-color: var(--setup-primary-border);
 //   }
 
-//   .setup-item-card:hover .setup-item-name {
-//     color: var(--setup-primary-color);
-//   }
 
 //   .setup-item-card.selected {
 //     background: var(--setup-primary-light);
 //     border-color: var(--setup-primary-border);
 //     color: var(--setup-primary-border);
-//     box-shadow: 0 0 0 1px var(--setup-primary-border) inset;
+//     // box-shadow: 0 0 0 1px var(--setup-primary-border) inset;
 //   }
 
 //   /* Apply gradient to selected items when gradient is enabled */
@@ -2018,7 +2025,8 @@ if (typeof window !== "undefined") {
 //   .setup-action-card:hover {
 //     border-color: var(--setup-primary-border);
 //     box-shadow: var(--setup-shadow-hover);
-//     background: var(--setup-primary-light);
+//     box-shadow: 0 0 0 1px var(--setup-primary-border) inset;
+//     // background: var(--setup-primary-light);
 //   }
 
 //   .setup-action-card.selected {
@@ -2136,7 +2144,6 @@ if (typeof window !== "undefined") {
 //     cursor: not-allowed;
 //   }
 
-//   .setup-margin-top { margin-top: var(--setup-space-lg); }
 //   .setup-margin-bottom { margin-bottom: var(--setup-space-md); }
 //   .setup-spacer { margin-top: var(--setup-space-md); }
 //   .setup-mt-8 { margin-top: 8px; }
@@ -3036,8 +3043,8 @@ if (typeof window !== "undefined") {
 //           </div>
 //         </div>
 //         <div class="setup-card-body">
-//           <div class="setup-text-subdued setup-spacer">${descriptions[actionType]}</div>
-//           <div class="setup-heading setup-margin-top">What happens next:</div>
+//           <div class="setup-text-subdued">${descriptions[actionType]}</div>
+//           <div class="setup-heading setup-spacer">What happens next:</div>
 //           <div class="setup-action-summary-list">${stepsHTML}</div>
 //         </div>
 //       </div>
