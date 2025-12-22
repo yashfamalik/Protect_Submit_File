@@ -50,8 +50,8 @@ const DEFAULT_GREEN_YELLOW_COLORS = {
 // CSS class constants for consistent styling
 const CSS_CLASSES = {
     root: "submitted-root",
-    row: "submitted-row submitted-row-between submitted-row-center",
-    inline: "submitted-inline submitted-gap-400 submitted-row-center",
+    row: "submitted-row",
+    inline: "submitted-gap-400 submitted-row-center",
     btn: {
         base: "submitted-btn",
         primary: "submitted-btn submitted-btn-primary",
@@ -151,7 +151,7 @@ const createInfoRow = (label, valueText) => {
     const hasValue = valueText != null && String(valueText).length > 0;
 
     return `
-    <div class="submitted-inline submitted-gap-100">
+    <div class="submitted-gap-100">
       <span class="submitted-text submitted-text-subdued submitted-minw-110 submitted-text-sm">${labelText}</span>
       ${hasValue
             ? `<span class="submitted-text submitted-text-sm">${String(
@@ -187,8 +187,8 @@ const createClaimedItemBox = (item, reasonLabel) => {
       </div>
       <div class="${CSS_CLASSES.item.priceWrap}">
         <span class="submitted-text submitted-text-md submitted-semibold">${quantity} x €${price.toFixed(
-            2
-        )} EUR</span>
+        2
+    )} EUR</span>
       </div>
       <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
           <span class="setup-badge critical">Reason: ${reason}</span>
@@ -267,28 +267,34 @@ const render = (container, props) => {
             console.warn('No claimed items found, using default items');
         }
 
-    /**
-     * Creates the left card containing claim status and items
-     * @returns {string} HTML string
-     */
-    const createLeftCard = () => {
-        const itemsHtml = claimedItems
-            .map((item) => createClaimedItemBox(item, reason))
-            .join("");
+        /**
+         * Creates the left card containing claim status and items
+         * @returns {string} HTML string
+         */
+        const createLeftCard = () => {
+            const itemsHtml = claimedItems
+                .map((item) => createClaimedItemBox(item, reason))
+                .join("");
 
-        return `
+            return `
       <div class="${CSS_CLASSES.card}">
         <div class="submitted-stack submitted-gap-100">
-          <div class="submitted-row submitted-row-between submitted-row-center submitted-mb-2 submitted-p-2">
+          <div class="submitted-row">
+          <div class="submitted-row-head">
+          
+          <div class="submitted-Heading-text">
             ${ICONS.selectedItem} 
           <h3 class="submitted-heading-md">${getTranslation(t, "SubmittedDesignJs.statusTitle", "Claim status")}</h3>
-            <span class="${CSS_CLASSES.badge}">${getTranslation(t, "SubmittedDesignJs.statusBadge", "Pending")}</span>
+          </div>
+          <span class="${CSS_CLASSES.badge}">${getTranslation(t, "SubmittedDesignJs.statusBadge", "Pending")}</span>
+          </div>
+
             <span class="submitted-text submitted-subdued submitted-text-md">
               ${getTranslation(t, "SubmittedDesignJs.statusText", "Your claim is currently pending review.")}
             </span>
           </div>
           <div class="submitted-divider"></div>
-          <div class="submitted-items submitted-p-2">
+          <div class="submitted-items ">
           <h3 class="submitted-heading-md submitted-mb-2">
             ${getTranslation(t, "SubmittedDesignJs.itemsHead", "Claimed items")}
           </h3>
@@ -297,120 +303,120 @@ const render = (container, props) => {
         </div>
       </div>
     `;
-    };
+        };
 
-    /**
-     * Creates the right card containing reorder info and general information
-     * @returns {string} HTML string
-     */
-    const createRightCard = () => {
-        const infoItems = [
-            {
-                labelKey: "SubmittedDesignJs.giCidLabel",
-                label: "Claim ID",
-                value: claimInfo.id,
-            },
-            {
-                labelKey: "SubmittedDesignJs.giEmailLabel",
-                label: "Customer contact",
-                value: claimInfo.email,
-            },
-            {
-                labelKey: "SubmittedDesignJs.giCreatedLabel",
-                label: "Created time",
-                value: claimInfo.created,
-            },
-        ];
+        /**
+         * Creates the right card containing reorder info and general information
+         * @returns {string} HTML string
+         */
+        const createRightCard = () => {
+            const infoItems = [
+                {
+                    labelKey: "SubmittedDesignJs.giCidLabel",
+                    label: "Claim ID",
+                    value: claimInfo.id,
+                },
+                {
+                    labelKey: "SubmittedDesignJs.giEmailLabel",
+                    label: "Customer contact",
+                    value: claimInfo.email,
+                },
+                {
+                    labelKey: "SubmittedDesignJs.giCreatedLabel",
+                    label: "Created time",
+                    value: claimInfo.created,
+                },
+            ];
 
-        const infoItemsHtml = infoItems
-            .map(
-                ({ labelKey, label, value }) => `
+            const infoItemsHtml = infoItems
+                .map(
+                    ({ labelKey, label, value }) => `
         <h4 class="submitted-heading-sm">${getTranslation(
-                    t,
-                    labelKey,
-                    label
-                )}</h4>
+                        t,
+                        labelKey,
+                        label
+                    )}</h4>
         ${createInfoRow(label, value)}
       `
-            )
-            .join("");
+                )
+                .join("");
 
-        return `
+            return `
       <div class="${CSS_CLASSES.card}">
-        <div class="submitted-stack submitted-gap-100 submitted-p-2">
+        <div class="submitted-stack submitted-gap-100 ">
           <div class="submitted-mb-2">
             <h3 class="submitted-heading-md">${getTranslation(
-            t,
-            "SubmittedDesignJs.reorderTitle",
-            "Reorder"
-        )}</h3>
+                t,
+                "SubmittedDesignJs.reorderTitle",
+                "Reorder"
+            )}</h3>
             <span class="submitted-text submitted-subdued submitted-text-md">
               ${getTranslation(
-            t,
-            "SubmittedDesignJs.reorderText",
-            "Reordering same item(s). This will create a new order."
-        )}
+                t,
+                "SubmittedDesignJs.reorderText",
+                "Reordering same item(s). This will create a new order."
+            )}
             </span>
           </div>
           <div class="submitted-divider"></div>
-          <div class="submitted-p-2">
+          <div class="">
             <h3 class="submitted-heading-md submitted-mb-2">
               ${getTranslation(
-            t,
-            "SubmittedDesignJs.giTitle1",
-            "General information"
-        )}
+                t,
+                "SubmittedDesignJs.giTitle1",
+                "General information"
+            )}
             </h3>
             ${infoItemsHtml}
           </div>
         </div>
       </div>
     `;
-    };
+        };
 
-    /**
-     * Creates the footer with action buttons
-     * @returns {string} HTML string
-     */
-    const createFooter = () => {
-        const buttons = [
-            {
-                key: "SubmittedDesignJs.btn1",
-                text: "Download Receipt",
-                className: CSS_CLASSES.btn.base,
-            },
-            {
-                key: "SubmittedDesignJs.btn2",
-                text: "Contact Support",
-                className: CSS_CLASSES.btn.base,
-            },
-            {
-                key: "SubmittedDesignJs.btn3",
-                text: "Track Status",
-                className: CSS_CLASSES.btn.primary,
-            },
-        ];
+        /**
+         * Creates the footer with action buttons
+         * @returns {string} HTML string
+         */
+        const createFooter = () => {
+            const buttons = [
+                {
+                    key: "SubmittedDesignJs.btn1",
+                    text: "Download Receipt",
+                    className: CSS_CLASSES.btn.base,
+                },
+                {
+                    key: "SubmittedDesignJs.btn2",
+                    text: "Contact Support",
+                    className: CSS_CLASSES.btn.base,
+                },
+                {
+                    key: "SubmittedDesignJs.btn3",
+                    text: "Track Status",
+                    className: CSS_CLASSES.btn.primary,
+                },
+            ];
 
-        const buttonsHtml = buttons
-            .map(
-                ({ key, text, className }) =>
-                    `<button class="${className}">${getTranslation(
-                        t,
-                        key,
-                        text
-                    )}</button>`
-            )
-            .join("");
+            const buttonsHtml = buttons
+                .map(
+                    ({ key, text, className }) =>
+                        `<button class="${className}">${getTranslation(
+                            t,
+                            key,
+                            text
+                        )}</button>`
+                )
+                .join("");
 
-        return `
+            return `
       <div class="submitted-footer">
         ${buttonsHtml}
       </div>
     `;
-    };
+        };
 
-    // Generate complete HTML template
-    const htmlTemplate = `
+        // Generate complete HTML template
+        const htmlTemplate = `
     <div class="${CSS_CLASSES.root}">
       ${createHeader(t)}
       <div class="${CSS_CLASSES.grid}">
@@ -421,7 +427,7 @@ const render = (container, props) => {
     </div>
   `;
 
-    container.innerHTML = htmlTemplate;
+        container.innerHTML = htmlTemplate;
     } catch (error) {
         console.error('Error rendering submitted component:', error);
         container.innerHTML = `
@@ -544,7 +550,7 @@ function mountSubmitted(container, props = {}) {
     // DISABLED: proxy integration to prevent infinite loops
     // The following proxy integration code is disabled to prevent circular updates
     let proxyUnsubscribe = null;
-    
+
     // Only apply default colors without subscribing to prevent loops
     proxy.updateColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
     proxy.applyColorSettings(DEFAULT_GREEN_YELLOW_COLORS);
@@ -677,18 +683,20 @@ const ensureSubmittedStyles = () => {
   }
 
   .submitted-row {
-    display: flex;
+    padding: var(--submitted-space-200);
   }
-  .submitted-row-between {
-    justify-content: space-between;
-  }
-  .submitted-row-center {
+    .submitted-Heading-text{
+    display:flex;
     align-items: center;
-  }
+    gap: 10px;
+    }
 
-  .submitted-inline {
-    display: inline-flex;
-  }
+    .submitted-row-head{
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    }
+
   .submitted-gap-100 { column-gap: var(--submitted-space-100); }
   .submitted-gap-400 { column-gap: var(--submitted-space-400); }
   .submitted-mb-2 { margin-bottom: var(--submitted-space-100); }
@@ -810,6 +818,7 @@ const ensureSubmittedStyles = () => {
     display: flex; 
     flex-direction: column; 
     gap: var(--submitted-space-100); 
+    padding: var(--submitted-space-200);
   }
 
   .submitted-item-box {
@@ -1025,6 +1034,9 @@ export default mountSubmitted;
 
 
 
+
+
+
 // const ICONS = {
 //     reorder: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path d="M3.5 9.25a.75.75 0 0 0 1.5 0 3 3 0 0 1 3-3h6.566l-1.123 1.248a.75.75 0 1 0 1.114 1.004l2.25-2.5a.75.75 0 0 0-.027-1.032l-2.25-2.25a.75.75 0 1 0-1.06 1.06l.97.97h-6.44a4.5 4.5 0 0 0-4.5 4.5Z"></path><path d="M16.5 10.75a.75.75 0 0 0-1.5 0 3 3 0 0 1-3 3h-6.566l1.123-1.248a.75.75 0 1 0-1.114-1.004l-2.25 2.5a.75.75 0 0 0 .027 1.032l2.25 2.25a.75.75 0 0 0 1.06-1.06l-.97-.97h6.44a4.5 4.5 0 0 0 4.5-4.5Z"></path></svg>',
 //     refund: '<svg viewBox="0 0 20 20" class="Polaris-Icon__Svg" focusable="false" aria-hidden="true" style="width: 23px; height: 23px; margin-right: 0px; vertical-align: middle; fill: var(--setup-svg-color);"><path fill-rule="evenodd" d="M12.379 4h-7.258c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v3.008c0 .395 0 .736.023 1.017.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.121.01.254.016.397.019.001.243.006.46.022.65.024.297.078.592.222.875.216.424.56.768.984.984.283.144.578.198.875.222.28.023.622.023 1.017.023h7.258c.395 0 .736 0 1.017-.023.297-.024.592-.078.875-.222.424-.216.768-.56.984-.984.144-.283.198-.578.222-.875.023-.28.023-.622.023-1.017v-3.008c0-.395 0-.736-.023-1.017-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.983-.984-.284-.144-.58-.198-.876-.222-.121-.01-.254-.016-.397-.019-.001-.243-.006-.46-.022-.65-.024-.297-.078-.592-.222-.875-.216-.424-.56-.768-.984-.984-.283-.144-.578-.198-.875-.222-.28-.023-.622-.023-1.017-.023Zm1.62 2.75h-6.378c-.395 0-.736 0-1.017.023-.297.024-.592.078-.875.222-.424.216-.768.56-.984.984-.144.283-.198.578-.222.875-.023.28-.023.622-.023 1.017v1.874c-.104-.002-.194-.006-.274-.013-.204-.017-.28-.045-.316-.064-.142-.072-.256-.186-.328-.327-.02-.038-.047-.113-.064-.317-.017-.212-.018-.492-.018-.924v-2.95c0-.432 0-.712.018-.924.017-.204.045-.28.064-.316.072-.142.186-.256.328-.328.037-.02.112-.047.316-.064.212-.017.492-.018.924-.018h7.2c.432 0 .712 0 .924.018.204.017.28.045.317.064.14.072.255.186.327.328.02.037.047.112.064.316.011.138.016.305.017.524Zm-6.349 7.75h1.178c-.515-.796-.828-1.848-.828-3 0-1.278.385-2.43 1.002-3.25h-1.352c-.432 0-.712 0-.924.018-.204.017-.28.045-.316.064-.142.072-.256.186-.328.328-.02.037-.047.112-.064.316-.017.212-.018.492-.018.924v2.95c0 .432 0 .712.018.924.017.204.045.28.064.317.072.14.186.255.328.327.037.02.112.047.316.064.212.017.492.018.924.018Zm6.85-3c0-1.278-.384-2.43-1.002-3.25h1.352c.432 0 .712 0 .924.018.204.017.28.045.316.064.142.072.256.186.328.328.02.037.047.112.064.316.017.212.018.492.018.924v2.95c0 .432 0 .712-.018.924-.017.204-.045.28-.064.317-.072.14-.186.255-.328.327-.037.02-.112.047-.316.064-.212.017-.492.018-.924.018h-1.178c.515-.796.828-1.848.828-3Zm-4.332 2.304c-.384-.532-.668-1.342-.668-2.304 0-.962.284-1.772.668-2.304.385-.533.787-.696 1.082-.696.295 0 .697.163 1.082.696.384.532.668 1.342.668 2.304 0 .962-.284 1.772-.668 2.304-.385.533-.787.696-1.082.696-.295 0-.697-.163-1.082-.696Z"></path></svg>',
@@ -1205,8 +1217,7 @@ export default mountSubmitted;
 
 //     return `
 //     <div class="${CSS_CLASSES.item.box}">
-//       <img class="${CSS_CLASSES.item.image
-//         }" src="${itemImage}" alt="${itemName}" onerror="this.src='https://picsum.photos/seed/perfume-c/72'" />
+//       <div class="${CSS_CLASSES.item.image}" style="background-image: url('${itemImage}')"></div>
 //       <div class="${CSS_CLASSES.item.textWrap}">
 //         <span class="submitted-text submitted-text-md submitted-semibold submitted-block">${itemName}</span>
 //         <span class="submitted-text submitted-text-sm submitted-subdued submitted-block submitted-mt-2">${itemDescription}</span>
@@ -1858,11 +1869,13 @@ export default mountSubmitted;
 //   .submitted-item-image {
 //     width: 56px;
 //     height: 56px;
-//     object-fit: cover;
 //     border-radius: 6px;
 //     background: #f1f5f9;
 //     border: 1px solid var(--submitted-border);
 //     margin-right: var(--submitted-space-200);
+//     background-size: cover !important;
+//     background-position: center !important;
+//     background-repeat: no-repeat !important;
 //   }
 
 //   .submitted-item-box:hover .submitted-item-image {
