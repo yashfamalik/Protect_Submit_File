@@ -95,10 +95,10 @@ const ensureSetupStyles = () => {
   .setup-row {
     display: flex;
     gap: var(--setup-space-md);
-    align-items: stretch;
+    align-items: flex-start;
   }
   @media (max-width: 850px) {
-    .setup-row { flex-direction: column; align-items: flex-start; }
+    .setup-row { flex-direction: column; }
   }
 
   .setup-col {
@@ -114,9 +114,8 @@ const ensureSetupStyles = () => {
     border: 1px solid var(--setup-border);
     border-radius: var(--setup-radius-md);
     box-shadow: var(--setup-shadow-card);
-    overflow: hidden;
+    overflow: visible;
     transition: box-shadow 0.2s ease;
-    height: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -132,7 +131,7 @@ const ensureSetupStyles = () => {
 
   .setup-card-body {
     padding: var(--setup-space-lg);
-    flex: 1;
+    overflow: visible;
   }
 
   .setup-heading {
@@ -1486,6 +1485,41 @@ export default function mountSetup(container, props = {}) {
         summaryCol.appendChild(createActionSummaryCard());
         totalBar.appendChild(createTotalBar());
         actionsBar.appendChild(createActionsBar());
+
+        // Equalize column heights after content is added
+        equalizeColumnHeights();
+    }
+
+    // Function to equalize column heights
+    function equalizeColumnHeights() {
+        // Use setTimeout to ensure DOM is fully rendered
+        setTimeout(() => {
+            const rows = container.querySelectorAll('.setup-row');
+            
+            rows.forEach(row => {
+                const columns = row.querySelectorAll('.setup-col');
+                if (columns.length < 2) return;
+                
+                // Reset heights first
+                columns.forEach(col => {
+                    col.style.minHeight = 'auto';
+                });
+                
+                // Get the maximum height
+                let maxHeight = 0;
+                columns.forEach(col => {
+                    const height = col.offsetHeight;
+                    if (height > maxHeight) {
+                        maxHeight = height;
+                    }
+                });
+                
+                // Apply the maximum height to all columns
+                columns.forEach(col => {
+                    col.style.minHeight = maxHeight + 'px';
+                });
+            });
+        }, 10);
     }
 
     function rerender() {
@@ -1514,6 +1548,8 @@ export default function mountSetup(container, props = {}) {
                 proxy.applyColorSettings(greenYellowTheme);
             }
         }
+        // Equalize column heights after rerender
+        equalizeColumnHeights();
     }
 
     // Initial render
