@@ -67,6 +67,7 @@ const ensureSetupStyles = () => {
     --setup-primary-color: #72D9A3;
     --setup-primary-light: #b8e6b8;
     --setup-primary-border: #5a9a5a;
+    --setup-svg-color: #5a9a5a;
   }
 
   .setup-svg-fill{
@@ -94,9 +95,10 @@ const ensureSetupStyles = () => {
   .setup-row {
     display: flex;
     gap: var(--setup-space-md);
+    align-items: stretch;
   }
   @media (max-width: 850px) {
-    .setup-row { flex-direction: column; }
+    .setup-row { flex-direction: column; align-items: flex-start; }
   }
 
   .setup-col {
@@ -114,7 +116,7 @@ const ensureSetupStyles = () => {
     box-shadow: var(--setup-shadow-card);
     overflow: hidden;
     transition: box-shadow 0.2s ease;
-    flex: 1;
+    height: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -130,6 +132,7 @@ const ensureSetupStyles = () => {
 
   .setup-card-body {
     padding: var(--setup-space-lg);
+    flex: 1;
   }
 
   .setup-heading {
@@ -866,6 +869,7 @@ export default function mountSetup(container, props = {}) {
                 ["primaryColor", "--setup-primary-color"],
                 ["primaryLight", "--setup-primary-light"],
                 ["primaryBorder", "--setup-primary-border"],
+                ["svgColor", "--setup-svg-color"],
             ];
 
             for (const [key, cssVar] of colorMap) {
@@ -884,6 +888,15 @@ export default function mountSetup(container, props = {}) {
                 const borderColor = generateBorderColor(settings.selectedItemBg);
                 if (borderColor) {
                     root.style.setProperty('--setup-selected-item-border', borderColor);
+                }
+            }
+
+            // Ensure SVG color is always set from primary color or primary border
+            const svgColor = settings.primaryColor || settings.primaryBorder;
+            if (svgColor) {
+                const svgBorderColor = generateBorderColor(svgColor);
+                if (svgBorderColor) {
+                    root.style.setProperty('--setup-svg-color', svgBorderColor);
                 }
             }
 
@@ -1337,9 +1350,9 @@ export default function mountSetup(container, props = {}) {
             </div>
             `);
     }
-    // <div style="display: flex; justify-content: flex-end; margin-top: 4px; font-size: 13px;">
-    //   <div class="setup-text-subdued">${item.price}</div>
-    // </div>
+            // <div style="display: flex; justify-content: flex-end; margin-top: 4px; font-size: 13px;">
+            //   <div class="setup-text-subdued">${item.price}</div>
+            // </div>
 
     function renderActionOption(value, title, description) {
         const isSelected = state.selectedAction === value;
@@ -1623,7 +1636,6 @@ if (typeof window !== "undefined") {
         };
     }
 }
-
 
 
 
